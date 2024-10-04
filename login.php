@@ -17,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Jika login gagal, tampilkan pesan error
         echo "Nama pengguna atau kata sandi salah!";
-        header("Location: register.php");
     }
 }
 ?>
