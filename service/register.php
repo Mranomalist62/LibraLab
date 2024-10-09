@@ -1,4 +1,4 @@
-<?php
+e<?php
 //Arief Budi Mulyawan
 // Koneksi ke database (ganti sesuai konfigurasi database Anda)
 $host = "localhost";
