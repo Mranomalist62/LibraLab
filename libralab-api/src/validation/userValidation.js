@@ -23,7 +23,26 @@ export async function isUsernameAvailable(userData){
     }
 }
 
+export async function isEmailAvailable(userData){
+    try {
+        if(userData.Nama_user !== null){
+            row = await model.getUserByEmailDb(userData.email_user);
+            if(row.length === 0){
+                return true;
+            }
 
+            else { 
+                return false; 
+            }
+        }
+        else {
+            return false;
+        }
+    } catch (error) {
+        console.log(error,'\n');
+        return error;
+    }
+}
 
 export function validateUserPost(userData){
     const schema = Joi.object({
