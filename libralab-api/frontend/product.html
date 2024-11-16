@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Buku</title>
+    <link rel="stylesheet" href="css/style-product.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <!-- Navbar Brand -->
+          <a class="navbar-brand" href="#">Libralab</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa-solid fa-bars custom-icon"></span>
+          </button>
+
+          <!-- Navbar Content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- SEARCH -->
+            <div class="search">
+              <input type="text" class="search-input" placeholder="Search..." />
+              <a href="#" class="search-icon">
+                <i class="fas fa-search"></i>
+              </a>
+            </div>
+
+            <!-- Keranjang -->
+            <ul class="navbar-nav ms-auto">
+              <!-- Menggunakan ms-auto di sini -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-cart-shopping" style="color: white"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Item 1</a></li>
+                  <li><a class="dropdown-item" href="#">Item 2</a></li>
+                  <li><a class="dropdown-item" href="#">Item 3</a></li>
+                  <li>
+                    <a class="dropdown-item text-center" href="cart.html">
+                      <button class="btn btn-primary w-100">
+                        Lihat Keranjang
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- PROFILE -->
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user-circle custom-icon"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <div class="d-flex align-items-center p-2">
+                      <img
+                        src="img/test1.jpg"
+                        alt="Profile"
+                        class="profile-pic me-2"
+                      />
+                      <div>
+                        <strong>Email@example.com</strong>
+                        <small class="d-block text-muted">Username</small>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="mybook.html">Buku Saya</a>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Wishlish Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Poin Saya</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <section class="product-section">
+      <div class="container">
+        <div class="book-detail">
+          <div class="book-image">
+            <img
+              src="img/book-placeholder.png"
+              alt="Gambar Buku"
+              width="240"
+              height="360"
+            />
+          </div>
+          <div class="book-info">
+            <p class="author">Author</p>
+            <h1 class="book-title">Judul Buku</h1>
+            <p class="price">
+              <span class="current-price">Rp100.000</span>
+              <span class="discount">30%</span>
+              <span class="old-price">Rp150.000</span>
+            </p>
+            <div class="format">
+              <p>Format Buku</p>
+              <span class="badge">Soft Cover</span>
+            </div>
+            <div class="details">
+              <h2>Detail Buku</h2>
+              <p>Penerbit: Masashi Kishimoto</p>
+              <p>ISBN: XXXXXXXXXXX</p>
+              <p>Lebar: 12,0 cm</p>
+              <p>Bahasa: Indonesia</p>
+            </div>
+            <div class="description">
+              <h2>Deskripsi</h2>
+              <p>Tahun Terbit: 12 Jan 2003</p>
+              <p>Halaman: XXXXXXXXXX</p>
+              <p>Panjang: Masashi Kishimoto</p>
+              <p>Berat: 0,15 kg</p>
+            </div>
+          </div>
+          <div class="order-section">
+            <h2>Atur Jumlah</h2>
+            <div class="quantity">
+              <button class="decrease">-</button>
+              <input type="text" value="1" />
+              <button class="increase">+</button>
+            </div>
+            <p>Stok Total: 449</p>
+            <p class="sub-total">Sub Total: Rp100.000</p>
+            <button class="add-to-cart">+ Keranjang</button>
+            <button class="buy-now">Beli</button>
+          </div>
+        </div>
+        <section class="related-products">
+          <h2>Produk Terkait</h2>
+          <div class="product-list">
+            <div class="product-item">
+              <img src="img/book-placeholder.png" alt="Produk Terkait" />
+            </div>
+            <div class="product-item">
+              <img src="img/book-placeholder.png" alt="Produk Terkait" />
+            </div>
+            <div class="product-item">
+              <img src="img.png" alt="Produk Terkait" />
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  </body>
+</html>

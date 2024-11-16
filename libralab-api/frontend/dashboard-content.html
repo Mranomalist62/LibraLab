@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Libralab - Content Management</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 250px;
+        background-color: white;
+        padding: 20px;
+        border-right: 1px solid #eee;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 40px;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        border-radius: 8px;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .menu-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .menu-item.active {
+        background-color: #e0e0e0;
+      }
+
+      .menu-item i {
+        margin-right: 12px;
+        width: 20px;
+      }
+
+      .bottom-menu {
+        margin-top: auto;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+      }
+
+      .main-content {
+        flex-grow: 1;
+        padding: 20px;
+        background-color: #fff;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .search-bar {
+        flex-grow: 1;
+        margin: 0 20px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+      }
+
+      .profile-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #eee;
+      }
+
+      .content-section {
+        margin-bottom: 30px;
+      }
+
+      .section-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .section-title i {
+        margin-right: 10px;
+      }
+
+      .upload-box {
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 10px;
+        cursor: pointer;
+      }
+
+      .upload-note {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .save-button {
+        background-color: #ccc;
+        color: #000;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        float: right;
+      }
+
+      .dark-mode-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .toggle-switch {
+        width: 40px;
+        height: 20px;
+        background-color: #ccc;
+        border-radius: 20px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .toggle-switch::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background-color: white;
+        border-radius: 50%;
+        top: 1px;
+        left: 1px;
+        transition: transform 0.3s;
+      }
+
+      .toggle-switch.active::after {
+        transform: translateX(20px);
+      }
+
+      body.dark-mode {
+        background-color: #1a1a1a;
+        color: #fff;
+      }
+
+      .dark-mode .sidebar,
+      .dark-mode .main-content {
+        background-color: #1a1a1a;
+        color: #fff;
+      }
+
+      .dark-mode .menu-item {
+        color: #fff;
+      }
+
+      .dark-mode .menu-item.active {
+        background-color: #333;
+      }
+
+      .dark-mode .upload-box {
+        border-color: #444;
+      }
+
+      .dark-mode .search-bar {
+        background-color: #333;
+        border-color: #444;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="top-menu">
+        <div class="logo">Libralab</div>
+        <a href="#" class="menu-item">
+          <i>👤</i>
+          Account
+        </a>
+        <a href="#" class="menu-item">
+          <i>📊</i>
+          Analytic
+        </a>
+        <a href="#" class="menu-item active">
+          <i>📝</i>
+          Content
+        </a>
+        <a href="#" class="menu-item">
+          <i>💳</i>
+          Payment
+        </a>
+      </div>
+      <div class="bottom-menu">
+        <a href="#" class="menu-item">
+          <i>↪</i>
+          Logout
+        </a>
+        <!-- <div class="menu-item">
+                <i>🌙</i>
+                Dark Mode
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div> -->
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <div class="hamburger">☰</div>
+        <input type="text" class="search-bar" placeholder="Search..." />
+        <div class="profile-icon"></div>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title">
+          <i>📄</i>
+          Update Content
+        </h2>
+        <div class="upload-box">Upload Your Files....</div>
+        <div class="upload-note">
+          Note : Size 1220px X 261px, format : jpeg.
+        </div>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title">Update your Highlight1 on main page</h2>
+        <div class="upload-box">Upload Your Files....</div>
+        <div class="upload-note">Note : Size 268px X 330px, format : jpeg.</div>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title">Update your Highlight2 on main page</h2>
+        <div class="upload-box">Upload Your Files....</div>
+        <div class="upload-note">Note : Size 268px X 330px, format : jpeg.</div>
+      </div>
+
+      <button class="save-button">Save</button>
+    </div>
+
+    <script>
+      // Dark mode toggle functionality
+      const toggleSwitch = document.querySelector('.toggle-switch');
+      const body = document.body;
+
+      toggleSwitch.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        toggleSwitch.classList.toggle('active');
+      });
+
+      // Upload functionality
+      const uploadBoxes = document.querySelectorAll('.upload-box');
+
+      uploadBoxes.forEach((box) => {
+        box.addEventListener('click', () => {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = 'image/jpeg';
+          input.click();
+
+          input.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+              // Here you would typically handle the file upload
+              // For this example, we'll just show the filename
+              box.textContent = file.name;
+            }
+          });
+        });
+      });
+
+      // Save button functionality
+      const saveButton = document.querySelector('.save-button');
+      saveButton.addEventListener('click', () => {
+        alert('Changes saved successfully!');
+      });
+
+      // Mobile menu toggle
+      const hamburger = document.querySelector('.hamburger');
+      const sidebar = document.querySelector('.sidebar');
+
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+      });
+    </script>
+  </body>
+</html>

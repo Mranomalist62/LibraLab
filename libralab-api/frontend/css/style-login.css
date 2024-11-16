@@ -1,0 +1,238 @@
+/* POPPINS FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.wrapper {
+  background: #ececec;
+  padding: 0 20px 0 20px;
+}
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+header h2 {
+  font-size: 20px;
+  margin: 0;
+}
+header h1 {
+  font-size: 28px;
+  margin: 10px 0 0 0;
+}
+.side-image {
+  background-image: url('images/2.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px 0 0 10px;
+  position: relative;
+}
+.row {
+  width: 900px;
+  height: 550px;
+  border-radius: 10px;
+  background: #fff;
+  padding: 0px;
+  box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
+}
+.text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.text p {
+  color: #fff;
+  font-size: 20px;
+}
+i {
+  font-weight: 400;
+  font-size: 15px;
+}
+.right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.input-box {
+  width: 330px;
+  box-sizing: border-box;
+}
+img {
+  width: 35px;
+  position: absolute;
+  top: 30px;
+  left: 30px;
+}
+.input-box header {
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 45px;
+}
+.input-field {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 0 10px 0 10px;
+}
+.input {
+  height: 45px;
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  color: #40414a;
+  transition: border-color 0.3s;
+}
+.input-box .input-field label {
+  position: absolute;
+  top: 10px;
+  left: 30px;
+  background-color: #fff;
+  pointer-events: none;
+  transition: 0.5s;
+}
+.input-field input:focus ~ label {
+  top: -10px;
+  font-size: 13px;
+}
+.input-field input:valid ~ label {
+  top: -10px;
+  font-size: 13px;
+  color: #5d5076;
+}
+.input-field .input:focus,
+.input-field .input:valid {
+  border-bottom: 1px solid #ff8a00;
+}
+.forgot-password {
+  text-align: right;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.forgot-password a {
+  text-decoration: none;
+  color: #4f75ff;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+.forgot-password a:hover {
+  color: #0438f5;
+}
+.submit {
+  border: none;
+  outline: none;
+  height: 45px;
+  background: #ececec;
+  border-radius: 5px;
+  transition: 0.4s;
+}
+.submit:hover {
+  background: #ff8a00;
+  color: #fff;
+}
+.signin {
+  text-align: center;
+  font-size: small;
+  margin-top: 25px;
+}
+span a {
+  text-decoration: none;
+  font-weight: 700;
+  color: #000;
+  transition: 0.5s;
+}
+span a:hover {
+  text-decoration: underline;
+  color: #000;
+}
+
+.img-login {
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  border-radius: 10px 0 0 10px;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-field i {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.signin {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.social-login {
+  display: flex;
+  justify-content: center; /* Memastikan logo berada di tengah */
+  margin-top: 20px; /* Menambahkan margin atas jika perlu */
+}
+
+.social-icon {
+  margin: 0 10px; /* Menambahkan jarak antara logo */
+}
+.social-icon img {
+  width: 35px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.social-icon img {
+  width: 40px; /* Ukuran gambar */
+  height: auto; /* Menjaga rasio aspek */
+  cursor: pointer; /* Menunjukkan bahwa ikon bisa diklik */
+}
+
+.form-select:focus {
+  border-color: #ff8a00;
+}
+
+@media only screen and (max-width: 768px) {
+  .side-image {
+    border-radius: 10px 10px 0 0;
+  }
+  img {
+    width: 35px;
+    position: absolute;
+    top: 20px;
+    left: 47%;
+  }
+  
+  .img-login {
+    display: none;
+  }
+
+  .text {
+    position: absolute;
+    top: 70%;
+    text-align: center;
+  }
+  .text p,
+  i {
+    font-size: 16px;
+  }
+  .row {
+    max-width: 420px;
+    width: 100%;
+  }
+}

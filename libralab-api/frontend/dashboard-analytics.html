@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Libralab Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      :root {
+        --bg-primary: #fff;
+        --bg-secondary: #f0f0f0;
+        --bg-tertiary: #f8f8f8;
+        --text-primary: #333;
+        --text-secondary: #666;
+        --border-color: #eee;
+        --chart-grid: #eee;
+        --sidebar-border: 1px solid #eee;
+        --transition-speed: 0.3s;
+      }
+
+      [data-theme='dark'] {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --bg-tertiary: #3d3d3d;
+        --text-primary: #fff;
+        --text-secondary: #ccc;
+        --border-color: #3d3d3d;
+        --chart-grid: #3d3d3d;
+        --sidebar-border: 1px solid #3d3d3d;
+      }
+
+      body {
+        display: flex;
+        min-height: 100vh;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: background-color var(--transition-speed),
+          color var(--transition-speed);
+      }
+
+      .sidebar {
+        width: 250px;
+        background-color: white;
+        padding: 20px;
+        border-right: 1px solid #eee;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 40px;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        border-radius: 8px;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .menu-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .menu-item.active {
+        background-color: #e0e0e0;
+      }
+
+      .menu-item i {
+        margin-right: 12px;
+        width: 20px;
+      }
+
+      .bottom-menu {
+        margin-top: auto;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 20px;
+        background-color: var(--bg-primary);
+        transition: background-color var(--transition-speed);
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .search-bar {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        transition: all var(--transition-speed);
+      }
+
+      .search-bar::placeholder {
+        color: var(--text-secondary);
+      }
+
+      .profile-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--bg-secondary);
+        transition: background-color var(--transition-speed);
+      }
+
+      .chart-container {
+        margin-top: 15px;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 15px;
+        height: 250px;
+        background-color: var(--bg-primary);
+        transition: all var(--transition-speed);
+      }
+
+      .chart-title {
+        font-size: 18px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .chart-title i {
+        margin-right: 10px;
+      }
+
+      .genre-stats {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        gap: 20px;
+      }
+
+      .pie-chart {
+        width: 40%;
+        height: 200px;
+      }
+
+      .stats-list {
+        width: 55%;
+      }
+
+      .stats-list h3 {
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .stats-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        padding: 8px;
+        border-radius: 6px;
+        font-size: 14px;
+        background-color: var(--bg-tertiary);
+        transition: background-color var(--transition-speed);
+      }
+
+      .toggle {
+        position: relative;
+        width: 40px;
+        height: 20px;
+        background-color: var(--bg-secondary);
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color var(--transition-speed);
+      }
+
+      .toggle::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: var(--bg-primary);
+        border-radius: 50%;
+        top: 1px;
+        left: 1px;
+        transition: left var(--transition-speed),
+          background-color var(--transition-speed);
+      }
+
+      .toggle.active {
+        background: var(--text-primary);
+      }
+
+      .toggle.active::after {
+        left: 21px;
+        background: var(--bg-primary);
+      }
+
+      @media (max-width: 768px) {
+        .genre-stats {
+          flex-direction: column;
+        }
+
+        .pie-chart,
+        .stats-list {
+          width: 100%;
+        }
+
+        .chart-container {
+          height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="top-menu">
+        <div class="logo">Libralab</div>
+        <a href="#" class="menu-item">
+          <i>👤</i>
+          Account
+        </a>
+        <a href="#" class="menu-item active">
+          <i>📊</i>
+          Analytic
+        </a>
+        <a href="#" class="menu-item">
+          <i>📝</i>
+          Content
+        </a>
+        <a href="#" class="menu-item">
+          <i>💳</i>
+          Payment
+        </a>
+      </div>
+      <div class="bottom-menu">
+        <a href="#" class="menu-item">
+          <i>↪</i>
+          Logout
+        </a>
+        <!-- <div class="menu-item">
+                <i>🌙</i>
+                Dark Mode
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div> -->
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <input type="text" class="search-bar" placeholder="Search..." />
+        <div class="profile-icon"></div>
+      </div>
+
+      <div class="analytics-section">
+        <div class="chart-title">
+          <i>📈</i>
+          Analytic
+        </div>
+        <div class="chart-container">
+          <canvas id="profitChart"></canvas>
+        </div>
+      </div>
+
+      <div class="genre-stats">
+        <div class="pie-chart">
+          <canvas id="genreChart"></canvas>
+        </div>
+        <div class="stats-list">
+          <h3>Genre Terfavorit</h3>
+          <div class="stats-item">
+            <span>Best</span>
+            <span>Horror</span>
+          </div>
+          <div class="stats-item">
+            <span>Average</span>
+            <span>Action</span>
+          </div>
+          <div class="stats-item">
+            <span>Worst</span>
+            <span>Comedy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let profitChart, genreChart;
+
+      function initCharts(isDark) {
+        const chartTextColor = isDark ? '#fff' : '#333';
+        const chartGridColor = isDark ? '#3d3d3d' : '#eee';
+
+        // Line Chart
+        if (profitChart) profitChart.destroy();
+        const profitCtx = document
+          .getElementById('profitChart')
+          .getContext('2d');
+        profitChart = new Chart(profitCtx, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [
+              {
+                label: 'Sold',
+                data: [65, 59, 80, 81, 56, 85],
+                borderColor: chartTextColor,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  color: chartTextColor,
+                  font: { size: 11 },
+                },
+                grid: {
+                  color: chartGridColor,
+                },
+              },
+              x: {
+                ticks: {
+                  color: chartTextColor,
+                  font: { size: 11 },
+                },
+                grid: {
+                  color: chartGridColor,
+                },
+              },
+            },
+          },
+        });
+
+        // Pie Chart
+        if (genreChart) genreChart.destroy();
+        const genreCtx = document.getElementById('genreChart').getContext('2d');
+        genreChart = new Chart(genreCtx, {
+          type: 'pie',
+          data: {
+            labels: ['Horror', 'Comedy'],
+            datasets: [
+              {
+                data: [150, 78],
+                backgroundColor: ['#FF6384', '#36A2EB'],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  color: chartTextColor,
+                  font: { size: 11 },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // Initial charts
+      initCharts(false);
+
+      // Dark Mode Toggle
+      const toggle = document.querySelector('.toggle');
+      const body = document.body;
+
+      toggle.addEventListener('click', () => {
+        toggle.classList.toggle('active');
+        document.documentElement.setAttribute(
+          'data-theme',
+          toggle.classList.contains('active') ? 'dark' : 'light'
+        );
+        initCharts(toggle.classList.contains('active'));
+      });
+    </script>
+  </body>
+</html>

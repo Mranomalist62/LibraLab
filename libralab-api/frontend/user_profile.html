@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>Profil Saya</title>
+    <style>
+      main {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        margin-top: 5rem;
+      }
+      /* Navbar styling */
+      .navbar {
+        padding: 10px;
+        justify-content: space-around;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #ff8a00;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar .navbar-container {
+        padding-left: 25px;
+        padding-right: 25px;
+        justify-content: space-between;
+      }
+
+      .navbar .navbar-brand {
+        font-weight: 600;
+        font-size: 35px;
+        color: #ffffff;
+      }
+
+      .navbar-nav {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: #333;
+        padding-right: 15px;
+      }
+
+      .nav-link:hover {
+        color: #000000;
+      }
+
+      .dropdown-menu {
+        font-weight: 400;
+        z-index: 20;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .nav-item {
+        margin-left: 15px;
+      }
+
+      /* Navbar Collapse */
+      .navbar-collapse {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* Search bar */
+      .search {
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        align-items: center;
+      }
+
+      .search-input {
+        color: white;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 0;
+        margin-top: 5px;
+        caret-color: transparent;
+        line-height: 20px;
+        transition: width 0.4s linear;
+      }
+
+      .search-input::placeholder {
+        font-size: 15px;
+        font-style: italic;
+      }
+
+      .search .search-input {
+        padding: 0 10px;
+        width: 100%;
+        caret-color: #ff8a00;
+        font-size: 19px;
+        color: rgb(41, 40, 40);
+        transition: width 0.4s linear;
+      }
+
+      .search-icon {
+        height: 34px;
+        width: 34px;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #ff8a00;
+        font-size: 10px;
+        bottom: 30px;
+        position: relative;
+        border-radius: 20px;
+      }
+
+      .search-icon:hover {
+        color: #fff !important;
+      }
+
+      .custom-icon {
+        font-size: 30px;
+        color: white;
+      }
+
+      /* Profile Dropdown */
+      .dropdown-menu {
+        padding: 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+      }
+
+      .dropdown-item {
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .navbar .dropdown-toggle::after {
+        display: none;
+      }
+
+      /* important */
+      .dropdown-menu {
+        filter: none !important;
+      }
+
+      body {
+        background-color: #f5f5f5;
+      }
+
+      main .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      main .header {
+        background: linear-gradient(90deg, #ff8800 0%, #ff0000 100%);
+        height: 200px;
+        position: relative;
+        border-radius: 8px 8px 0 0;
+      }
+
+      .profile-info {
+        background: white;
+        padding: 20px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-picture {
+        width: 150px;
+        height: 150px;
+        background: #ddd;
+        border-radius: 50%;
+        position: absolute;
+        bottom: -75px;
+        left: 50px;
+        border: 5px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .profile-picture img {
+        width: 80px;
+        height: 80px;
+        opacity: 0.5;
+      }
+
+      .username {
+        margin-left: 220px;
+        font-size: 24px;
+        margin-bottom: 20px;
+        padding-top: 10px;
+      }
+
+      .biodata-form {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        border: 1px solid #ddd;
+      }
+
+      .form-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 20px;
+        margin-bottom: 15px;
+        align-items: center;
+      }
+
+      .form-label {
+        font-weight: bold;
+        color: #333;
+      }
+
+      .form-input {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 20px;
+      }
+
+      .photo-container {
+        width: 180px;
+        height: 180px;
+        background: #ddd;
+        border: 2px dashed #999;
+        margin-bottom: 10px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      .btn-password {
+        background: none;
+        border: 2px solid #ff4500;
+        color: #ff4500;
+      }
+
+      .btn-submit {
+        background: #ff4500;
+        color: white;
+        float: right;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+      }
+      @media (max-width: 991px) {
+        .navbar .dropdown-menu {
+          position: absolute;
+          width: auto; 
+        }
+
+        .navbar .dropdown-item {
+          padding: 10px 15px;
+        }
+        main {
+            margin-top: 8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container navbar-container">
+          <!-- Navbar Brand -->
+          <a class="navbar-brand" href="#">Libralab</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa-solid fa-bars custom-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- SEARCH -->
+            <div class="search">
+              <input type="text" class="search-input" placeholder="Search..." />
+              <a href="#" class="search-icon">
+                <i class="fas fa-search"></i>
+              </a>
+            </div>
+            <!-- Keranjang -->
+            <ul class="navbar-nav ms-auto">
+              <!-- Menggunakan ms-auto di sini -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-cart-shopping" style="color: white"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Item 1</a></li>
+                  <li><a class="dropdown-item" href="#">Item 2</a></li>
+                  <li><a class="dropdown-item" href="#">Item 3</a></li>
+                  <li>
+                    <a class="dropdown-item text-center" href="cart.html">
+                      <button class="btn btn-primary w-100">
+                        Lihat Keranjang
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <!-- PROFILE -->
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user-circle custom-icon"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <div class="d-flex align-items-center p-2">
+                      <img
+                        src="img/test1.jpg"
+                        alt="Profile"
+                        class="profile-pic me-2"
+                      />
+                      <div>
+                        <strong>Email@example.com</strong>
+                        <small class="d-block text-muted">Username</small>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="mybook.html">Buku Saya</a>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Wishlish Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Poin Saya</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="container">
+        <div class="header">
+          <div class="profile-picture">
+            <svg viewBox="0 0 24 24" width="80" height="80">
+              <path
+                fill="#666"
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="profile-info">
+          <h1 class="username">Username</h1>
+
+          <div class="biodata-form">
+            <h2 class="form-title">Ubah Biodata Diri</h2>
+
+            <form id="profileForm">
+              <div class="form-group">
+                <label class="form-label">Nama</label>
+                <input type="text" class="form-input" value="User" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Tanggal Lahir</label>
+                <input type="text" class="form-input" placeholder="DD/MM/YY" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Jenis Kelamin</label>
+                <div class="radio-group">
+                  <label>
+                    <input type="radio" name="gender" value="pria" /> Pria
+                  </label>
+                  <label>
+                    <input type="radio" name="gender" value="wanita" /> Wanita
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-input"
+                  value="student@example.com"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Nomor HP</label>
+                <input type="text" class="form-input" placeholder="-" />
+              </div>
+
+              <button type="button" class="btn btn-password">Ubah Sandi</button>
+              <button type="submit" class="btn btn-submit">Ubah</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      document
+        .getElementById('profileForm')
+        .addEventListener('submit', function (e) {
+          e.preventDefault();
+          alert('Profil berhasil diperbarui!');
+        });
+
+      document
+        .querySelector('.btn-password')
+        .addEventListener('click', function () {
+          alert('Fitur ubah sandi akan segera hadir!');
+        });
+
+      const userId = 1; // ini diganti, diganti apa? nggatauw
+      async function fetchUserData() {
+        try {
+          const response = await fetch(`http://localhost:3000/user/${userId}`);
+          if (!response.ok) throw new Error('Gagal mengambil data pengguna');
+
+          const data = await response.json();
+
+          document.querySelector(".form-input[name='name']").value =
+            data.Nama_user || '';
+          document.querySelector(".form-input[name='dob']").value =
+            data.Tanggal_Lahir || '';
+          document.querySelector(
+            `input[name="gender"][value="${data.Jenis_Kelamin}"]`
+          ).checked = true;
+          document.querySelector(".form-input[name='email']").value =
+            data.Email || '';
+          document.querySelector(".form-input[name='phone']").value =
+            data.Nomor_HP || '';
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Gagal memuat data pengguna');
+        }
+      }
+
+      async function updateUserData(e) {
+        e.preventDefault();
+
+        const userData = {
+          Nama_user: document.querySelector(".form-input[name='name']").value,
+          Tanggal_Lahir: document.querySelector(".form-input[name='dob']")
+            .value,
+          Jenis_Kelamin: document.querySelector('input[name="gender"]:checked')
+            .value,
+          Email: document.querySelector(".form-input[name='email']").value,
+          Nomor_HP: document.querySelector(".form-input[name='phone']").value,
+        };
+
+        try {
+          const response = await fetch(`http://localhost:3000/user/${userId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+          });
+
+          if (!response.ok) throw new Error('Gagal memperbarui data pengguna');
+
+          alert('Profil berhasil diperbarui!');
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Gagal memperbarui profil');
+        }
+      }
+
+      document
+        .getElementById('profileForm')
+        .addEventListener('submit', updateUserData);
+
+      document.addEventListener('DOMContentLoaded', fetchUserData);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

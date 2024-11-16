@@ -1,0 +1,354 @@
+/* Import Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Set default font to Poppins for the whole body */
+body {
+  font-family: 'Poppins', sans-serif !important;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Navbar styling */
+.navbar {
+  padding: 10px;
+  justify-content: space-around;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #ff8a00;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .navbar-container {
+  padding-left: 25px;
+  padding-right: 25px;
+  justify-content: space-between;
+}
+
+.navbar .navbar-brand {
+  font-weight: 600;
+  font-size: 35px;
+  color: #ffffff;
+}
+
+.navbar-nav {
+  margin-right: 0;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #333;
+  padding-right: 15px;
+}
+
+.nav-link:hover {
+  color: #000000;
+}
+
+.dropdown-menu {
+  font-weight: 400;
+  z-index: 20;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.nav-item {
+  margin-left: 15px;
+}
+
+/* Navbar Collapse */
+.navbar-collapse {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Search bar */
+.search {
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 30px;
+  align-items: center;
+}
+
+.search-input {
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  margin-top: 5px;
+  caret-color: transparent;
+  line-height: 20px;
+  transition: width 0.4s linear;
+}
+
+.search-input::placeholder {
+  font-size: 15px;
+  font-style: italic;
+}
+
+.search .search-input {
+  padding: 0 10px;
+  width: 100%;
+  caret-color: #ff8a00;
+  font-size: 19px;
+  color: rgb(41, 40, 40);
+  transition: width 0.4s linear;
+}
+
+.search-icon {
+  height: 34px;
+  width: 34px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #ff8a00;
+  font-size: 10px;
+  bottom: 30px;
+  position: relative;
+  border-radius: 20px;
+}
+
+.search-icon:hover {
+  color: #fff !important;
+}
+
+.custom-icon {
+  font-size: 30px;
+  color: white;
+}
+
+/* Profile Dropdown */
+.dropdown-menu {
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.navbar .dropdown-toggle::after {
+  display: none;
+}
+
+/* important */
+.dropdown-menu {
+  filter: none !important;
+}
+
+.profile-pic {
+  width: 40px; 
+  height: 40px;
+  border-radius: 50%; 
+}
+
+.navbar .dropdown-toggle::after {
+  display: none;
+}
+
+/* BANNER */
+.carousel {
+  max-width: 1000px;
+  margin: 150px auto 0;
+  position: relative;
+  display: block;
+}
+
+.carousel-inner img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.carousel-item img {
+  border-radius: 20px;
+}
+
+.blur {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+
+/* Category */
+.categories {
+  margin-top: 40px;
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.category-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.row {
+  justify-content: center;
+}
+
+/* recommendation */
+.rekomendasi-produk {
+  background-color: #ffffff; /* Warna latar belakang untuk menonjolkan bagian ini */
+  padding: 20px 0;
+  width: 100%;
+}
+
+.rekomendasi-link {
+  text-decoration: none; /* Menghilangkan underline */
+  color: inherit; /* Warna teks mengikuti elemen di dalamnya */
+  display: block;
+}
+
+.img-rekomendasi {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 160px;
+  height: auto;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  outline: 1px solid rgba(161, 161, 161, 0.1);
+}
+
+.card-img-top {
+  width: 125px !important;
+  height: 160px !important;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.card-title {
+  font-weight: bold; /* Menonjolkan judul buku */
+}
+
+.img-rekomendasi {
+  width: 240px;
+  height: 360px;
+  object-fit: cover;
+}
+
+/* .card {
+  width: 150px;
+  height: 290px;
+  margin: 10px 0;
+} */
+.slider {
+  /* display: flex;                      */
+  justify-content: center; /* Pusatkan konten secara horizontal */
+  align-items: center; /* Pusatkan konten secara vertikal */
+  margin-top: 3rem; /* Berikan jarak atas */
+  /* height: 100vh;                      */
+}
+
+.card-produk {
+  width: 160px;
+  height: 290px;
+  border: none; /* Hapus border jika tidak diperlukan */
+}
+
+
+/* Tambahkan breakpoint untuk mode responsive */
+@media (max-width: 991px) {
+  .navbar .dropdown-menu {
+    position: absolute; /* Agar dropdown mengambang */
+    width: auto; /* Bisa sesuaikan sesuai kebutuhan */
+  }
+
+  .navbar .dropdown-item {
+    padding: 10px 15px; /* Pastikan padding konsisten di responsive */
+  }
+
+  /* carousel gede */
+  .carousel {
+    width: 80%;
+  }
+
+  .carousel-inner img {
+    width: 30%;
+    height: 300px;
+    object-fit: cover;
+  }
+
+  /* rekomendasi */
+  .rekomendasi-produk {
+    margin-top: -100px;
+  }
+
+  .img-rekomendasi {
+    display: none;
+  }
+
+  .col-md-2 {
+    flex: 0 0 auto;
+    width: 30%; /* Mengatur lebar item */
+    max-width: 30%;
+  }
+}
+
+@media (max-width: 767px) {
+  .img-rekomendasi {
+    display: none;
+  }
+
+  .category-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: center; /* Untuk memastikan item tetap di tengah */
+    flex-wrap: wrap; /* Pastikan elemen dapat melipat */
+  }
+
+  .col-md-2 {
+    flex: 0 0 auto;
+    width: 30%; /* Mengatur lebar item */
+    max-width: 30%;
+  }
+}

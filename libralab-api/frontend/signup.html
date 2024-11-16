@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style-login.css" />
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Signup - Libralab</title>
+    <link rel="icon" type="image/x-icon" href="img/test1.jpg" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container main">
+        <div class="row">
+          <div class="col-md-6 side-image">
+            <img src="img/test1.jpg" alt="" class="img-login" />
+            <div class="text"></div>
+          </div>
+          <div class="col-md-6 right">
+            <div class="input-box">
+              <header>
+                <h2>Hi, Buddy</h2>
+                <h1>Let's Get Started</h1>
+              </header>
+              <div class="input-field">
+                <input
+                  type="text"
+                  class="input"
+                  id="email"
+                  required=""
+                  autocomplete="off"
+                />
+                <label for="email">Email</label>
+              </div>
+              <div class="input-field password-field">
+                <input type="password" class="input" id="pass" required="" />
+                <label for="pass">Password</label>
+                <i class="fas fa-eye" id="togglePassword"></i>
+              </div>
+              <div class="forgot-password">
+                <a href="#">Lupa Password?</a>
+              </div>
+              <div class="input-field">
+                <input type="submit" class="submit" value="Sign Up" />
+              </div>
+              <div class="signin">
+                <span>Or Signup with</span>
+              </div>
+              <div class="social-login">
+                <span class="social-icon">
+                  <img src="img/facebooklogo.png" alt="Facebook" />
+                </span>
+                <span class="social-icon">
+                  <img src="img/googlelogo.png" alt="Google" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const togglePassword = document.querySelector('#togglePassword');
+      const password = document.querySelector('#pass');
+
+      togglePassword.addEventListener('click', function () {
+        const type =
+          password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      document
+        .getElementById('signupButton')
+        .addEventListener('click', function (event) {
+          event.preventDefault();
+
+          const email_user = document.getElementById('email').value;
+          const password_user = document.getElementById('pass').value;
+
+          fetch('http://localhost:3000/user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email_user, password_user }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              if (data.message === 'User created successfully') {
+                alert('Signup successful');
+                window.location.href = 'login.html';
+              } else {
+                alert(data.message);
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style-mybook.css" />
+
+    <!-- Slick Slider CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.min.mjs"></script>
+    <title>Libralab</title>
+    <style>
+      #pdf-container {
+        margin-left: auto;
+        margin-right: auto;
+        width: 900px;
+      }
+      body {
+        background-color: #ffffff;
+      }
+    </style>
+    <link rel="icon" type="image/x-icon" href="img/test1.jpg" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container">
+          <!-- Navbar Brand -->
+          <a class="navbar-brand" href="#">Libralab</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa-solid fa-bars custom-icon"></span>
+          </button>
+
+          <!-- Navbar Content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- SEARCH -->
+            <div class="search">
+              <input type="text" class="search-input" placeholder="Search..." />
+              <a href="#" class="search-icon">
+                <i class="fas fa-search"></i>
+              </a>
+            </div>
+
+            <!-- Keranjang -->
+            <ul class="navbar-nav ms-auto">
+              <!-- Menggunakan ms-auto di sini -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-cart-shopping" style="color: white"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Item 1</a></li>
+                  <li><a class="dropdown-item" href="#">Item 2</a></li>
+                  <li><a class="dropdown-item" href="#">Item 3</a></li>
+                  <li>
+                    <a class="dropdown-item text-center" href="cart.html">
+                      <button class="btn btn-primary w-100">
+                        Lihat Keranjang
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <!-- PROFILE -->
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user-circle custom-icon"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <div class="d-flex align-items-center p-2">
+                      <img
+                        src="img/test1.jpg"
+                        alt="Profile"
+                        class="profile-pic me-2"
+                      />
+                      <div>
+                        <strong>Email@example.com</strong>
+                        <small class="d-block text-muted">Username</small>
+                      </div>
+                    </div>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Buku Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Wishlish Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Poin Saya</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <embed
+      type="application/pdf"
+      src="https://docs.google.com/document/d/1O3KGpUk0t2puzfXdUfMTMc4WMHI9FKkwAmmA5i40CPA/edit"
+      width="100%"
+      height="1000px"
+      style="margin-top: 10rem"
+      alt="pdf"
+      pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"
+      background-color="0xFF525659"
+      top-toolbar-height="56"
+      full-frame=""
+      internalinstanceid="21"
+      title="CHROME"
+    />
+    <script>
+      // Add the link to your PDF FILE.
+      const pdfUrl = 'test1.pdf';
+
+      // Get the container element
+      const container = document.getElementById('pdf-container');
+
+      // Load PDF document
+      pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc) => {
+        // This for loop, loops through all of the pages and loads the doc
+        for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+          pdfDoc.getPage(pageNum).then((page) => {
+            // Create a viewport to render the PDF page. The higher number you add to the scale, the bigger the pdf file will look.
+            const viewport = page.getViewport({ scale: 1.5 });
+
+            // Set the dimensions of the container to match the PDF page
+            container.style.width = viewport.width + 'px';
+            container.style.height = viewport.height + 'px';
+
+            // Prepare the canvas element to render the PDF page
+            const canvas = document.createElement('canvas');
+            container.appendChild(canvas);
+
+            // Set the canvas dimensions
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            // Render the PDF page on the canvas
+            const renderContext = {
+              canvasContext: canvas.getContext('2d'),
+              viewport: viewport,
+            };
+            page.render(renderContext);
+          });
+        }
+      });
+    </script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Slick Slider JS -->
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  </body>
+</html>

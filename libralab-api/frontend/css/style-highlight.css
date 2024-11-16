@@ -1,0 +1,306 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Navbar styling */
+.navbar {
+  padding: 10px;
+  justify-content: space-around;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.custom-navbar {
+  background-color: #ff8a00;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.container {
+  padding-left: 25px;
+  padding-right: 25px;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  font-size: 35px;
+}
+
+a.navbar-brand {
+  color: #ffffff;
+}
+
+.navbar-nav {
+  margin-right: 0;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #333;
+  padding-right: 15px;
+}
+
+.nav-link:hover {
+  color: #000000;
+}
+
+.dropdown-menu {
+  font-weight: 400;
+  z-index: 20;
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+.nav-item {
+  margin-left: 15px;
+}
+
+/* isinya navbar */
+.navbar-collapse {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Search bar */
+.search {
+  /* width: 50%; */
+  width: 100%;
+  height: 50px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 30px;
+  align-items: center;
+  /* margin-left: auto; */
+  /* margin-right: 20px; */
+}
+
+.search-input {
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  margin-top: 5px;
+  caret-color: transparent;
+  line-height: 20px;
+  transition: width 0.4s linear;
+}
+
+.search-input::placeholder {
+  font-size: 15px;
+  font-style: italic;
+}
+
+.search .search-input {
+  padding: 0 10px;
+  width: 100%;
+  caret-color: #ff8a00;
+  font-size: 19px;
+  font-weight: 8px;
+  color: rgb(41, 40, 40);
+  transition: width 0.4s linear;
+}
+
+.search-icon {
+  height: 34px;
+  width: 34px;
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #ff8a00;
+  font-size: 10px;
+  bottom: 30px;
+  position: relative;
+  border-radius: 20px;
+}
+
+.search-icon:hover {
+  color: #fff !important;
+}
+.custom-icon {
+  font-size: 30px;
+  color: white;
+}
+
+/* Profile Dropdown */
+.dropdown-menu {
+  padding: 0; /* Menghilangkan padding default */
+  border-radius: 10px; /* Menambah radius untuk tampilan lebih halus */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Menambahkan shadow untuk efek kedalaman */
+  z-index: 100;
+}
+
+.dropdown-item {
+  padding: 10px 20px; /* Menambah padding untuk item */
+  transition: background-color 0.3s; /* Animasi saat hover */
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0; /* Warna background saat hover */
+}
+
+.dropdown-menu {
+  filter: none !important; /* Pastikan dropdown tidak terkena efek blur */
+}
+
+.profile-pic {
+  width: 40px; /* Ukuran foto profil */
+  height: 40px; /* Ukuran foto profil */
+  border-radius: 50%; /* Membuat foto profil menjadi bulat */
+}
+
+.navbar .dropdown-toggle::after {
+  display: none;
+}
+
+/* important */
+.dropdown-menu {
+  filter: none !important;
+}
+
+/* BANNER */
+.carousel {
+  max-width: 1000px;
+  margin: 150px auto 0;
+  position: relative;
+  display: block;
+}
+
+.carousel-inner img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.carousel-item img {
+  border-radius: 20px;
+}
+
+.blur {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+
+/* Daftar Buku */
+.card {
+  width: 160px;
+  height: auto;
+  margin: 5px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  outline: 1px solid rgba(161, 161, 161, 0.1);
+}
+
+.card-img-top {
+  width: 125px !important;
+  height: 160px !important;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.card-title {
+  font-weight: bold;
+}
+.card-sec {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 3rem;
+}
+
+/* .card {
+  width: 160px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} */
+
+/* .book-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+}
+
+.book-item {
+  text-align: center;
+}
+
+.book-item img {
+  width: 120px;
+  height: 180px;
+  background-color: #e0e0e0;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.book-item p {
+  font-size: 14px;
+  color: #333;
+} */
+
+@media (max-width: 992px) {
+  .navbar .dropdown-menu {
+    position: absolute; /* Agar dropdown mengambang */
+    width: auto; /* Bisa sesuaikan sesuai kebutuhan */
+  }
+
+  .navbar .dropdown-item {
+    padding: 10px 15px; /* Pastikan padding konsisten di responsive */
+  }
+
+  /* carousel gede */
+  .carousel {
+    width: 80%;
+  }
+
+  .carousel-inner img {
+    width: 30%;
+    height: 300px;
+    object-fit: cover;
+  }
+  .card-sec {
+    justify-content: center;
+  }
+  .card {
+    flex-basis: calc(33% - 16px);
+    max-width: 160px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex-basis: calc(50% - 16px);
+    max-width: 200px;
+    width: 100%;
+  }
+
+  /* .book-list {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+
+  .book-item img {
+    width: 100px;
+    height: 150px;
+  }
+
+  .col-2:nth-child(n + 5) {
+    display: none;
+  } */
+}

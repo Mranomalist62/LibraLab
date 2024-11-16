@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>Libralab - Keranjang</title>
+    <style>
+      main {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        margin-top: 5rem;
+      }
+
+      /* Navbar styling */
+      .navbar {
+        padding: 10px;
+        justify-content: space-around;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #ff8a00;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar .navbar-container {
+        padding-left: 25px !important;
+        padding-right: 25px !important;
+        justify-content: space-between;
+        padding: 0;
+      }
+
+      .navbar .navbar-brand {
+        font-weight: 600;
+        font-size: 35px;
+        color: #ffffff;
+      }
+
+      .navbar-nav {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: #333;
+        padding-right: 15px;
+      }
+
+      .nav-link:hover {
+        color: #000000;
+      }
+
+      .dropdown-menu {
+        font-weight: 400;
+        z-index: 20;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .nav-item {
+        margin-left: 15px;
+      }
+
+      /* Navbar Collapse */
+      .navbar-collapse {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* Search bar */
+      .search {
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        align-items: center;
+      }
+
+      .search-input {
+        color: white;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 0;
+        margin-top: 5px;
+        caret-color: transparent;
+        line-height: 20px;
+        transition: width 0.4s linear;
+      }
+
+      .search-input::placeholder {
+        font-size: 15px;
+        font-style: italic;
+      }
+
+      .search .search-input {
+        padding: 0 10px;
+        width: 100%;
+        caret-color: #ff8a00;
+        font-size: 19px;
+        color: rgb(41, 40, 40);
+        transition: width 0.4s linear;
+      }
+
+      .search-icon {
+        height: 34px;
+        width: 34px;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #ff8a00;
+        font-size: 10px;
+        bottom: 30px;
+        position: relative;
+        border-radius: 20px;
+      }
+
+      .search-icon:hover {
+        color: #fff !important;
+      }
+
+      .custom-icon {
+        font-size: 30px;
+        color: white;
+      }
+
+      /* Profile Dropdown */
+      .dropdown-menu {
+        padding: 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+      }
+
+      .dropdown-item {
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .navbar .dropdown-toggle::after {
+        display: none;
+      }
+
+      /* important */
+      .dropdown-menu {
+        filter: none !important;
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .navbar .dropdown-toggle::after {
+        display: none;
+      }
+
+      main .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 2rem;
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        grid-column: 1 / -1;
+      }
+
+      .select-all {
+        padding: 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .cart-item {
+        padding: 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .book-image {
+        width: 80px;
+        height: 120px;
+        background: #f0f0f0;
+      }
+
+      .book-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .book-title {
+        font-weight: bold;
+      }
+
+      .book-category {
+        color: #f90;
+        font-size: 0.875rem;
+      }
+
+      .price-container {
+        text-align: right;
+      }
+
+      .original-price {
+        color: #999;
+        text-decoration: line-through;
+        font-size: 0.875rem;
+      }
+
+      .discounted-price {
+        font-weight: bold;
+      }
+
+      .item-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .quantity-btn {
+        width: 24px;
+        height: 24px;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        background: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .quantity-input {
+        width: 40px;
+        text-align: center;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        padding: 0.25rem;
+      }
+
+      .action-icons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+      }
+
+      .summary-card {
+        padding: 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        position: sticky;
+        top: 1rem;
+      }
+
+      .summary-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .promo-button {
+        width: 100%;
+        padding: 0.75rem;
+        background: #f0f0f0;
+        border: none;
+        border-radius: 4px;
+        margin: 1rem 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .checkout-button {
+        width: 100%;
+        padding: 0.75rem;
+        background: #e0e0e0;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .checkout-button:hover {
+        background: #d0d0d0;
+      }
+      @media (max-width: 991px) {
+        .navbar .dropdown-menu {
+          position: absolute; /* Agar dropdown mengambang */
+          width: auto; /* Bisa sesuaikan sesuai kebutuhan */
+        }
+
+        .navbar .dropdown-item {
+          padding: 10px 15px; /* Pastikan padding konsisten di responsive */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container navbar-container">
+          <!-- Navbar Brand -->
+          <a class="navbar-brand" href="#">Libralab</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa-solid fa-bars custom-icon"></span>
+          </button>
+
+          <!-- Navbar Content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- SEARCH -->
+            <div class="search">
+              <input type="text" class="search-input" placeholder="Search..." />
+              <a href="#" class="search-icon">
+                <i class="fas fa-search"></i>
+              </a>
+            </div>
+            <!-- Keranjang -->
+            <ul class="navbar-nav ms-auto">
+              <!-- Menggunakan ms-auto di sini -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-cart-shopping" style="color: white"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Item 1</a></li>
+                  <li><a class="dropdown-item" href="#">Item 2</a></li>
+                  <li><a class="dropdown-item" href="#">Item 3</a></li>
+                  <li>
+                    <a class="dropdown-item text-center" href="cart.html">
+                      <button class="btn btn-primary w-100">
+                        Lihat Keranjang
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <!-- PROFILE -->
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user-circle custom-icon"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <div class="d-flex align-items-center p-2">
+                      <img
+                        src="img/test1.jpg"
+                        alt="Profile"
+                        class="profile-pic me-2"
+                      />
+                      <div>
+                        <strong>Email@example.com</strong>
+                        <small class="d-block text-muted">Username</small>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="mybook.html">Buku Saya</a>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Wishlish Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Poin Saya</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <h1 class="page-title">Keranjang</h1>
+
+        <div class="cart-container">
+          <div class="select-all">
+            <input type="checkbox" id="selectAll" />
+            <label for="selectAll">Pilih Semua (4)</label>
+          </div>
+
+          <!-- Cart Item Template - Repeated for each item -->
+          <div class="cart-item">
+            <input type="checkbox" checked />
+            <div class="book-image"></div>
+            <div class="book-info">
+              <div class="book-title">Judul Buku</div>
+              <div class="book-category">Sisa 2</div>
+              <div class="price-container">
+                <div class="original-price">Rp150.000</div>
+                <div class="discounted-price">Rp100.000</div>
+              </div>
+              <div class="item-actions">
+                <div class="action-icons">
+                  <button class="icon-btn">♥</button>
+                  <button class="icon-btn">🗑</button>
+                </div>
+                <div class="quantity-controls">
+                  <button class="quantity-btn">-</button>
+                  <input type="text" class="quantity-input" value="1" />
+                  <button class="quantity-btn">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Repeat cart-item for other items -->
+        </div>
+
+        <div class="summary-card">
+          <h2 class="summary-title">Ringkasan Belanja</h2>
+          <div class="summary-row">
+            <span>Total</span>
+            <span class="total-amount">Rp100.000</span>
+          </div>
+          <button class="promo-button">
+            <span>⚙</span>
+            Gunakan promo
+          </button>
+          <button class="checkout-button">Beli</button>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Select All functionality
+      const selectAllCheckbox = document.getElementById('selectAll');
+      const itemCheckboxes = document.querySelectorAll(
+        '.cart-item input[type="checkbox"]'
+      );
+
+      selectAllCheckbox.addEventListener('change', (e) => {
+        itemCheckboxes.forEach((checkbox) => {
+          checkbox.checked = e.target.checked;
+        });
+        updateTotal();
+      });
+
+      // Quantity control functionality
+      document.querySelectorAll('.quantity-controls').forEach((control) => {
+        const minusBtn = control.querySelector('button:first-child');
+        const plusBtn = control.querySelector('button:last-child');
+        const input = control.querySelector('input');
+
+        minusBtn.addEventListener('click', () => {
+          if (input.value > 1) {
+            input.value = parseInt(input.value) - 1;
+            updateTotal();
+          }
+        });
+
+        plusBtn.addEventListener('click', () => {
+          input.value = parseInt(input.value) + 1;
+          updateTotal();
+        });
+      });
+
+      // Update total functionality
+      function updateTotal() {
+        const checkedItems = document.querySelectorAll(
+          '.cart-item input[type="checkbox"]:checked'
+        );
+        let total = 0;
+        checkedItems.forEach((item) => {
+          const price = 100000; // This would normally come from the item data
+          const quantity = parseInt(
+            item.closest('.cart-item').querySelector('.quantity-input').value
+          );
+          total += price * quantity;
+        });
+        document.querySelector(
+          '.total-amount'
+        ).textContent = `Rp${total.toLocaleString()}`;
+      }
+
+      // Initialize
+      updateTotal();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
