@@ -19,11 +19,30 @@ export async function getUserByIdDb(userId){
     }
 }
 
+export async function getUserByEmailDb(userEmail){
+    let connection = Connection.DatabaseConnection();
+
+    try {
+        const rows = await connection.execute('SELECT * FROM user WHERE email_user = ?', [UserEmail]);
+        if (rows.length !== 0){
+            return rows;
+        } 
+        else {
+            return null;
+        } 
+    } catch (error){
+        console.log(error,'\n');
+        return 503;
+    } finally {
+        connection.end();
+    }
+}
+
 export async function getUserByNameDb(Nama_user){
     let connection = Connection.DatabaseConnection();
 
     try {
-        const rows = await connection.execute('SELECT * FROM user WHERE Nama_User = ?', [Nama_user]);
+        const rows = await connection.execute('SELECT * FROM user WHERE Nama_user = ?', [Nama_user]);
         if (rows.length !== 0){
             return rows;
         } 
