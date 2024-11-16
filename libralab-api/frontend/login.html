@@ -88,50 +88,56 @@
       </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcrypt.js/2.4.3/bcrypt.min.js"></script>
     <script>
-        const togglePassword = document.querySelector('#togglePassword');
-        const password = document.querySelector('#pass');
-        const loginButton = document.querySelector('#loginButton');
+      const togglePassword = document.querySelector('#togglePassword');
+      const password = document.querySelector('#pass');
+      const loginButton = document.querySelector('#loginButton');
 
-        togglePassword.addEventListener('click', function () {
-          const type =
-            password.getAttribute('type') === 'password' ? 'text' : 'password';
-          password.setAttribute('type', type);
+      togglePassword.addEventListener('click', function () {
+        const type =
+          password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
 
-          this.classList.toggle('fa-eye-slash');
-        });
+        this.classList.toggle('fa-eye-slash');
+      });
 
-        loginButton.addEventListener('click', async function () {
-          const email_user = document.querySelector('#email').value;
-          const password_user = document.querySelector('#pass').value;
+      loginButton.addEventListener('click', async function () {
+        const email_user = document.querySelector('#email').value.trim();
+        const password_user = document.querySelector('#pass').value.trim();
 
-          if (!email_user || !password_user) {
-            alert('Email dan password harus diisi!');
-            return;
-          }
-      try {
+        if (!email_user || !password_user) {
+          alert('Email dan password harus diisi!');
+          return;
+        }
+
+        try {
+          const salt = await bcrypt.genSalt(10);
+          const hashedPassword = await bcrypt.hash(password_user, salt);
+
           const response = await fetch('http://localhost:3000/user', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ email_user, password_user }),
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email_user, password_user: hashedPassword }),
           });
 
           const data = await response.json();
 
           if (response.ok) {
-              alert('Login berhasil!');
-              window.location.href = 'index.html';
+            alert('Login berhasil!');
+            window.location.href = 'index.html';
           } else {
-              alert(data.message || 'Login gagal. Periksa email dan password Anda.');
+            alert(
+              data.message || 'Login gagal. Periksa email dan password Anda.'
+            );
           }
-      } catch (error) {
+        } catch (error) {
           console.error('Error:', error);
           alert('Terjadi kesalahan. Silakan coba lagi.');
-      }
-
-        });
+        }
+      });
     </script>
   </body>
 </html>

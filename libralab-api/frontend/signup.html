@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcrypt.js/2.4.3/bcrypt.min.js"></script>
     <script>
       const togglePassword = document.querySelector('#togglePassword');
       const password = document.querySelector('#pass');
@@ -76,32 +76,46 @@
 
       document
         .getElementById('signupButton')
-        .addEventListener('click', function (event) {
+        .addEventListener('click', async function (event) {
           event.preventDefault();
 
-          const email_user = document.getElementById('email').value;
-          const password_user = document.getElementById('pass').value;
+          const email_user = document.getElementById('email').value.trim();
+          const password_user = document.getElementById('pass').value.trim();
 
-          fetch('http://localhost:3000/user', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email_user, password_user }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-              if (data.message === 'User created successfully') {
-                alert('Signup successful');
-                window.location.href = 'login.html';
-              } else {
-                alert(data.message);
-              }
+          if (!email_user || !password_user) {
+            alert('Email dan Password tidak boleh kosong!');
+            return;
+          }
+          try {
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password_user, salt);
+
+            fetch('http://localhost:3000/user', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email_user,
+                password_user: hashedPassword,
+              }),
             })
-            .catch((error) => {
-              console.error('Error:', error);
-            });
+              .then((response) => response.json())
+              .then((data) => {
+                console.log(data);
+                if (data.message === 'User created successfully') {
+                  alert('Signup successful');
+                  window.location.href = 'login.html';
+                } else {
+                  alert(data.message);
+                }
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+              });
+          } catch (error) {
+            console.error('Error: hashing password', error);
+          }
         });
     </script>
   </body>
