@@ -6,14 +6,20 @@ import * as controller from '../controller/userController.js'
 const app = express();
 app.use(bodyParser.json());
 
-app.get('/user', controller.getUser);
+//CRUD operation
 
-app.get('/user/:id',controller.getUserbyID);
+app.get('/user/get', controller.getUser);
 
-app.post('/user',controller.postUser);
+app.get('/user/get', controller.getUser);
 
-app.put('/user/:id',controller.putUser);
+app.get('/user/get/:id',controller.getUserbyID);
 
-app.delete('/user/:id',dcontroller.deleteUser);
+app.post('/user/post',controller.postUser);
 
-app.listen(3000, () => console.log('server started'))
+app.put('/user/put/:id',controller.putUser);
+
+app.delete('/user/delete/:id',dcontroller.deleteUser);
+
+//Login Operation
+
+app.post('/user/login');

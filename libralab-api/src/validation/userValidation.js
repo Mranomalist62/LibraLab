@@ -4,7 +4,7 @@ import * as model from '../model/userModel.js';
 
 export async function isUsernameAvailable(userData){
     try {
-        if(userData.Nama_user !== null){
+        if(userData.Nama_user !== ''){
             row = await model.getUserByName(userData.Nama_user);
             if(row.length === 0){
                 return true;
@@ -25,7 +25,7 @@ export async function isUsernameAvailable(userData){
 
 export async function isEmailAvailable(userData){
     try {
-        if(userData.Nama_user !== null){
+        if(userData.email_user !== ''){
             row = await model.getUserByEmailDb(userData.email_user);
             if(row.length === 0){
                 return true;
@@ -51,7 +51,7 @@ export function validateUserPost(userData){
         ID_Kabupaten : Joi.number().optional(),
         Ket_alamat  : Joi.string().optional(),
         notel_user  : Joi.string().optional(),
-        norek_user : Joi.string().required(),
+        norek_user : Joi.string().optional(),
         password_user : Joi.string().required(),
         email_user : Joi.string().email().required()
     })
