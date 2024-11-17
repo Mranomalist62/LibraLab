@@ -2,15 +2,15 @@ import mysql from 'mysql2';
 
 
 const dbConfig = {
-    host : 'localhost',
-    user : 'root',
-    password : 'kukukakikukaku',
-    database : 'db_libralab'
+    host : process.env.HOSTDB,
+    user : process.env.USERDB,
+    password : process.env.PASSDB,
+    database : process.env.DATABASENAME
 };
 
 export default async function DatabaseConnection(){
     try{ 
-        const connection = mysql.createConnection(dbConfig);
+        const connection = await mysql.createConnection(dbConfig);
         return connection;
 
     } catch (error){
