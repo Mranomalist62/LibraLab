@@ -10,6 +10,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/style-mybook.css" />
+    sty
 
     <!-- Slick Slider CSS -->
     <link
@@ -29,13 +30,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.min.mjs"></script>
     <title>Libralab</title>
     <style>
-      #pdf-container {
-        margin-left: auto;
-        margin-right: auto;
-        width: 900px;
-      }
-      body {
-        background-color: #ffffff;
+      embed[type='application/pdf'] {
+        max-width: 100%; /* PDF tidak akan melebihi lebar layar */
+        height: 90vh; /* PDF menyesuaikan tinggi 90% viewport height */
+        margin: 0 auto; /* Agar berada di tengah */
+        display: block; /* Menghindari sifat inline default */
+        border: 1px solid #ccc; /* Memberikan batas jika diperlukan */
       }
     </style>
     <link rel="icon" type="image/x-icon" href="img/test1.jpg" />
@@ -142,55 +142,16 @@
     </header>
     <embed
       type="application/pdf"
-      src="https://docs.google.com/document/d/1O3KGpUk0t2puzfXdUfMTMc4WMHI9FKkwAmmA5i40CPA/edit"
-      width="100%"
+      src="https://drive.google.com/file/d/14QJKtoYD-bV_gyM-zJxqS2gdgDoQ8iDY/preview"
+      width="80%"
       height="1000px"
       style="margin-top: 10rem"
       alt="pdf"
-      pluginspage="http://www.adobe.com/products/acrobat/readstep2.html"
       background-color="0xFF525659"
-      top-toolbar-height="56"
       full-frame=""
       internalinstanceid="21"
       title="CHROME"
     />
-    <script>
-      // Add the link to your PDF FILE.
-      const pdfUrl = 'test1.pdf';
-
-      // Get the container element
-      const container = document.getElementById('pdf-container');
-
-      // Load PDF document
-      pdfjsLib.getDocument(pdfUrl).promise.then((pdfDoc) => {
-        // This for loop, loops through all of the pages and loads the doc
-        for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
-          pdfDoc.getPage(pageNum).then((page) => {
-            // Create a viewport to render the PDF page. The higher number you add to the scale, the bigger the pdf file will look.
-            const viewport = page.getViewport({ scale: 1.5 });
-
-            // Set the dimensions of the container to match the PDF page
-            container.style.width = viewport.width + 'px';
-            container.style.height = viewport.height + 'px';
-
-            // Prepare the canvas element to render the PDF page
-            const canvas = document.createElement('canvas');
-            container.appendChild(canvas);
-
-            // Set the canvas dimensions
-            canvas.width = viewport.width;
-            canvas.height = viewport.height;
-
-            // Render the PDF page on the canvas
-            const renderContext = {
-              canvasContext: canvas.getContext('2d'),
-              viewport: viewport,
-            };
-            page.render(renderContext);
-          });
-        }
-      });
-    </script>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
