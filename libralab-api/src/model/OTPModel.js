@@ -27,6 +27,26 @@ export async function postUserOTPDb(userData){
     }
 }
 
+export async function getUserOTPByEmailDb(userEmail){
+    let connection = Connection.DatabaseConnection();
+
+    try {
+        const rows = await connection.execute('SELECT * FROM userOtp WHERE email_user = ?', 
+            [userEmail]);
+        if (rows.length !== 0){
+            return rows;
+        } 
+        else {
+            return null;
+        } 
+    } catch (error){
+        console.log(error,'\n');
+        return 503;
+    } finally {
+        connection.end();
+    }
+}
+
 export async function DeleteUserOTPDb(userData){
     let connection = Connection.DatabaseConnection();
     let queries = 'DELETE FROM userotp WHERE email_user = ?'
