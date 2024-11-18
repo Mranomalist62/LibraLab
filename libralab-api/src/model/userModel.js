@@ -1,5 +1,7 @@
 import Connection from '../config/database.js';
 
+//CRUD function
+
 export async function getUserByIdDb(userId){
     let connection = Connection.DatabaseConnection();
 
@@ -23,7 +25,7 @@ export async function getUserByEmailDb(userEmail){
     let connection = Connection.DatabaseConnection();
 
     try {
-        const rows = await connection.execute('SELECT * FROM user WHERE email_user = ?', [UserEmail]);
+        const rows = await connection.execute('SELECT * FROM user WHERE email_user = ?', [userEmail]);
         if (rows.length !== 0){
             return rows;
         } 
@@ -160,4 +162,30 @@ export async function deleteUserDb(ID_User){
     }
 } 
 
+
+
+//Another function
+export async function SignUpUserDb(userData){
+    let connection = Connection.DatabaseConnection();
+    let queries = 'INSERT INTO user(Nama_user, password_user, email_user) VALUES (?,?,?)';
+    try{
+        const rows = await connection.execute(queries,
+            userData.Nama_user,
+            userData.password_user,
+            userData.email_user);
+        
+        if(rows.length !==0){
+            return rows;
+        } else {
+            return null;
+        }
+
+    } catch(error){
+        console.log(error,'\n');
+        return 503;
+
+    } finally {
+        connection.end();
+    }
+}
 
