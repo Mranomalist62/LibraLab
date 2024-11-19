@@ -7,53 +7,56 @@ export async function otpGenerator(){
     return otp_value;
 }
 
-export async function sendOTPEmailVerification(emailRecipient){
+export async function sendOTPEmailVerification(emailRecipient) {
+    try {
 
-    let otp_value = otpGenerator();
-    let Subject = 'OTP - Libralab';
-    let text = 'Jangan bagikan code tersebut pada siapapun: ' + otp_value;
-    let from = process.env.EMAILFORSMTP;
-    let to = emailRecipient;
-    let userSMPTP = process.env.USERSMPTP
-    let passSMPTP = process.env.PASSSMPTP
+        let otp_value = await otpGenerator();
+        let Subject = 'OTP - Libralab';
+        let text = 'Jangan bagikan code tersebut pada siapapun: ' + otp_value;
+        let from = process.env.EMAILFORSMTP;
+        let to = emailRecipient;
+        let userSMPTP = process.env.USERSMTP;
+        let passSMPTP = process.env.PASSSMTP;
 
-    const transport = nodemailer.createTransport({
-        host: 'mxslurp.click',
-        port: '2525',
-        secure: false,
-        auth : {
-            user: userSMPTP,
-            pass: passSMPTP
-        }
-    })
+        const transport = nodemailer.createTransport({
+            host: 'mxslurp.click',
+            port: 2525,
+            secure: false,  // TLS is not used here
+            auth: {
+                user: userSMPTP,
+                pass: passSMPTP
+            }
+        });
 
-    transport.sendMail({
-        Subject, text, from , to
+        // Send the email
+        await transport.sendMail({
+            from,
+            to,
+            subject: Subject,
+            text: text
+        });
 
-    }).then(()=>{
-        let result = {
-            otp : otp_value,
-            status : 'OTP has been sent'
-        }
-        return result ;
-    }).catch(error => {
+        return {
+            otp: otp_value,
+            status: 'OTP has been sent'
+        };
+
+    } catch (error) {
         console.log(error);
-        return 502
-    })
-
-} 
+        return { status: 'Error', code: 502, message: error.message };
+    }
+}
 
 export async function verifyOtp(userData){
     try {
-        ServerOTPData = await OTPModel.getUserOTPByEmailDb(userData.email_user);
-        
+        const ServerOTPData = await OTPModel.getUserOTPByEmailDb(userData.email_user);
         if(ServerOTPData !== null){
-            let otpDate = await dateFns.parse(ServerOTPData.created_at, 'yyyy-MM-dd HH:mm:ss', new Date());
+            let otpDate = ServerOTPData[0].created_at
             let expirationDate = dateFns.addMinutes(otpDate, 5)
             let currentDateTime = new Date();
 
             if(currentDateTime < expirationDate){
-                if(ServerOTPData.otp === userData.otp){
+                if(ServerOTPData[0].otp === userData.otp){
                     await OTPModel.DeleteUserOTPDb(userData);
                     return 200
                 } else {
@@ -62,6 +65,7 @@ export async function verifyOtp(userData){
                     return 404
                 }
             } else {
+                await OTPModel.DeleteUserOTPDb(userData);
                 console.log('OTP is expired, please redo Initiate signUp')
                 return 400
             }

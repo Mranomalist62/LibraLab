@@ -1,7 +1,7 @@
 import * as bcrypt  from 'bcrypt'
 
 export async function hashPassword(userData) {
-    let plainPassword = userData.password_user;
+    let plainPassword = userData;
     let saltRound = process.env.SALTROUND
     try {
         let hashedpassword = await bcrypt.hash(plainPassword,saltRound);

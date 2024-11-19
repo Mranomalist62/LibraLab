@@ -3,6 +3,7 @@ import * as userValidation from '../validation/userValidation.js'
 import * as OTPMiddleware from '../middleware/OTPMiddleware.js'
 import * as hashingMiddleware from '../middleware/hashingMiddleware.js';
 import * as JWTMiddleware from '../middleware/JWTMiddleware.js'
+import * as OTPmodel from '../model/OTPModel.js'
 
 //USER CRUD
 export async function getUser(req, res){
@@ -156,11 +157,17 @@ export async function deleteUser(req, res){
 export async function InitiateSignUp(req,res){
     const userData = req.body;
     try {
-        if(userValidation.isEmailAvailable(userData.email_user)){
-            if(userValidation.isDataSignUpExist(userData)){
+        if(await userValidation.isEmailAvailable(userData)){
+            if(await userValidation.isDataSignUpExist(userData)){
                 let otp_status = await OTPMiddleware.sendOTPEmailVerification(userData.email_user);
                 if (otp_status.affectedRows !==0){
-                    await postUserOTPDbP(userData);
+                    const mergedData = {
+                        Nama_user       : userData.Nama_user,
+                        password_user   : userData.password_user,
+                        email_user      : userData.email_user,
+                        otp             : otp_status.otp
+                    }
+                    await OTPmodel.postUserOTPDb(mergedData);
                     res.status(200).json({message : 'OTP has been sent'});
                     return
                 } else {
@@ -183,20 +190,21 @@ export async function InitiateSignUp(req,res){
 export async function finishSignUp(req,res){
     const userData = req.body;
     try {
-        if(userValidation.isDataOTPExist(userData)){
+        console.log(await userValidation.isDataOTPExist(userData))
+        if(await userValidation.isDataOTPExist(userData)){
             const result = await OTPMiddleware.verifyOtp(userData)
             if(result === 200){
                 userData.password_user = await hashingMiddleware.hashPassword(userData.password_user);
-                SignUpStatus = await userModel.SignUpUserDb(userData);
+                const SignUpStatus = await userModel.SignUpUserDb(userData);
                 if (SignUpStatus === 503 || SignUpStatus === null){
-                    res.status(500).json({message: 'Error verifying OTP', error});
+                    res.status(500).json({message: 'Query Error'});
                 } else {
-                    res.status(200).json({message: 'OTP confirmed, sign up success'})
+                    res.status(200).json({message: 'OTP confirmed, sign up success', status : 200})
                 }
             } else if (result === 404){
                 res.status(404).json({message: 'no OTP found for said address, sign up failed'});
             } else if (result === 400){
-                res.status(404).json({message: 'otp is expired, initiate sign up again'});
+                res.status(400).json({message: 'otp is expired, initiate sign up again'});
             } else {
                 res.status(500).json({message: 'Error verifying OTP,  sign up failed'});
             }
