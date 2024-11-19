@@ -164,7 +164,7 @@ export async function deleteUserDb(ID_User){
 
 
 
-//Another function
+//Sign Up function
 export async function SignUpUserDb(userData){
     let connection = Connection.DatabaseConnection();
     let queries = 'INSERT INTO user(Nama_user, password_user, email_user) VALUES (?,?,?)';

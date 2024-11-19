@@ -1,10 +1,9 @@
-import { EmailOTPVerification } from '../middleware/OtpMiddleware.js';
 import * as userModel from '../model/userModel.js'
-import * as validation from '../validation/userValidation.js'
-import * as userMiddleware from '../middleware/OtpMiddleware.js'
-import * as bcrypt  from 'bcrypt'
+import * as userValidation from '../validation/userValidation.js'
+import * as OTPMiddleware from '../middleware/OTPMiddleware.js'
 import * as jwt from 'jsonwebtoken'
 import { DeleteUserOTPDb } from '../model/OTPModel.js';
+import * as hashingMiddleware from '../middleware/hashingMiddleware.js';
 
 
 //USER CRUD
@@ -84,12 +83,12 @@ export async function postUser(req, res){
     const userData = req.body;
     try {
         
-        if(!validation.validateUserPost(userData)){
+        if(!userValidation.isDataUserPostExist(userData)){
             res.status(400).json({message: 'required information is missing'});
         }
 
         else{
-            isvalid = await validation.isUsernameAvailable(userData);
+            isvalid = await userValidation.isUsernameAvailable(userData);
             if(isvalid){
                 const result = await userModel.postUser(userData)
                 if (result.affectedRows !==0){
@@ -116,7 +115,7 @@ export async function putUser(req, res){
     const userData = req.body;
     const userID = req.params.id;
     try {
-        if(!validation.validateUserPost(userData)){
+        if(!userValidation.isDataUserPutExist(userData)){
             res.status(400).json({message: 'invalid data types'});
         }
 
@@ -159,16 +158,19 @@ export async function deleteUser(req, res){
 export async function InitiateSignUp(req,res){
     const userData = req.body;
     try {
-        if(validation.isEmailAvailable(userData.email_user)){
-
-            let otp_status = await userMiddleware.sendOTPEmailVerification(userData.email_user);
-            if (otp_status.affectedRows !==0){
-                await postUserOTPDbP(userData);
-                res.status(200).json({message : 'OTP has been sent'});
-                return
+        if(userValidation.isEmailAvailable(userData.email_user)){
+            if(userValidation.isDataSignUpExist(userData)){
+                let otp_status = await OTPMiddleware.sendOTPEmailVerification(userData.email_user);
+                if (otp_status.affectedRows !==0){
+                    await postUserOTPDbP(userData);
+                    res.status(200).json({message : 'OTP has been sent'});
+                    return
+                } else {
+                    res.status(500).json({message: 'Error sending OTP'});}
+                    return
             } else {
-                res.status(500).json({message: 'Error sending OTP'});}
-                return
+                res.status(400).json({message: 'required information is missing'});
+            }
         }
         else{
             res.status(400).json({message: 'Email has been used'});
@@ -183,18 +185,25 @@ export async function InitiateSignUp(req,res){
 export async function finishSignUp(req,res){
     const userData = req.body;
     try {
-        const result = await userMiddleware.verifyOtp(userData)
-        if(result === 200){
-            SignUpStatus = await userModel.SignUpUserDb(userData)
-            if (SignUpStatus === 503 || SignUpStatus === null){
-                res.status(500).json({message: 'Error verifying OTP', error});
+        if(userValidation.isDataOTPExist(userData)){
+            const result = await OTPMiddleware.verifyOtp(userData)
+            if(result === 200){
+                userData.password_user = await hashingMiddleware.hashPassword(userData.password_user);
+                SignUpStatus = await userModel.SignUpUserDb(userData);
+                if (SignUpStatus === 503 || SignUpStatus === null){
+                    res.status(500).json({message: 'Error verifying OTP', error});
+                } else {
+                    res.status(200).json({message: 'OTP confirmed, sign up success'})
+                }
+            } else if (result === 404){
+                res.status(404).json({message: 'no OTP found for said address, sign up failed'});
+            } else if (result === 400){
+                res.status(404).json({message: 'otp is expired, initiate sign up again'});
             } else {
-                res.status(200).json({message: 'OTP confirmed, sign up success'})
+                res.status(500).json({message: 'Error verifying OTP,  sign up failed'});
             }
-        } else if (result === 404){
-            res.status(404).json({message: 'no OTP found for said address, sign up failed'});
         } else {
-            res.status(500).json({message: 'Error verifying OTP,  sign up failed'});
+            res.status(400).json({message: 'required information is missing'});
         }
     } catch (error) {
         console.log(error,'\n');
@@ -203,3 +212,26 @@ export async function finishSignUp(req,res){
     }
 }
 
+export async function loginUser(req,res){
+    const userData = req.body;
+    try {
+        if(userValidation.isDataLoginExist(userData)){
+            const result = await userModel.getUserByEmailDb(userData)
+            if(result !== null){
+                if(hashingMiddleware.isHashedPasswordMatch(userData.password_user,result.password_user)){
+                    res.status(200).json({message: 'Credential confirmed, Login success'})
+                } else {
+                    res.status(400).json({message: 'Wrong Credential, login failed'});
+                }
+            } else {
+                res.status(404).json({message: 'User not found'});
+            }
+        } else {
+            res.status(400).json({message: 'required information is missing'});
+        }
+    } catch (error) {
+        console.log(error,'\n');
+        res.status(500).json({message: 'Error verifying credential', error});
+        return 
+    }
+}

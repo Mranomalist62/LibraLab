@@ -44,7 +44,7 @@ export async function isEmailAvailable(userData){
     }
 }
 
-export function validateUserPost(userData){
+export function isDataUserPostExist(userData){
     const schema = Joi.object({
         Nama_user : Joi.string().required(),
         ID_Provinsi : Joi.number().optional(),
@@ -58,8 +58,8 @@ export function validateUserPost(userData){
 
     try {
         let isValid = new Promise((resolve,reject)=>{
-            let isNothingRequiredNull = schema.validate(userData);
-            if(isNothingRequiredNull){
+            let isNothingRequiredEmpty = schema.validate(userData);
+            if(isNothingRequiredEmpty){
                 resolve(userData);
             } else {
                 reject(userData);
@@ -80,7 +80,7 @@ export function validateUserPost(userData){
     }
 }
 
-export function validateUserPut(userData){
+export function isDataUserPutExist(userData){
     const schema = Joi.object({
         Nama_user : Joi.string().optional(),
         ID_Provinsi : Joi.number().optional(),
@@ -94,8 +94,8 @@ export function validateUserPut(userData){
 
     try {
         let isValid = new Promise((resolve,reject)=>{
-            let isNothingRequiredNull = schema.validate(userData);
-            if(isNothingRequiredNull){
+            let isNothingRequiredEmpty = schema.validate(userData);
+            if(isNothingRequiredEmpty){
                 resolve(userData);
             } else {
                 reject(userData);
@@ -115,3 +115,98 @@ export function validateUserPut(userData){
         return error;
     }
 }
+
+export function isDataSignUpExist(userData){
+    const schema = Joi.object({
+        Nama_user : Joi.string().required(),
+        password_user : Joi.string().required(),
+        email_user : Joi.string().email().required()
+    })
+
+    try {
+        let isValid = new Promise((resolve,reject)=>{
+            let isNothingRequiredEmpty = schema.validate(userData);
+            if(isNothingRequiredEmpty){
+                resolve(userData);
+            } else {
+                reject(userData);
+            }
+        })
+
+        isValid
+            .then(result => {
+                return true;
+            })
+            .catch(result => {
+                return false
+            })
+        
+    } catch (error) {
+        console.log(error,'\n');
+        return error;
+    }
+}
+
+export function isDataOTPExist(userData){
+    const schema = Joi.object({
+        Nama_user : Joi.string().required(),
+        password_user : Joi.string().required(),
+        email_user : Joi.string().email().required(),
+        otp : Joi.string().required()
+    })
+
+    try {
+        let isValid = new Promise((resolve,reject)=>{
+            let isNothingRequiredEmpty = schema.validate(userData);
+            if(isNothingRequiredEmpty){
+                resolve(userData);
+            } else {
+                reject(userData);
+            }
+        })
+
+        isValid
+            .then(result => {
+                return true;
+            })
+            .catch(result => {
+                return false
+            })
+        
+    } catch (error) {
+        console.log(error,'\n');
+        return error;
+    }
+}
+
+export function isDataLoginExist(userData){
+    const schema = Joi.object({
+        password_user : Joi.string().required(),
+        email_user : Joi.string().email().required(),
+    })
+
+    try {
+        let isValid = new Promise((resolve,reject)=>{
+            let isNothingRequiredEmpty = schema.validate(userData);
+            if(isNothingRequiredEmpty){
+                resolve(userData);
+            } else {
+                reject(userData);
+            }
+        })
+
+        isValid
+            .then(result => {
+                return true;
+            })
+            .catch(result => {
+                return false
+            })
+        
+    } catch (error) {
+        console.log(error,'\n');
+        return error;
+    }
+}
+
+

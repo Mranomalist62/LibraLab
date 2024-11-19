@@ -1,5 +1,6 @@
 import * as nodemailer from 'nodemailer'
 import * as OTPModel from '../model/OTPModel'
+import * as dateFns from 'date-fns'
 
 export async function otpGenerator(){
     let otp_value = Math.floor(Math.random()*10000);
@@ -45,13 +46,24 @@ export async function sendOTPEmailVerification(emailRecipient){
 export async function verifyOtp(userData){
     try {
         ServerOTPData = await OTPModel.getUserOTPByEmailDb(userData.email_user);
+        
         if(ServerOTPData !== null){
-            if(ServerOTPData.otp === userData.otp){
-                OTPModel.DeleteUserOTPDb(userData);
-                return 200
+            let otpDate = await dateFns.parse(ServerOTPData.created_at, 'yyyy-MM-dd HH:mm:ss', new Date());
+            let expirationDate = dateFns.addMinutes(otpDate, 5)
+            let currentDateTime = new Date();
+
+            if(currentDateTime < expirationDate){
+                if(ServerOTPData.otp === userData.otp){
+                    await OTPModel.DeleteUserOTPDb(userData);
+                    return 200
+                } else {
+                    await OTPModel.DeleteUserOTPDb(userData);
+                    console.log('no OTP found for said address');
+                    return 404
+                }
             } else {
-                console.log('no OTP found for said address');
-                return 404
+                console.log('OTP is expired, please redo Initiate signUp')
+                return 400
             }
         } else if(ServerOTPData === 503){
             console.log('Internal Database Error');

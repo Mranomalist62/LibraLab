@@ -14,19 +14,19 @@ app.get('/get/name', userController.getUserbyName);
 
 app.get('/get/email',userController.getUserbyEmail);
 
-app.get('/user/get/:id',userController.getUserbyID);
+app.get('/get/:id',userController.getUserbyID);
 
-app.post('/user/post',userController.postUser);
+app.post('/post',userController.postUser);
 
-app.put('/user/put/:id',userController.putUser);
+app.put('/put/:id',userController.putUser);
 
-app.delete('/user/delete/:id',userController.deleteUser);
+app.delete('/delete/:id',userController.deleteUser);
 
 //Sign Up Operation
 
-app.post('/user/initiateSignUp',userController.InitiateSignUp);
+app.post('/initiateSignUp',userController.InitiateSignUp);
 
-app.post('/user/finishSignUp', userController.finishSignUp);
+app.post('/finishSignUp', userController.finishSignUp);
 
 //login Operation
 
