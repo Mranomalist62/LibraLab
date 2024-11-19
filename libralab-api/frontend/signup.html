@@ -128,6 +128,16 @@
                   />
                   <label for="email">Email</label>
                 </div>
+                <div class="input-field">
+                  <input
+                    type="text"
+                    class="input"
+                    id="username"
+                    required
+                    autocomplete="off"
+                  />
+                  <label for="username">Username</label>
+                </div>
                 <div class="input-field password-field">
                   <input type="password" class="input" id="pass" required />
                   <label for="pass">Password</label>
@@ -200,20 +210,22 @@
       let timeLeft = 60;
       let timerId = null;
       let userEmail = ''; // Store email for OTP verification
+      let username = ''; // Store username for OTP verification
 
       function showOTPModal() {
         otpModal.style.display = 'flex';
         startTimer();
         otpInputs[0].focus();
         // Clear previous OTP inputs
-        otpInputs.forEach(input => input.value = '');
+        otpInputs.forEach((input) => (input.value = ''));
       }
 
       function startTimer() {
         clearInterval(timerId); // Clear any existing timer
         timeLeft = 60;
         const resendContainer = document.querySelector('.resend-timer');
-        resendContainer.innerHTML = `send verify code again <span id="timer">60</span>s`;
+        resendContainer.innerHTML =
+          'send verify code again <span id="timer">60</span>s';
         timerDisplay = document.getElementById('timer');
 
         timerId = setInterval(() => {
@@ -222,8 +234,9 @@
 
           if (timeLeft <= 0) {
             clearInterval(timerId);
-            resendContainer.innerHTML = `send verify code again <a class="resend-link">Resend</a>`;
-            
+            resendContainer.innerHTML =
+              'send verify code again <a class="resend-link">Resend</a>';
+
             // Add resend functionality
             const resendLink = document.querySelector('.resend-link');
             resendLink.addEventListener('click', handleResendOTP);
@@ -241,18 +254,18 @@
           },
           body: JSON.stringify({ email: userEmail }),
         })
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            startTimer();
-          } else {
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              startTimer();
+            } else {
+              alert('Failed to resend OTP. Please try again.');
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
             alert('Failed to resend OTP. Please try again.');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('Failed to resend OTP. Please try again.');
-        });
+          });
       }
 
       // Handle OTP input
@@ -264,7 +277,9 @@
               otpInputs[index + 1].focus();
             }
             // Check if all inputs are filled
-            const allFilled = Array.from(otpInputs).every(input => input.value.length === 1);
+            const allFilled = Array.from(otpInputs).every(
+              (input) => input.value.length === 1
+            );
             if (allFilled) {
               verifyBtn.focus();
             }
@@ -300,7 +315,9 @@
 
       // Handle verify button click
       verifyBtn.addEventListener('click', () => {
-        const otp = Array.from(otpInputs).map(input => input.value).join('');
+        const otp = Array.from(otpInputs)
+          .map((input) => input.value)
+          .join('');
         if (otp.length === 4) {
           // Add your OTP verification API call here
           fetch('http://localhost:3000/verify-otp', {
@@ -310,24 +327,24 @@
             },
             body: JSON.stringify({
               email: userEmail,
-              otp: otp
+              otp: otp,
             }),
           })
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              // Redirect to login page on successful verification
-              window.location.href = 'login.html';
-            } else {
-              alert('Invalid OTP. Please try again.');
-              otpInputs.forEach(input => input.value = '');
-              otpInputs[0].focus();
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Verification failed. Please try again.');
-          });
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                // Redirect to login page on successful verification
+                window.location.href = 'login.html';
+              } else {
+                alert('Invalid OTP. Please try again.');
+                otpInputs.forEach((input) => (input.value = ''));
+                otpInputs[0].focus();
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              alert('Verification failed. Please try again.');
+            });
         }
       });
 
@@ -345,31 +362,32 @@
         }
 
         try {
-          const salt = await bcrypt.genSalt(10);
-          const hashedPassword = await bcrypt.hash(password, salt);
+          // const salt = await bcrypt.genSalt(10);
+          // const hashedPassword = await bcrypt.hash(password, salt);
 
-          fetch('http://localhost:3000/user', {
+          fetch('http://localhost:3000/user/initiateSignUp', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               email_user: email,
-              password_user: hashedPassword,
+              password_user: password,
+              Nama_user: username,
             }),
           })
-          .then(response => response.json())
-          .then(data => {
-            if (data.message === 'User created successfully') {
-              showOTPModal();
-            } else {
-              alert(data.message);
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Signup failed. Please try again.');
-          });
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message === 'User created successfully') {
+                showOTPModal();
+              } else {
+                alert(data.message);
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              alert('Signup failed. Please try again.');
+            });
         } catch (error) {
           console.error('Error: hashing password', error);
           alert('An error occurred. Please try again.');
