@@ -62,6 +62,24 @@ export async function getUserbyName(req, res){
     }
 }
 
+export async function getUserbyEmail(req, res){
+    const userEmail = req.body.email_user;
+    try {
+        const user = await userModel.getUserByEmailDb(userEmail);
+        if(user){
+            res.status(200).json(user);
+            return
+        } else {
+            res.status(404).json({message: 'User not found'});
+            return
+        }
+    } catch(error) {
+        console.log(error,'\n');
+        res.status(500).json({message: 'error retrieving user', error});
+        return
+    }
+}
+
 export async function postUser(req, res){
     const userData = req.body;
     try {
@@ -184,7 +202,4 @@ export async function finishSignUp(req,res){
         return 
     }
 }
-
-
-
 

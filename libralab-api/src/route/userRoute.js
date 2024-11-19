@@ -1,25 +1,32 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import * as controller from '../controller/userController.js'
+import * as userController from '../controller/userController.js'
 
 const app = express();
 app.use(bodyParser.json());
 
 //CRUD operation
 
-app.get('/user/get', controller.getUser);
+app.get('/get', userController.getUser);
 
-app.get('/user/get', controller.getUser);
+app.get('/get/name', userController.getUserbyName);
 
-app.get('/user/get/:id',controller.getUserbyID);
+app.get('/get/email',userController.getUserbyEmail);
 
-app.post('/user/post',controller.postUser);
+app.get('/user/get/:id',userController.getUserbyID);
 
-app.put('/user/put/:id',controller.putUser);
+app.post('/user/post',userController.postUser);
 
-app.delete('/user/delete/:id',dcontroller.deleteUser);
+app.put('/user/put/:id',userController.putUser);
 
-//Login Operation
+app.delete('/user/delete/:id',userController.deleteUser);
 
-app.post('/user/login');
+//Sign Up Operation
+
+app.post('/user/initiateSignUp',userController.InitiateSignUp);
+
+app.post('/user/finishSignUp', userController.finishSignUp);
+
+//login Operation
+
