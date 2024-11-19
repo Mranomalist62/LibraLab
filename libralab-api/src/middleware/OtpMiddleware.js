@@ -1,5 +1,5 @@
 import * as nodemailer from 'nodemailer'
-import * as OTPModel from '../model/OTPModel'
+import * as OTPModel from '../model/OTPModel.js'
 import * as dateFns from 'date-fns'
 
 export async function otpGenerator(){

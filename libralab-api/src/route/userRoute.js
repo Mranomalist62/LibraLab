@@ -1,32 +1,22 @@
-
 import express from 'express';
-import bodyParser from 'body-parser';
-import * as userController from '../controller/userController.js'
+import * as userController from '../controller/userController.js';
 
-const app = express();
-app.use(bodyParser.json());
+const router = express.Router(); // Correct method to instantiate the router
 
-//CRUD operation
+// CRUD operation
+router.get('/get', userController.getUser);
+router.get('/get/name', userController.getUserbyName);
+router.get('/get/email', userController.getUserbyEmail);
+router.get('/get/:id', userController.getUserbyID);
+router.post('/post', userController.postUser);
+router.put('/put/:id', userController.putUser);
+router.delete('/delete/:id', userController.deleteUser);
 
-app.get('/get', userController.getUser);
+// Sign Up Operation
+router.post('/initiateSignUp', userController.InitiateSignUp);
+router.post('/finishSignUp', userController.finishSignUp);
 
-app.get('/get/name', userController.getUserbyName);
+// Login Operation
+router.post('/login', userController.loginUser);
 
-app.get('/get/email',userController.getUserbyEmail);
-
-app.get('/get/:id',userController.getUserbyID);
-
-app.post('/post',userController.postUser);
-
-app.put('/put/:id',userController.putUser);
-
-app.delete('/delete/:id',userController.deleteUser);
-
-//Sign Up Operation
-
-app.post('/initiateSignUp',userController.InitiateSignUp);
-
-app.post('/finishSignUp', userController.finishSignUp);
-
-//login Operation
-
+export default router;
