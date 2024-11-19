@@ -1,11 +1,10 @@
 import * as bcrypt  from 'bcrypt'
-import * as userModel from '../model/userModel.js'
 
 export async function hashPassword(userData) {
     let plainPassword = userData.password_user;
     let saltRound = process.env.SALTROUND
     try {
-        let hashedpassword = await bcrypt.hash(password,saltRound);
+        let hashedpassword = await bcrypt.hash(plainPassword,saltRound);
         return hashedpassword;
     } catch (error) {
         console.log(error)

@@ -1,10 +1,8 @@
 import * as userModel from '../model/userModel.js'
 import * as userValidation from '../validation/userValidation.js'
 import * as OTPMiddleware from '../middleware/OTPMiddleware.js'
-import * as jwt from 'jsonwebtoken'
-import { DeleteUserOTPDb } from '../model/OTPModel.js';
 import * as hashingMiddleware from '../middleware/hashingMiddleware.js';
-
+import * as JWTMiddleware from '../middleware/JWTMiddleware.js'
 
 //USER CRUD
 export async function getUser(req, res){
@@ -219,7 +217,12 @@ export async function loginUser(req,res){
             const result = await userModel.getUserByEmailDb(userData)
             if(result !== null){
                 if(hashingMiddleware.isHashedPasswordMatch(userData.password_user,result.password_user)){
-                    res.status(200).json({message: 'Credential confirmed, Login success'})
+                    const token = await JWTMiddleware.generateJWT(result)
+                    if (token === 500){
+                        res.status(500).json({message: 'Cannot Generating Token'});
+                    } else {
+                        res.status(200).json({message: 'Credential confirmed, Login success', token})   
+                    }
                 } else {
                     res.status(400).json({message: 'Wrong Credential, login failed'});
                 }
