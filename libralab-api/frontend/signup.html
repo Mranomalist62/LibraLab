@@ -319,24 +319,30 @@
         const otp = Array.from(otpInputs)
           .map((input) => input.value)
           .join('');
+          const username = document.getElementById('username').value.trim()
+          const email = document.getElementById('email').value.trim();
+          const password = document.getElementById('pass').value.trim();
         if (otp.length === 4) {
           // Add your OTP verification API call here
-          fetch('http://localhost:3000/verify-otp', {
+          fetch('http://localhost:3000/user/finishSignUp', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email: userEmail,
-              otp: otp,
+              email_user: email,
+              password_user: password,
+              Nama_user: username,
+              otp: otp
             }),
           })
             .then((response) => response.json())
             .then((data) => {
-              if (data.success) {
+              if (data.status === 200) {
                 // Redirect to login page on successful verification
                 window.location.href = 'login.html';
               } else {
+                console.log(data)
                 alert('Invalid OTP. Please try again.');
                 otpInputs.forEach((input) => (input.value = ''));
                 otpInputs[0].focus();
@@ -353,7 +359,7 @@
       signupForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
-        const username = document.getElementById('username').value.trim();
+        const username = document.getElementById('username').value.trim()
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('pass').value.trim();
         userEmail = email; // Store email for OTP verification
@@ -373,9 +379,9 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              Nama_user: username,
               email_user: email,
               password_user: password,
+              Nama_user: username,
             }),
           })
             .then((response) => response.json())
