@@ -27,18 +27,31 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.6.82/pdf.min.mjs"></script>
+
     <title>Libralab</title>
     <style>
-      embed[type='application/pdf'] {
-        max-width: 100%; /* PDF tidak akan melebihi lebar layar */
-        height: 90vh; /* PDF menyesuaikan tinggi 90% viewport height */
-        margin: 0 auto; /* Agar berada di tengah */
-        display: block; /* Menghindari sifat inline default */
-        border: 1px solid #ccc; /* Memberikan batas jika diperlukan */
+      #pdf-canvas {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        max-width: 800px;
+        margin: 5rem auto;
+      }
+
+      #pdf-canvas canvas {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+        height: auto;
       }
     </style>
+
     <link rel="icon" type="image/x-icon" href="img/test1.jpg" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
   </head>
   <body>
     <header>
@@ -140,7 +153,38 @@
         </div>
       </nav>
     </header>
-    <embed
+    <script>
+      const url = './pdf/test1.pdf';
+
+      // Load the PDF document
+      pdfjsLib.getDocument(url).promise.then(function (pdf) {
+        const viewer = document.createElement('div');
+        viewer.id = 'pdf-canvas'; // Beri ID ke kontainer
+        document.body.appendChild(viewer);
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          pdf.getPage(i).then(function (page) {
+            // Buat elemen canvas untuk setiap halaman
+            const canvas = document.createElement('canvas');
+            viewer.appendChild(canvas);
+
+            const context = canvas.getContext('2d');
+            const viewport = page.getViewport({ scale: 1.5 });
+
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            // Render halaman ke dalam canvas
+            page.render({
+              canvasContext: context,
+              viewport: viewport,
+            });
+          });
+        }
+      });
+    </script>
+
+    <!-- <embed
       type="application/pdf"
       src="https://drive.google.com/file/d/14QJKtoYD-bV_gyM-zJxqS2gdgDoQ8iDY/preview"
       width="80%"
@@ -151,7 +195,7 @@
       full-frame=""
       internalinstanceid="21"
       title="CHROME"
-    />
+    /> -->
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
