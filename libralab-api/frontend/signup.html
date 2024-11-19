@@ -353,6 +353,7 @@
       signupForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
+        const username = document.getElementById('username').value.trim();
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('pass').value.trim();
         userEmail = email; // Store email for OTP verification
@@ -372,9 +373,9 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+              Nama_user: username,
               email_user: email,
               password_user: password,
-              Nama_user: username,
             }),
           })
             .then((response) => response.json())
