@@ -162,9 +162,9 @@ body {
 }
 
 .profile-pic {
-  width: 40px; 
+  width: 40px;
   height: 40px;
-  border-radius: 50%; 
+  border-radius: 50%;
 }
 
 .navbar .dropdown-toggle::after {
@@ -181,7 +181,7 @@ body {
 
 .carousel-inner img {
   width: 100%;
-  height: 400px;
+  height: 300px;
   object-fit: cover;
 }
 
@@ -195,7 +195,7 @@ body {
 }
 
 /* Category */
-.categories {
+/* .categories {
   margin-top: 40px;
   width: 70%;
   margin: 0 auto;
@@ -213,22 +213,27 @@ body {
   width: 100px;
   height: 100px;
   object-fit: cover;
-}
+} */
 
 .row {
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 /* recommendation */
 .rekomendasi-produk {
-  background-color: #ffffff; /* Warna latar belakang untuk menonjolkan bagian ini */
+  background-color: #ffffff;
   padding: 20px 0;
   width: 100%;
 }
 
+.rekomendasi-produk .container {
+  margin-top: 5rem;
+  padding: 0 0 0 0;
+}
+
 .rekomendasi-link {
-  text-decoration: none; /* Menghilangkan underline */
-  color: inherit; /* Warna teks mengikuti elemen di dalamnya */
+  text-decoration: none;
+  color: inherit;
   display: block;
 }
 
@@ -290,7 +295,6 @@ body {
   height: 290px;
   border: none; /* Hapus border jika tidak diperlukan */
 }
-
 
 /* Tambahkan breakpoint untuk mode responsive */
 @media (max-width: 991px) {

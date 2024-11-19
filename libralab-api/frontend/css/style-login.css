@@ -67,8 +67,8 @@ i {
 img {
   width: 35px;
   position: absolute;
-  top: 30px;
-  left: 30px;
+  /* top: 30px;
+  left: 30px; */
 }
 .input-box header {
   font-weight: 700;
@@ -157,10 +157,16 @@ span a:hover {
   text-decoration: underline;
   color: #000;
 }
-
+.col-md-6.side-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+}
 .img-login {
-  width: 90%;
-  height: 90%;
+  width: 225px;
+  height: 500px;
   object-fit: cover;
   border-radius: 10px 0 0 10px;
 }
@@ -211,13 +217,20 @@ span a:hover {
   .side-image {
     border-radius: 10px 10px 0 0;
   }
+  .col-md-6.side-image {
+    display: unset;
+    justify-content: unset;
+    align-items: unset;
+    height: unset;
+    position: unset;
+  }
   img {
     width: 35px;
     position: absolute;
     top: 20px;
     left: 47%;
   }
-  
+
   .img-login {
     display: none;
   }
