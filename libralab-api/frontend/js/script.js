@@ -18,7 +18,7 @@
 
 $(document).ready(function () {
   $('.slider').slick({
-    slidesToShow: 4, // Jumlah slide yang ditampilkan sekaligus
+    slidesToShow: 5, // Jumlah slide yang ditampilkan sekaligus
     slidesToScroll: 1,
     arrows: true, // Tampilkan tombol navigasi
     dots: true, // Tampilkan navigasi dot
