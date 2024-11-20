@@ -186,7 +186,7 @@
           send verify code again <span id="timer">60</span>s
         </div>
         <button class="verify-btn">Verify</button>
-        <button class="verify-btn hidden" style="margin-top: 1rem">
+        <button class="close-modal verify-btn" style="margin-top: 1rem">
           Close
         </button>
       </div>
@@ -194,6 +194,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bcrypt.js/2.4.3/bcrypt.min.js"></script>
     <script>
+            //close otp modal
+      const closeModalBtn = document.querySelector('.close-modal');
+      closeModalBtn.addEventListener('click', () => {
+        otpModal.style.display = 'none';
+      });
       // Toggle password visibility
       const togglePassword = document.querySelector('#togglePassword');
       const password = document.querySelector('#pass');
