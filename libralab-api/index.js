@@ -7,7 +7,6 @@ import userRoute from './src/route/userRoute.js'; // Importing the default expor
 const app = express();
 app.use(cors()); 
 
-
 app.use(bodyParser.json());
 app.use('/user', userRoute); // Prefixing all routes with /user
 

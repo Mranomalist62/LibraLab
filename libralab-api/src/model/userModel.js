@@ -27,7 +27,7 @@ export async function getUserByEmailDb(userEmail){
     try {
         const [rows] = await connection.execute('SELECT * FROM user WHERE email_user = ?', [userEmail]);
         if (rows.length !== 0){
-            return rows;
+            return rows[0];
         } 
         else {
             return null;
@@ -39,6 +39,7 @@ export async function getUserByEmailDb(userEmail){
         connection.end();
     }
 }
+
 
 export async function getUserByNameDb(Nama_user){
     let connection = await DbConnection();

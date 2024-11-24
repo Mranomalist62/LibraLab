@@ -146,49 +146,29 @@ export function isDataOTPExist(userData) {
         otp: Joi.string().required(),
     });
 
-    return new Promise((resolve, reject) => {
-        
-        const { error } = schema.validate(userData);
+    const { error } = schema.validate(userData);
 
-        if (error) {
-            reject(false);  
-        } else {
-            resolve(true);  
-        }
-    })
-    .catch((error) => {
+    if (error) {
         console.log(error, '\n');
-        return false;  
-    });
+        return false;
+    } else {
+        return true;
+    }
 }
 
-export function isDataLoginExist(userData){
+export function isDataLoginExist(userData) {
     const schema = Joi.object({
-        password_user : Joi.string().required(),
-        email_user : Joi.string().email().required(),
-    })
+        password_user: Joi.string().required(),
+        email_user: Joi.string().email().required(),
+    });
 
-    try {
-        let isValid = new Promise((resolve,reject)=>{
-            let isNothingRequiredEmpty = schema.validate(userData);
-            if(isNothingRequiredEmpty){
-                resolve(userData);
-            } else {
-                reject(userData);
-            }
-        })
+    const { error } = schema.validate(userData);
 
-        isValid
-            .then(result => {
-                return true;
-            })
-            .catch(result => {
-                return false
-            })
-        
-    } catch (error) {
-        console.log(error,'\n');
-        return error;
+    if (error) {
+        console.log(error, '\n');
+        return false; 
+    } else {
+        return true; 
     }
 }
 

@@ -221,19 +221,25 @@ export async function finishSignUp(req,res){
 export async function loginUser(req,res){
     const userData = req.body;
     try {
-        if(userValidation.isDataLoginExist(userData)){
-            const result = await userModel.getUserByEmailDb(userData)
-            if(result !== null){
-                if(hashingMiddleware.isHashedPasswordMatch(userData.password_user,result.password_user)){
+        if(await userValidation.isDataLoginExist(userData)){
+            const result = await userModel.getUserByEmailDb(userData.email_user)
+            if(result !== null)
+            {
+                if(await hashingMiddleware.isHashedPasswordMatch(userData.password_user,result.password_user))
+                {
                     const token = await JWTMiddleware.generateJWT(result)
-                    if (token === 500){
+                    if (token === 500)
+                    {
                         res.status(500).json({message: 'Cannot Generating Token'});
+                        
                     } else {
                         res.status(200).json({message: 'Credential confirmed, Login success', token})   
                     }
+
                 } else {
                     res.status(400).json({message: 'Wrong Credential, login failed'});
                 }
+
             } else {
                 res.status(404).json({message: 'User not found'});
             }

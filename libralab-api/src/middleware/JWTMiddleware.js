@@ -1,8 +1,9 @@
-import * as jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 export async function generateJWT(userData){
     const payload = {
-        ID_User         : userData.ID_user,
+        ID_User         : userData.ID_User,
+        Nama_user       : userData.Nama_user,
         ID_Provinsi     : userData.ID_Provinsi,
         ID_Kabupaten    : userData.ID_Kabupaten,
         Ket_alamat      : userData.Ket_alamat,
@@ -12,8 +13,8 @@ export async function generateJWT(userData){
     };
 
     try {
-        jwtSecret = process.env.JWTSECRET;
-        jwtExpiration = process.env.JWTEXPIRATION;
+        const jwtSecret = process.env.JWTSECRET;
+        const jwtExpiration = process.env.JWTEXPIRATION;
         const token = jwt.sign(payload,jwtSecret,{expiresIn : jwtExpiration})
         return token;
 

@@ -4,7 +4,6 @@ import * as userController from '../controller/userController.js';
 const router = express.Router(); // Correct method to instantiate the router
 
 // CRUD operation
-router.get('/get', userController.getUser);
 router.get('/get/name', userController.getUserbyName);
 router.get('/get/email', userController.getUserbyEmail);
 router.get('/get/:id', userController.getUserbyID);

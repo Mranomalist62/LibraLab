@@ -12,10 +12,9 @@ export async function hashPassword(userData) {
     }
 }
 
-export async function isHashedPasswordMatch(userData,databaseData) {
-    let plainPassword = userData.password_user;
+export async function isHashedPasswordMatch(userPassword,databasePassword) {
     try {
-        if(await bcrypt.compare(plainPassword, databaseData.password_user)) {
+        if(await bcrypt.compare(userPassword, databasePassword)) {
             return true
         } else {
             return false
