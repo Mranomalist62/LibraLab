@@ -32,7 +32,7 @@
           <div class="col-md-6 right">
             <div class="input-box">
               <header>
-                <h2>Welcome, Buddy</h2>
+                <h2>Hi, Author</h2>
                 <h1>Please, Login</h1>
               </header>
 
@@ -112,15 +112,15 @@
         }
 
         try {
-          //const salt = await bcrypt.genSalt(10);
-          //const hashedPassword = await bcrypt.hash(password_user, salt);
+          const salt = await bcrypt.genSalt(10);
+          const hashedPassword = await bcrypt.hash(password_user, salt);
 
-          const response = await fetch('http://localhost:3000/user/login', {
+          const response = await fetch('http://localhost:3000/user', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email_user, password_user }),
+            body: JSON.stringify({ email_user, password_user: hashedPassword }),
             // credentials: "include",
           });
 
@@ -136,7 +136,6 @@
           }
         } catch (error) {
           console.error('Error:', error);
-          console.log(data);
           alert('Terjadi kesalahan. Silakan coba lagi.');
         }
       });
