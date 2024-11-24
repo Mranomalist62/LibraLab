@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
   <head>
@@ -404,3 +405,411 @@
     </script>
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style-login.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>Signup - Libralab</title>
+    <style>
+      .otp-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .otp-modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      .otp-modal-content h2 {
+        font-size: 1.25rem;
+        margin-bottom: 20px;
+        line-height: 1.5;
+      }
+
+      .email-highlight {
+        color: #ff0000;
+      }
+
+      .otp-input-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .otp-input {
+        width: 48px;
+        height: 48px;
+        border: 2px solid #ffcdd2;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 1.25rem;
+        outline: none;
+      }
+
+      .otp-input:focus {
+        border-color: #ff0000;
+      }
+
+      .resend-timer {
+        font-size: 0.875rem;
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .verify-btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(to right, #ff3333, #ff6633);
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: opacity 0.3s;
+      }
+
+      .verify-btn:hover {
+        opacity: 0.9;
+      }
+
+      .resend-link {
+        color: #ff0000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .resend-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <link rel="icon" type="image/x-icon" href="img/test1.jpg" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container main">
+        <div class="row">
+          <div class="col-md-6 side-image">
+            <img src="img/signup.png" alt="" class="img-login" />
+            <div class="text"></div>
+          </div>
+          <div class="col-md-6 right">
+            <div class="input-box">
+              <header>
+                <h2>Welcome, Author!</h2>
+                <h1>Let's Get Started</h1>
+              </header>
+              <form id="signupForm">
+                <div class="input-field">
+                  <input
+                    type="text"
+                    class="input"
+                    id="email"
+                    required
+                    autocomplete="off"
+                  />
+                  <label for="email">Email</label>
+                </div>
+                <div class="input-field">
+                  <input
+                    type="text"
+                    class="input"
+                    id="username"
+                    required
+                    autocomplete="off"
+                  />
+                  <label for="username">Username</label>
+                </div>
+                <div class="input-field password-field">
+                  <input type="password" class="input" id="pass" required />
+                  <label for="pass">Password</label>
+                  <i class="fas fa-eye" id="togglePassword"></i>
+                </div>
+                <div class="forgot-password">
+                  <a href="#">Lupa Password?</a>
+                </div>
+                <div class="input-field">
+                  <button onclick="showOTPModal()" type="submit" class="submit">
+                    Sign Up
+                  </button>
+                </div>
+              </form>
+              <div class="signin">
+                <span>Or Signup with</span>
+              </div>
+              <div class="social-login">
+                <span class="social-icon">
+                  <img src="img/facebooklogo.png" alt="Facebook" />
+                </span>
+                <span class="social-icon">
+                  <img src="img/googlelogo.png" alt="Google" />
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTP Modal -->
+    <div id="otpModal" class="otp-modal">
+      <div class="otp-modal-content">
+        <h2>
+          Please enter your<br />verify code in
+          <span class="email-highlight">email</span>.
+        </h2>
+        <div class="otp-input-container">
+          <input type="text" maxlength="1" class="otp-input" pattern="\d*" />
+          <input type="text" maxlength="1" class="otp-input" pattern="\d*" />
+          <input type="text" maxlength="1" class="otp-input" pattern="\d*" />
+          <input type="text" maxlength="1" class="otp-input" pattern="\d*" />
+        </div>
+        <div class="resend-timer">
+          send verify code again <span id="timer">60</span>s
+        </div>
+        <button class="verify-btn">Verify</button>
+        <button class="close-modal verify-btn" style="margin-top: 1rem">
+          Close
+        </button>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcrypt.js/2.4.3/bcrypt.min.js"></script>
+    <script>
+      // Toggle password visibility
+      const togglePassword = document.querySelector('#togglePassword');
+      const password = document.querySelector('#pass');
+
+      togglePassword.addEventListener('click', function () {
+        const type =
+          password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+      });
+
+      // OTP Modal functionality
+      const otpModal = document.getElementById('otpModal');
+      const otpInputs = document.querySelectorAll('.otp-input');
+      const timerDisplay = document.getElementById('timer');
+      const verifyBtn = document.querySelector('.verify-btn');
+      const signupForm = document.getElementById('signupForm');
+
+      let timeLeft = 60;
+      let timerId = null;
+      let userEmail = ''; // Store email for OTP verification
+      let username = ''; // Store username for OTP verification
+
+      function showOTPModal() {
+        otpModal.style.display = 'flex';
+        startTimer();
+        otpInputs[0].focus();
+        // Clear previous OTP inputs
+        otpInputs.forEach((input) => (input.value = ''));
+      }
+
+      function startTimer() {
+        clearInterval(timerId);
+        timeLeft = 60;
+        timerDisplay.textContent = timeLeft;
+        timerId = setInterval(() => {
+          timeLeft--;
+          timerDisplay.textContent = timeLeft;
+
+          if (timeLeft <= 0) {
+            clearInterval(timerId);
+            document.querySelector('.resend-timer').innerHTML =
+              'Resend code <a class="resend-link" href="#">Resend</a>';
+            document
+              .querySelector('.resend-link')
+              .addEventListener('click', handleResendOTP);
+          }
+        }, 1000);
+      }
+
+      function handleResendOTP(e) {
+        if (e) e.preventDefault();
+        // Add your resend OTP API call here
+        fetch('http://localhost:3000/resend-otp', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: userEmail }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              startTimer();
+              showOTPModal();
+            } else {
+              alert('Failed to resend OTP. Please try again.');
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            alert('Failed to resend OTP. Please try again.');
+          });
+      }
+
+      // Handle OTP input
+      otpInputs.forEach((input, index) => {
+        // Handle input
+        input.addEventListener('input', (e) => {
+          if (e.target.value.length === 1) {
+            if (index < otpInputs.length - 1) {
+              otpInputs[index + 1].focus();
+            }
+            // Check if all inputs are filled
+            const allFilled = Array.from(otpInputs).every(
+              (input) => input.value.length === 1
+            );
+            if (allFilled) {
+              verifyBtn.focus();
+            }
+          }
+        });
+
+        // Handle backspace
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Backspace') {
+            if (!e.target.value && index > 0) {
+              otpInputs[index - 1].focus();
+              e.preventDefault();
+            }
+          }
+        });
+
+        // Handle paste
+        input.addEventListener('paste', (e) => {
+          e.preventDefault();
+          const pastedData = e.clipboardData.getData('text').slice(0, 4);
+          if (/^\d+$/.test(pastedData)) {
+            pastedData.split('').forEach((digit, i) => {
+              if (otpInputs[i]) {
+                otpInputs[i].value = digit;
+                if (i < otpInputs.length - 1) {
+                  otpInputs[i + 1].focus();
+                }
+              }
+            });
+          }
+        });
+      });
+
+      // Handle verify button click
+      verifyBtn.addEventListener('click', () => {
+        const otp = Array.from(otpInputs)
+          .map((input) => input.value)
+          .join('');
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('pass').value.trim();
+        if (otp.length === 4) {
+          // Add your OTP verification API call here
+          fetch('http://localhost:3000/user/finishSignUp', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email_user: email,
+              password_user: password,
+              Nama_user: username,
+              otp: otp,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === 200) {
+                // Redirect to login page on successful verification
+                window.location.href = 'login.html';
+              } else {
+                console.log(data);
+                alert('Invalid OTP. Please try again.');
+                otpInputs.forEach((input) => (input.value = ''));
+                otpInputs[0].focus();
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              alert('Verification failed. Please try again.');
+            });
+        }
+      });
+
+      // Handle signup form submission
+      signupForm.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('pass').value.trim();
+        userEmail = email; // Store email for OTP verification
+
+        if (!email || !password) {
+          alert('Email dan Password tidak boleh kosong!');
+          return;
+        }
+
+        try {
+          // const salt = await bcrypt.genSalt(10);
+          // const hashedPassword = await bcrypt.hash(password, salt);
+
+          fetch('http://localhost:3000/user/initiateSignUp', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email_user: email,
+              password_user: password,
+              Nama_user: username,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message === 'User created successfully') {
+                showOTPModal();
+              } else {
+                alert(data.message);
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              alert('Signup failed. Please try again.');
+            });
+        } catch (error) {
+          console.error('Error: hashing password', error);
+          alert('An error occurred. Please try again.');
+        }
+      });
+    </script>
+  </body>
+</html>
+>>>>>>> aa66f600a53e08e20f5733e5ef31e10f70968592
