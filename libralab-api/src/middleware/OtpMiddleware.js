@@ -1,5 +1,6 @@
 import * as nodemailer from 'nodemailer'
-import * as OTPModel from '../model/OTPModel.js'
+import * as userOTPModel from '../model/userOTPModel.js'
+import * as authorOTPModel from '../model/authorOTPmodel.js'
 import * as dateFns from 'date-fns'
 
 export async function otpGenerator(){
@@ -47,9 +48,9 @@ export async function sendOTPEmailVerification(emailRecipient) {
     }
 }
 
-export async function verifyOtp(userData){
+export async function verifyUserOtp(userData){
     try {
-        const ServerOTPData = await OTPModel.getUserOTPByEmailDb(userData.email_user);
+        const ServerOTPData = await userOTPModel.getUserOTPByEmailDb(userData.email_user);
         if(ServerOTPData !== null){
             let otpDate = ServerOTPData[0].created_at
             let expirationDate = dateFns.addMinutes(otpDate, 5)
@@ -57,15 +58,48 @@ export async function verifyOtp(userData){
 
             if(currentDateTime < expirationDate){
                 if(ServerOTPData[0].otp === userData.otp){
-                    await OTPModel.DeleteUserOTPDb(userData);
+                    await userOTPModel.DeleteUserOTPDb(userData);
                     return 200
                 } else {
-                    await OTPModel.DeleteUserOTPDb(userData);
+                    await userOTPModel.DeleteUserOTPDb(userData);
                     console.log('no OTP found for said address');
                     return 404
                 }
             } else {
-                await OTPModel.DeleteUserOTPDb(userData);
+                await userOTPModel.DeleteUserOTPDb(userData);
+                console.log('OTP is expired, please redo Initiate signUp')
+                return 400
+            }
+        } else if(ServerOTPData === 503){
+            console.log('Internal Database Error');
+            return 503
+        }
+
+    } catch (error) {
+        console.log(error,'\n');
+        return 502;
+    }
+}
+
+export async function verifyAuthorOtp(authorData){
+    try {
+        const ServerOTPData = await authorOTPModel.getAuthorOTPByEmailDb(authorData.email_author);
+        if(ServerOTPData !== null){
+            let otpDate = ServerOTPData[0].created_at
+            let expirationDate = dateFns.addMinutes(otpDate, 5)
+            let currentDateTime = new Date();
+
+            if(currentDateTime < expirationDate){
+                if(ServerOTPData[0].otp === authorData.otp){
+                    await authorOTPModel.DeleteAuthorOTPDb(authorData);
+                    return 200
+                } else {
+                    await authorOTPModel.DeleteAuthorOTPDb(authorData);
+                    console.log('no OTP found for said address');
+                    return 404
+                }
+            } else {
+                await authorOTPModel.DeleteUserOTPDb(authorData);
                 console.log('OTP is expired, please redo Initiate signUp')
                 return 400
             }

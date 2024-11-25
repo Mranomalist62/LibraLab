@@ -31,7 +31,7 @@ export async function getUserOTPByEmailDb(userEmail){
     let connection =  await DbConnection();
 
     try {
-        const [rows] = await connection.execute('SELECT * FROM userOtp WHERE email_user = ?', 
+        const [rows] = await connection.execute('SELECT * FROM userotp WHERE email_user = ?', 
             [userEmail]);
         if (rows.length !== 0){
             return rows;

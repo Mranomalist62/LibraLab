@@ -5,7 +5,7 @@ import * as model from '../model/userModel.js';
 export async function isUsernameAvailable(userData){
     try {
         if(userData.Nama_user !== ''){
-            const row = await model.getUserByName(userData.Nama_user);
+            const [row] = await model.getUserByNameDb(userData.Nama_user);
             if(row.length === 0){
                 return true;
             }
