@@ -101,8 +101,13 @@
       color: #fff;
       border-radius: 20px;
       font-size: 12px;
+      box-shadow: #333;
     }
-
+    .hidden-btn:focus,
+    .hidden-btn:hover {
+      outline: 2px solid #ff8a00; /* Ubah warna outline */
+      outline-offset: 2px; /* Jarak outline dari elemen */
+    }
     /* Tampilkan tombol saat hover pada card */
     .card:hover .hidden-btn {
       display: inline-block;
