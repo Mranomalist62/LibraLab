@@ -1,19 +1,21 @@
-
 import express from 'express';
-import bodyParser from 'body-parser';
-import * as controller from '../controller/userController.js'
+import * as userController from '../controller/userController.js';
 
-const app = express();
-app.use(bodyParser.json());
+const router = express.Router(); // Correct method to instantiate the router
 
-app.get('/user', controller.getUser);
+// CRUD operation
+// router.get('/get/name', userController.getUserbyName);
+// router.get('/get/email', userController.getUserbyEmail);
+// router.get('/get/:id', userController.getUserbyID);
+// router.post('/post', userController.postUser);
+// router.put('/put/:id', userController.putUser);
+// router.delete('/delete/:id', userController.deleteUser);
 
-app.get('/user/:id',controller.getUserbyID);
+// Sign Up Operation
+router.post('/initiateSignUp', userController.initiateSignUp);
+router.post('/finishSignUp', userController.finishSignUp);
 
-app.post('/user',controller.postUser);
+// Login Operation
+router.post('/login', userController.loginUser);
 
-app.put('/user/:id',controller.putUser);
-
-app.delete('/user/:id',dcontroller.deleteUser);
-
-app.listen(3000, () => console.log('server started'))
+export default router;

@@ -1,19 +1,19 @@
-import mysql from 'mysql2';
-
+import mysql from 'mysql2/promise';
 
 const dbConfig = {
-    host : 'localhost',
-    user : 'root',
-    password : 'kukukakikukaku',
-    database : 'db_libralab'
+    host: process.env.HOSTDB,
+    user: process.env.USERDB,
+    password: process.env.PASSDB,
+    database: process.env.DATABASENAME,
 };
 
-export default async function DatabaseConnection(){
-    try{ 
-        const connection = mysql.createConnection(dbConfig);
+export default async function DatabaseConnection() {
+    try {
+        const connection = await mysql.createConnection(dbConfig);
+        console.log('Database connected successfully!');
         return connection;
-
-    } catch (error){
-        console.log('connection error: ', error);
+    } catch (error) {
+        console.error('Connection error:', error);
+        throw error;
     }
 }
