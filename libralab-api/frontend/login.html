@@ -127,6 +127,9 @@
           const data = await response.json();
 
           if (response.ok) {
+            if (data.token) {
+              document.cookie = `jwtToken=${data.token}; path=/; HttpOnly`;
+            }
             alert('Login berhasil!');
             window.location.href = 'index.html';
           } else {
