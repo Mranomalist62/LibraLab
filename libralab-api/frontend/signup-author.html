@@ -325,15 +325,15 @@
         const password = document.getElementById('pass').value.trim();
         if (otp.length === 4) {
           // Add your OTP verification API call here
-          fetch('http://localhost:3000/user/finishSignUp', {
+          fetch('http://localhost:3000/Author/finishSignUp', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email_user: email,
-              password_user: password,
-              Nama_user: username,
+              email_author: email,
+              password_author: password,
+              nama_author: username,
               otp: otp,
             }),
           })
@@ -341,7 +341,7 @@
             .then((data) => {
               if (data.status === 200) {
                 // Redirect to login page on successful verification
-                window.location.href = 'login.html';
+                window.location.href = 'login-author.html';
               } else {
                 console.log(data);
                 alert('Invalid OTP. Please try again.');
@@ -374,15 +374,15 @@
           // const salt = await bcrypt.genSalt(10);
           // const hashedPassword = await bcrypt.hash(password, salt);
 
-          fetch('http://localhost:3000/user/initiateSignUp', {
+          fetch('http://localhost:3000/Author/initiateSignUp', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email_user: email,
-              password_user: password,
-              Nama_user: username,
+              email_author: email,
+              password_author: password,
+              nama_author: username,
             }),
           })
             .then((response) => response.json())
