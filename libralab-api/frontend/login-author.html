@@ -24,8 +24,7 @@
   <body>
     <div class="wrapper">
       <div class="container main">
-        <div class="row"> 
-          
+        <div class="row">
           <div class="col-md-6 side-image">
             <img src="img/login.png" alt="" class="img-login" />
             <div class="text"></div>
@@ -116,18 +115,25 @@
           //const salt = await bcrypt.genSalt(10);
           //const hashedPassword = await bcrypt.hash(password_user, salt);
 
-          const response = await fetch('http://localhost:3000/Author/loginAuthor', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email_author, password_author }),
-            // credentials: "include",
-          });
+          const response = await fetch(
+            'http://localhost:3000/Author/loginAuthor',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email_author, password_author }),
+              // credentials: "include",
+            }
+          );
 
           const data = await response.json();
 
           if (response.ok) {
+            //nyimpen ke cookie
+            if (data.token) {
+              document.cookie = `jwtToken=${data.token}; path=/; HttpOnly`;
+            }
             alert('Login berhasil!');
             window.location.href = 'author.html';
           } else {
