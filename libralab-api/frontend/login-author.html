@@ -104,24 +104,24 @@
       });
 
       loginButton.addEventListener('click', async function () {
-        const email_user = document.querySelector('#email').value.trim();
-        const password_user = document.querySelector('#pass').value.trim();
+        const email_author = document.querySelector('#email').value.trim();
+        const password_author = document.querySelector('#pass').value.trim();
 
-        if (!email_user || !password_user) {
+        if (!email_author || !password_author) {
           alert('Email dan password harus diisi!');
           return;
         }
 
         try {
-          const salt = await bcrypt.genSalt(10);
-          const hashedPassword = await bcrypt.hash(password_user, salt);
+          //const salt = await bcrypt.genSalt(10);
+          //const hashedPassword = await bcrypt.hash(password_user, salt);
 
-          const response = await fetch('http://localhost:3000/user', {
+          const response = await fetch('http://localhost:3000/Author/loginAuthor', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email_user, password_user: hashedPassword }),
+            body: JSON.stringify({ email_author, password_author }),
             // credentials: "include",
           });
 
@@ -129,7 +129,7 @@
 
           if (response.ok) {
             alert('Login berhasil!');
-            window.location.href = 'index.html';
+            window.location.href = 'author.html';
           } else {
             alert(
               data.message || 'Login gagal. Periksa email dan password Anda.'
