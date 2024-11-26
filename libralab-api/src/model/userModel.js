@@ -8,7 +8,7 @@ export async function getUserByIdDb(userId){
     try {
         const[rows]= await connection.execute('SELECT * FROM user WHERE ID_User = ?', [userId]);
         if (rows.length !== 0){
-            return rows;
+            return rows[0];
         } 
         else {
             return null;
@@ -47,7 +47,7 @@ export async function getUserByNameDb(Nama_user){
     try {
         const [rows] = await connection.execute('SELECT * FROM user WHERE Nama_user = ?', [Nama_user]);
         if (rows.length !== 0){
-            return rows;
+            return rows[0];
         } 
         else {
             return null;

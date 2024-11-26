@@ -56,11 +56,12 @@ export async function isJWTValid(authHeader){
         }
 
         else {
-            jwtSecret = process.env.JWTSECRET;
-            jwt.verify(token, jwtSecret);
-            return true
+            const jwtSecret = process.env.JWTSECRET;
+            const secret = jwt.verify(token, jwtSecret);
+            return secret;
         }
     } catch (error) {
+        console.log(error)
         return 403
     }
 }

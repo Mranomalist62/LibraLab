@@ -105,4 +105,4 @@ export async function loginAuthor(req,res){
     }
 }
 
-//USER HOME FUNCTION
+//AUTHOR HOME FUNCTION

@@ -6,7 +6,10 @@ import * as authorModel from './authorModel.js'
 export async function postAuthorOTPDb(authorData){
     let connection =  await DbConnection();
 
-    let queries = 'INSERT INTO authorotp(email_author, otp) VALUES (?,?)';
+    let queries = `INSERT INTO 
+                    authorotp
+                    (email_author,otp) 
+                    VALUES (?,?)`;
     try{
         const [rows] = await connection.execute(queries,
             [authorData.email_author,
@@ -31,7 +34,8 @@ export async function getAuthorOTPByEmailDb(authorEmail){
     let connection =  await DbConnection();
 
     try {
-        const [rows] = await connection.execute('SELECT * FROM authorotp WHERE email_author = ?', 
+        const [rows] = await connection.execute(
+            'SELECT * FROM authorotp WHERE email_author = ?', 
             [authorEmail]);
         if (rows.length !== 0){
             return rows;
