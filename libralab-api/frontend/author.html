@@ -142,6 +142,62 @@
       .edit-profile-btn:hover {
         background-color: #0056b3;
       }
+
+      .add-book-section,
+      .edit-book-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 10px 20px;
+        margin: 20px 0;
+        width: 100%;
+        max-width: 600px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .book-input-display {
+        font-size: 16px;
+        color: #333;
+        flex-grow: 1; 
+        padding: 8px 12px;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+
+      .book-input-display:hover {
+        background-color: #e9e9e9;
+      }
+
+      .add-btn {
+        background-color: #ffa500;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .add-btn:hover {
+        background-color: #e68900;
+      }
+
+      .edit-book-section .add-btn {
+        background-color: #ffa500;
+      }
+
+      .edit-book-section .add-btn:hover {
+        background-color: #e68900;
+      }
+      .add-btn {
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
@@ -157,20 +213,17 @@
         </p>
 
         <div class="add-book-section">
-          <input
-            type="text"
-            class="book-input"
-            placeholder="Add your new book"
-          />
-          <button class="add-btn">+</button>
+          <span class="book-input-display" id="addBookTitle"
+            >Add your new book</span
+          >
+          <a href="author-addbook.html" class="add-btn">+</a>
         </div>
+
         <div class="edit-book-section">
-          <input
-            type="text"
-            class="book-input"
-            placeholder="Edit your new book"
-          />
-          <button class="add-btn" href>+</button>
+          <span class="book-input-display" id="editBookTitle"
+            >Edit your new book</span
+          >
+          <a href="author-editbook.html" class="add-btn">+</a>
         </div>
 
         <div class="orders-section">
