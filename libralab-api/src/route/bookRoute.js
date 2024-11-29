@@ -17,7 +17,7 @@ router.get('/getBookByAuthorId', bookController.getBookByAuthorId);
 router.get('/media/image/:cover_path',bookController.getBookCoverByUrl);
 
 
-
-// Serving the static images from the 'book' folder
+//path for deleting book
+router.delete('/deleteBook',bookController.deleteBookById)
 
 export default router;

@@ -125,4 +125,59 @@ export async function getBookByAuthorId(req,res){
     }
 }
 
+
+export async function deleteBookById(req,res){
+    
+    try {
+        const dataBuku = req.body
+        const authHeader = req.headers['authorization'];
+        console.log(authHeader);
+        const Token = await jwtMiddleware.isJWTValid(authHeader);
+
+        if(Token === 403){
+            res.status(403).json({message: 'Token expire or has been tampered'});
+            return
+        }
+        else if(Token === 401){
+            res.status(401).json({message: 'Token is missing'});
+            return
+        } 
+
+        const { cover_path } = req.body;
+
+        const imageFolderPath = path.join(process.cwd(), '/libralab-api/media/image/book', cover_path); // Your folder path
+        // Step 3: Check if the file exists
+        if (fs.existsSync(imageFolderPath)) {
+
+            // Step 4: Delete the file
+            await fs.promises.unlink(imageFolderPath); 
+            // Asynchronously delete the file
+            console.log(`Image deleted: ${imageFolderPath}`);
+        }
+        else {
+            res.status(404).json({message: 'no cover image found'});
+        }
+
+        const result = await bookModel.deleteBookDb(dataBuku.ID_Buku);
+    
+        if(!result){
+            res.status(404).json({message: 'no Book in database for this author'});
+            return
+        }
+
+        if(result===503){
+            res.status(503).json({message: 'Error deleting Book'});
+            return
+        }
+
+            res.status(200).json({message: 'Book successfully deleted'});
+
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' })
+        console.log(error);
+    }
+}
+
+
+
 //todo =? figuring out what data needed by the author page that need book, for now
