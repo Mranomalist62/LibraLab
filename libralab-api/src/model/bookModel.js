@@ -85,7 +85,6 @@ export async function putBookDb(bookData) {
     let queries = `
         UPDATE book
         SET judul_buku = ?, 
-            ID_Author = ?,
             tahun_terbit = ?,
             ISBN = ?, 
             bahasa = ?, 
@@ -100,7 +99,6 @@ export async function putBookDb(bookData) {
     try {
         const rows = await connection.execute(queries, [
             bookData.judul_buku,
-            bookData.ID_Author,
             bookData.tahun_terbit,
             bookData.ISBN,
             bookData.bahasa,

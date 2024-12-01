@@ -7,15 +7,15 @@ import { fileURLToPath } from 'url';
 
 const router = express.Router(); // Correct method to instantiate the router
 
-// get Operation
 router.post('/postBook', upload.single('coverfile'), bookController.postBook);
+// get Operation
+
 router.get('/getBookByAuthorId', bookController.getBookByAuthorId);
-
-
-
-//path for bookImage
 router.get('/media/image/:cover_path',bookController.getBookCoverByUrl);
 
+
+//path for editing book
+router.put('/putBook', upload.single('coverfile'), bookController.putBookByBookId)
 
 //path for deleting book
 router.delete('/deleteBook',bookController.deleteBookById)
