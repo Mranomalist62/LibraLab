@@ -1,8 +1,6 @@
 import express from 'express';
 import * as bookController from '../controller/bookController.js';
-import { upload } from '../middleware/multerMiddleware';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { upload } from '../middleware/multerMiddleware.js/index.js';
 
 
 const router = express.Router(); // Correct method to instantiate the router
