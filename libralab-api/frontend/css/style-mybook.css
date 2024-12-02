@@ -271,7 +271,6 @@ body {
 .mybook-section {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
   margin-top: 10rem;
 }
 
@@ -282,6 +281,13 @@ body {
 }
 
 @media (max-width: 991px) {
+  .mybook-section {
+    width: 100%; /* Mengatur lebar section menjadi 100% */
+    display: flex;
+    justify-content: flex-start; /* Menjaga card tetap di tengah secara horizontal */
+    align-items: center; /* Menjaga card tetap di tengah secara vertikal jika diperlukan */
+    text-align: center; /* Menjaga teks tetap rata tengah */
+  }
   .navbar .dropdown-menu {
     position: absolute; /* Agar dropdown mengambang */
     width: auto; /* Bisa sesuaikan sesuai kebutuhan */
