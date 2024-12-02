@@ -24,6 +24,12 @@ $(document).ready(function () {
     dots: true, // Tampilkan navigasi dot
     responsive: [
       {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
         breakpoint: 992,
         settings: {
           slidesToShow: 3,
@@ -32,7 +38,7 @@ $(document).ready(function () {
       {
         breakpoint: 768, // Pengaturan responsif untuk ukuran layar lebih kecil
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
         },
       },
       {
