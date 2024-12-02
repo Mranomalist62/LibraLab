@@ -260,7 +260,7 @@ body {
 
 .card-img-top {
   width: 125px !important;
-  height: 160px !important;
+  height: 200px !important;
   object-fit: cover;
   display: block;
   margin: 0 auto;
@@ -277,11 +277,7 @@ body {
   object-fit: cover;
 }
 
-/* .card {
-  width: 150px;
-  height: 290px;
-  margin: 10px 0;
-} */
+
 .slider {
   /* display: flex;                      */
   justify-content: center; /* Pusatkan konten secara horizontal */
