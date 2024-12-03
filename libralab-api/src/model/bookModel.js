@@ -10,7 +10,9 @@ export async function postBookDb(bookData) {
             ID_Author,
             tahun_terbit,  
             ISBN, 
-            bahasa, 
+            bahasa,
+            halaman,
+            lebar_buku, 
             panjang_buku, 
             berat_buku, 
             harga_buku, 
@@ -18,7 +20,7 @@ export async function postBookDb(bookData) {
             rating_buku,
             cover_path,
             tersedia
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
     `;
     try {
         const rows = await connection.execute(queries, [
@@ -27,6 +29,8 @@ export async function postBookDb(bookData) {
             bookData.tahun_terbit,
             bookData.ISBN,
             bookData.bahasa,
+            bookData.halaman,
+            bookData.lebar_buku,
             bookData.panjang_buku,
             bookData.berat_buku,
             bookData.harga_buku,
@@ -88,7 +92,9 @@ export async function putBookDb(bookData) {
         SET judul_buku = ?, 
             tahun_terbit = ?,
             ISBN = ?, 
-            bahasa = ?, 
+            bahasa = ?,
+            halaman = ?,
+            lebar_buku =?,
             panjang_buku = ?, 
             berat_buku = ?, 
             harga_buku = ?, 
@@ -104,6 +110,8 @@ export async function putBookDb(bookData) {
             bookData.tahun_terbit,
             bookData.ISBN,
             bookData.bahasa,
+            bookData.halaman,
+            bookData.lebar_buku,
             bookData.panjang_buku,
             bookData.berat_buku,
             bookData.harga_buku,
