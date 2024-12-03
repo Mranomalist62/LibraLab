@@ -25,8 +25,6 @@ export async function postBook(req, res){
               message: 'No cover file upload',
             });
           }
-
-        console.log(req.body)
         
         const bookData = {
             ...req.body, 

@@ -4,7 +4,7 @@ import * as jwtMiddleware from '../middleware/JWTMiddleware.js'
 export async function getJobdeskAll(req,res){
     
     try {
-        const authHeader = req.headers['authorization'];
+        const authHeader = req.cookies.jwt;
         console.log(authHeader);
         const Token = await jwtMiddleware.isJWTValid(authHeader);
 

@@ -87,10 +87,10 @@ export async function loginAuthor(req,res){
                     } else {
                         res.cookie('jwt',token,{
                             httpOnly : true,
-                            secure: true, // Use only over HTTPS
-                            sameSite: 'Strict',
-                            maxAge: 12 * 60 * 60 * 1000 
-                        })
+                            secure: false , // Use only over HTTPS
+                            sameSite: 'Lax',
+                            maxAge: 12 * 60 * 60 * 1000
+                        });
                         res.status(200).json({message: 'Credential confirmed, Login success'})   
                     }
 
