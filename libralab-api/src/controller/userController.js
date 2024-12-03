@@ -160,7 +160,7 @@ export async function initiateSignUp(req,res){
         if(await userValidation.isEmailAvailable(userData)){
             if(await userValidation.isDataSignUpExist(userData)){
                 let otp_status = await OTPMiddleware.sendOTPEmailVerification(userData.email_user);
-                if (otp_status.otp_status.status !== 'Error'){
+                if (otp_status.status !== 'Error'){
                     const mergedData = {
                         Nama_user       : userData.Nama_user,
                         password_user   : userData.password_user,

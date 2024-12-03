@@ -15,27 +15,29 @@ export async function sendOTPEmailVerification(emailRecipient) {
         let Subject = 'OTP - Libralab';
         let text = 'Jangan bagikan code tersebut pada siapapun: ' + otp_value;
         let from = process.env.EMAILFORSMTP;
+        let server = process.env.SERVERFORSMTP;
         let to = emailRecipient;
         let userSMPTP = process.env.USERSMTP;
         let passSMPTP = process.env.PASSSMTP;
 
         const transport = nodemailer.createTransport({
-            host: 'mxslurp.click',
-            port: 2525,
-            secure: false,  // TLS is not used here
+            host: server,
+            port: 465 ,
+            secure: true,  // TLS is not used here
             auth: {
                 user: userSMPTP,
                 pass: passSMPTP
             }
         });
 
+
         // Send the email
-        await transport.sendMail({
+         console.log(await transport.sendMail({
             from,
             to,
             subject: Subject,
             text: text
-        });
+        }));
 
         return {
             otp: otp_value,
