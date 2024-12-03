@@ -68,6 +68,23 @@ export async function getbookByIdDb(BookId){
     }
 }
 
+export async function getbookByRandomDb(limit){
+    let connection = await DbConnection();
+
+    try {
+        const[rows]= await connection.execute(
+        'SELECT * FROM book ORDER BY RAND() LIMIT ?', [limit]);
+        return rows.length !== 0 ? rows[0] : null;
+
+    } catch (error){
+        console.log(error,'\n');
+        return 503;
+
+    } finally {
+        connection.end();
+    }
+}
+
 export async function getbookByAuthorIdDb(AuthorID){
     let connection = await DbConnection();
     

@@ -26,10 +26,6 @@ export async function postBook(req, res){
             });
           }
 
-        // Path to the file on the server
-        // const filepath = path.join('book/media/image', req.file.filename)
-
-
         console.log(req.body)
         
         const bookData = {
@@ -41,12 +37,36 @@ export async function postBook(req, res){
         const result = await bookModel.postBookDb(bookData);
 
         if(!result){
+
+            //Rollback cover update
+            const { cover_path } = bookData;
+
+            const imageFolderPath = path.join(process.cwd(), '/libralab-api/media/image/book', cover_path);
+
+            if (fs.existsSync(imageFolderPath)) {
+
+                await fs.promises.unlink(imageFolderPath); 
+                console.log(`Image deleted: ${imageFolderPath}`);
+            }
+
             res.status(500).json({
                 message: 'Error sending book Information'});
             return
         }
 
         if(result===503){
+
+            //Rollback cover update
+            const { cover_path } = bookData;
+
+            const imageFolderPath = path.join(process.cwd(), '/libralab-api/media/image/book', cover_path);
+
+            if (fs.existsSync(imageFolderPath)) {
+
+                await fs.promises.unlink(imageFolderPath); 
+                console.log(`Image deleted: ${imageFolderPath}`);
+            }
+
             res.status(503).json({
                 message: 'Error sending book Information'});
             return
@@ -199,6 +219,42 @@ export async function getBookByAuthorId(req,res){
     }
 }
 
+export async function getRandomBook(req,res){
+    
+    try {
+        const authHeader = req.headers['authorization'];
+        console.log(authHeader);
+        const Token = await jwtMiddleware.isJWTValid(authHeader);
+
+        if(Token === 403){
+            res.status(403).json({message: 'Token expire or has been tampered'});
+            return
+        }
+        else if(Token === 401){
+            res.status(401).json({message: 'Token is missing'});
+            return
+        } 
+
+        const result = await bookModel.getbookByRandomDb(req.body.limit);
+    
+        if(!result){
+            res.status(404).json({message: 'no Book in database for this author'});
+            return
+        }
+
+        if(result===503){
+            res.status(503).json({message: 'Error sending book Information'});
+            return
+        }
+
+            res.status(200).json(result);
+
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error' })
+        console.log(error);
+    }
+}
+
 
 export async function deleteBookById(req,res){
     
@@ -252,6 +308,7 @@ export async function deleteBookById(req,res){
     }
 }
 
-
+//Future function
+//getByName (for search)
 
 //todo =? figuring out what data needed by the author page that need book, for now
