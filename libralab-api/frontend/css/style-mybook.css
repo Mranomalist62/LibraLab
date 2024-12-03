@@ -237,37 +237,6 @@ body {
   transform: translateX(-100%); /* Gerakkan teks dari kanan ke kiri */
 }
 
-/* .card {
-  width: 160px;
-  height: auto;
-  margin: 5px;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  outline: 1px solid rgba(161, 161, 161, 0.1);
-}
-
-.card-img-top {
-  width: 125px !important;
-  height: 160px !important;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto;
-  margin-top: 10px;
-}
-
-.card-title {
-  font-weight: bold;
-}
-
-.hidden-btn {
-  display: none;
-}
-
-.card:hover .hidden-btn {
-  display: inline-block;
-} */
-
 .mybook-section {
   display: flex;
   flex-wrap: wrap;
