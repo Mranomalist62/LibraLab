@@ -32,12 +32,12 @@ export async function sendOTPEmailVerification(emailRecipient) {
 
 
         // Send the email
-         console.log(await transport.sendMail({
+        await transport.sendMail({
             from,
             to,
             subject: Subject,
             text: text
-        }));
+        });
 
         return {
             otp: otp_value,

@@ -5,7 +5,7 @@ import fs from 'fs'
 
 export async function postBook(req, res){
     try {
-        const authHeader = req.headers['authorization'];
+        const authHeader = req.cookies.jwt;
         const Token = await jwtMiddleware.isJWTValid(authHeader);
 
         if(Token === 403){
@@ -83,7 +83,7 @@ export async function postBook(req, res){
 }
 
 export async function putBookByBookId(req,res){
-    try {const authHeader = req.headers['authorization'];
+    try {const authHeader = req.cookies.jwt;
         const Token = await jwtMiddleware.isJWTValid(authHeader);
 
         if(Token === 403){
@@ -186,7 +186,7 @@ export async function getBookCoverByUrl(req,res){
 export async function getBookByAuthorId(req,res){
     
     try {
-        const authHeader = req.headers['authorization'];
+        const authHeader = req.cookies.jwt;
         console.log(authHeader);
         const Token = await jwtMiddleware.isJWTValid(authHeader);
 
@@ -222,7 +222,7 @@ export async function getBookByAuthorId(req,res){
 export async function getRandomBook(req,res){
     
     try {
-        const authHeader = req.headers['authorization'];
+        const authHeader = req.cookies.jwt;
         console.log(authHeader);
         const Token = await jwtMiddleware.isJWTValid(authHeader);
 
@@ -260,7 +260,7 @@ export async function deleteBookById(req,res){
     
     try {
         const dataBuku = req.body
-        const authHeader = req.headers['authorization'];
+        const authHeader = req.cookies.jwt;
         console.log(authHeader);
         const Token = await jwtMiddleware.isJWTValid(authHeader);
 

@@ -64,18 +64,13 @@ export async function generateJWTStaff(staffData){
 export async function isJWTValid(authHeader){
     try {
 
-        if (!authHeader || !authHeader.startsWith('Bearer')){
+        if (!authHeader){
             return 401
         }
         
-        const token = authHeader.split(' ')[1];
-        if(!token) {
-            return 401
-        }
-
         else {
             const jwtSecret = process.env.JWTSECRET;
-            const secret = jwt.verify(token, jwtSecret);
+            const secret = jwt.verify(authHeader, jwtSecret);
             return secret;
         }
     } catch (error) {

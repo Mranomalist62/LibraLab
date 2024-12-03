@@ -232,7 +232,13 @@ export async function loginUser(req,res){
                         res.status(500).json({message: 'Cannot Generating Token'});
                         
                     } else {
-                        res.status(200).json({message: 'Credential confirmed, Login success', token})   
+                        res.cookie('jwt',token,{
+                            httpOnly : true,
+                            secure: true, // Use only over HTTPS
+                            sameSite: 'Strict',
+                            maxAge: 12 * 60 * 60 * 1000
+                        });
+                        res.status(200).json({message: 'Credential confirmed, Login success'})   
                     }
 
                 } else {

@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser'; 
 import userRoute from './src/route/userRoute.js'; // Importing the default export
 import authorRoute from './src/route/authorRoute.js';
 import bookRoute from './src/route/bookRoute.js';
@@ -11,10 +12,9 @@ import jobdeskRoute from './src/route/jobdeskRoute.js';
 
 const app = express();
 app.use(cors()); 
-
-
-
+app.use(cookieParser());
 app.use(bodyParser.json());
+
 app.use('/user', userRoute); // Prefixing user routes with /user
 app.use('/author', authorRoute); // Prefixing author routes with /author
 app.use('/book',bookRoute); // Prefixing book routes with /book
