@@ -40,7 +40,25 @@ export async function generateJWTAuthor(authorData){
     }
 }
 
+export async function generateJWTStaff(staffData){
+    const payload = {
+        ID_Staff        : staffData.ID_Staff,
+        nama_staff       : staffData.Nama_staff,
+        email_staff      : staffData.email_staff,
+    };
 
+    try {
+        const jwtSecret = process.env.JWTSECRET;
+        const jwtExpiration = process.env.JWTEXPIRATION;
+        const token = jwt.sign(payload,jwtSecret,{expiresIn : jwtExpiration})
+        return token;
+
+    } catch (error) {
+        console.log(error)
+        return 500
+        
+    }
+}
 
 
 export async function isJWTValid(authHeader){

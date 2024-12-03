@@ -74,7 +74,7 @@ export async function getbookByRandomDb(limit){
     try {
         const[rows]= await connection.execute(
         'SELECT * FROM book ORDER BY RAND() LIMIT ?', [limit]);
-        return rows.length !== 0 ? rows[0] : null;
+        return rows.length !== 0 ? rows : null;
 
     } catch (error){
         console.log(error,'\n');

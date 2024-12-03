@@ -12,9 +12,9 @@ export async function initiateSignUp(req,res){
         if(await authorValidation.isEmailAvailable(authorData)){
             if(await authorValidation.isDataSignUpExist(authorData)){
                 let otp_status = await OTPMiddleware.sendOTPEmailVerification(authorData.email_author);
-                if (otp_status.affectedRows !==0){
+                if (otp_status.status !== 'Error'){
                     const mergedData = {
-                        nama_author       : authorData.Nama_author,
+                        nama_author       : authorData.nama_author,
                         password_author   : authorData.password_author,
                         email_author      : authorData.email_author,
                         otp             : otp_status.otp

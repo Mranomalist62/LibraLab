@@ -112,7 +112,7 @@ export async function postUserDb(userData){
 
 export async function putUserDb(userData, userId){
     let connection = await DbConnection();
-    let queries = 'UPDATE User SET Nama_user = ?, ID_Provinsi = ?, ID_Kabupaten = ?, Ket_alamat = ?, notel_user = ?, norek_user = ?, password_user = ?, email_user = ? WHERE ID_User = ?;';
+    let queries = 'UPDATE user SET Nama_user = ?, ID_Provinsi = ?, ID_Kabupaten = ?, Ket_alamat = ?, notel_user = ?, norek_user = ?, password_user = ?, email_user = ? WHERE ID_User = ?;';
     try{
         const rows = await connection.execute(queries,
             [userData.Nama_user,
