@@ -144,7 +144,7 @@
           <label for="judul-buku">Judul Buku</label>
           <input
             type="text"
-            id="judul-buku"
+            id="judul_buku"
             class="form-control"
             placeholder="Masukkan judul buku"
           />
@@ -153,7 +153,7 @@
           <label for="tahun-terbit">Tahun Terbit</label>
           <input
             type="text"
-            id="tahun-terbit"
+            id="tahun_terbit"
             class="form-control"
             placeholder="Masukkan tahun terbit"
           />
@@ -162,7 +162,7 @@
           <label for="isbn">ISBN</label>
           <input
             type="text"
-            id="isbn"
+            id="ISBN"
             class="form-control"
             placeholder="Masukkan ISBN"
           />
@@ -190,7 +190,7 @@
             <label for="panjang">Panjang (cm)</label>
             <input
               type="text"
-              id="panjang"
+              id="panjang_buku"
               class="form-control"
               placeholder="Panjang"
             />
@@ -199,7 +199,7 @@
             <label for="lebar">Lebar (cm)</label>
             <input
               type="text"
-              id="lebar"
+              id="lebar_buku"
               class="form-control"
               placeholder="Lebar"
             />
@@ -208,7 +208,7 @@
             <label for="berat">Berat (kg)</label>
             <input
               type="text"
-              id="berat"
+              id="berat_buku"
               class="form-control"
               placeholder="Berat"
             />
@@ -243,35 +243,43 @@
           '.upload-section .btn-upload:nth-of-type(2)'
         );
 
-        function getCookie(name) {
-          const value = `; ${document.cookie}`;
-          const parts = value.split(`; ${name}=`);
-          if (parts.length === 2) return parts.pop().split(';').shift();
-          return null;
-        }
-
-        const jwtToken = getCookie('jwtToken');
-
-        if (!jwtToken) {
-          alert('You must be logged in to upload a book.');
-          //window.location.href = 'login-author.html';
-          return;
-        }
-
+        // Handle upload form submit untuk upload buku
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
 
-          const formData = new FormData(form);
+          // Ambil data dari form dan buat objek JSON
+          const bookData = {
+            judul_buku: document.querySelector('#judul_buku').value,
+            ID_Author: document.querySelector('#ID_Author')
+              ? document.querySelector('#ID_Author').value
+              : null,
+            tahun_terbit: document.querySelector('#tahun_terbit').value,
+            ISBN: document.querySelector('#ISBN').value,
+            bahasa: document.querySelector('#bahasa').value,
+            panjang_buku: document.querySelector('#panjang_buku').value,
+            berat_buku: document.querySelector('#berat_buku').value,
+            // Tambahkan lebih banyak field jika diperlukan
+          };
+
+          console.log(bookData); // Untuk debugging, cek apakah data sudah benar
 
           try {
             const response = await fetch(
-              'http://localhost:3000/Author/uploadBook',
+              'http://localhost:3000/book/postBook',
               {
                 method: 'POST',
-                body: formData,
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(bookData),
               }
             );
-
+            console.log('Response Status:', response.status); // Menambahkan log status respons
+            if (!response.ok) {
+              throw new Error(
+                `Network response was not ok, Status Code: ${response.status}`
+              );
+            }
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
@@ -285,29 +293,33 @@
           }
         });
 
-        // Handle book upload button click
+        // Handle button klik untuk upload buku (untuk file)
         uploadBookButton.addEventListener('click', () => {
           const fileInput = document.createElement('input');
           fileInput.type = 'file';
-          fileInput.accept = '.pdf';
+          fileInput.accept = '.pdf'; // Hanya menerima file PDF
+          fileInput.id = 'book_file'; // Menambahkan ID agar bisa diambil datanya
           fileInput.onchange = (event) => {
             const file = event.target.files[0];
             if (file) {
               console.log('Book file selected:', file.name);
+              // Anda bisa menambahkan file ke objek JSON jika perlu mengirimkan file
             }
           };
           fileInput.click();
         });
 
-        // Handle cover upload button click
+        // Handle button klik untuk upload cover
         uploadCoverButton.addEventListener('click', () => {
           const fileInput = document.createElement('input');
           fileInput.type = 'file';
-          fileInput.accept = 'image/*'; // Acceptable image types
+          fileInput.accept = 'image/*'; // Hanya menerima file gambar
+          fileInput.id = 'cover_file'; // Menambahkan ID agar bisa diambil datanya
           fileInput.onchange = (event) => {
             const file = event.target.files[0];
             if (file) {
               console.log('Cover file selected:', file.name);
+              // Anda bisa menambahkan cover file ke objek JSON jika perlu mengirimkan file
             }
           };
           fileInput.click();

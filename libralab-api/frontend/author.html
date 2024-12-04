@@ -1,4 +1,3 @@
-<!-- belum ditambah edit book + popup upload -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -161,7 +160,7 @@
       .book-input-display {
         font-size: 16px;
         color: #333;
-        flex-grow: 1; 
+        flex-grow: 1;
         padding: 8px 12px;
         border-radius: 4px;
         background-color: #f9f9f9;
@@ -254,21 +253,6 @@
     </main>
 
     <script>
-      function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return null;
-      }
-
-      const jwtToken = getCookie('jwtToken');
-
-      if (!jwtToken) {
-        alert('You must be logged in.');
-        //window.location.href = 'login-author.html';
-        return;
-      }
-
       const bookInput = document.querySelector('.book-input');
       const addBtn = document.querySelector('.add-btn');
 

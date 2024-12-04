@@ -115,17 +115,14 @@
           //const salt = await bcrypt.genSalt(10);
           //const hashedPassword = await bcrypt.hash(password_user, salt);
 
-          const response = await fetch(
-            'http://localhost:3000/Author/loginAuthor',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ email_author, password_author }),
-              credentials: "include",
-            }
-          );
+          const response = await fetch('http://localhost:3000/author/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email_author, password_author }),
+            credentials: 'include',
+          });
 
           const data = await response.json();
 

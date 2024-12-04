@@ -212,44 +212,6 @@
           </button>
         </div>
       </section>
-
-      <!-- Category -->
-      <!-- <section class="categories py-5">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-2 text-center">
-              <div class="category-card">
-                <img
-                  src="img/test1.jpg"
-                  class="rounded-circle category-img"
-                  alt="Genre"
-                />
-                <h5 class="mt-3">Genre</h5>
-              </div>
-            </div>
-            <div class="col-md-2 text-center">
-              <div class="category-card">
-                <img
-                  src="img/test1.jpg"
-                  class="rounded-circle category-img"
-                  alt="Rekomendasi"
-                />
-                <h5 class="mt-3">Rekomendasi</h5>
-              </div>
-            </div>
-            <div class="col-md-2 text-center">
-              <div class="category-card">
-                <img
-                  src="img/test1.jpg"
-                  class="rounded-circle category-img"
-                  alt="Best Seller"
-                />
-                <h5 class="mt-3">BestSeller</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> -->
       <!-- Recommendation -->
       <section class="product-carousel py-5 rekomendasi-produk">
         <div class="container">
@@ -476,7 +438,52 @@
     <!-- Slick Slider JS -->
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-    <script></script>
+    <script>
+      async function fetchBooksByAuthorId(authorId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/book/getBookByAuthorId?authorId=${authorId}`
+          );
+          if (!response.ok) {
+            throw new Error('Failed to fetch books');
+          }
+          const books = await response.json();
+
+          // Menampilkan buku di halaman
+          displayBooks(books);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+
+      // Fungsi untuk menampilkan buku di halaman
+      function displayBooks(books) {
+        const bookCardsContainer = document.getElementById(
+          'book-cards-container'
+        );
+        bookCardsContainer.innerHTML = '';
+
+        books.forEach((book) => {
+          // Membuat card untuk setiap buku
+          const bookCard = document.createElement('div');
+          bookCard.classList.add('col-2', 'mb-4');
+
+          bookCard.innerHTML = `
+        <div class="card">
+          <img src="/api/media/image/${book.cover_path}" class="card-img-top" alt="${book.judul_buku}" />
+          <div class="card-body">
+            <h5 class="card-title">${book.judul_buku}</h5>
+          </div>
+        </div>
+      `;
+
+          bookCardsContainer.appendChild(bookCard);
+        });
+      }
+
+      // ID penulis
+      fetchBooksByAuthorId(1);
+    </script>
     <script src="js/script.js"></script>
   </body>
 </html>
