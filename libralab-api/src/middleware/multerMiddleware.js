@@ -1,3 +1,6 @@
+import multer from 'multer';
+import path from 'path';
+
 // Configure where and how to store uploaded files
 const storage = multer.diskStorage({
   // Define destination folder for uploaded files

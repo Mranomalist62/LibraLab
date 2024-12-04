@@ -9,7 +9,9 @@ export async function postBookDb(bookData) {
             ID_Author,
             tahun_terbit,  
             ISBN, 
-            bahasa, 
+            bahasa,
+            halaman,
+            lebar_buku, 
             panjang_buku, 
             berat_buku, 
             harga_buku, 
@@ -17,7 +19,7 @@ export async function postBookDb(bookData) {
             rating_buku,
             cover_path,
             tersedia
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
     `;
   try {
     const rows = await connection.execute(queries, [
@@ -26,6 +28,8 @@ export async function postBookDb(bookData) {
       bookData.tahun_terbit,
       bookData.ISBN,
       bookData.bahasa,
+      bookData.halaman,
+      bookData.lebar_buku,
       bookData.panjang_buku,
       bookData.berat_buku,
       bookData.harga_buku,
@@ -61,6 +65,23 @@ export async function getbookByIdDb(BookId) {
   }
 }
 
+export async function getbookByRandomDb(limit) {
+  let connection = await DbConnection();
+
+  try {
+    const [rows] = await connection.execute(
+      'SELECT * FROM book ORDER BY RAND() LIMIT ?',
+      [limit]
+    );
+    return rows.length !== 0 ? rows : null;
+  } catch (error) {
+    console.log(error, '\n');
+    return 503;
+  } finally {
+    connection.end();
+  }
+}
+
 export async function getbookByAuthorIdDb(AuthorID) {
   let connection = await DbConnection();
 
@@ -85,7 +106,9 @@ export async function putBookDb(bookData) {
         SET judul_buku = ?, 
             tahun_terbit = ?,
             ISBN = ?, 
-            bahasa = ?, 
+            bahasa = ?,
+            halaman = ?,
+            lebar_buku =?,
             panjang_buku = ?, 
             berat_buku = ?, 
             harga_buku = ?, 
@@ -101,6 +124,8 @@ export async function putBookDb(bookData) {
       bookData.tahun_terbit,
       bookData.ISBN,
       bookData.bahasa,
+      bookData.halaman,
+      bookData.lebar_buku,
       bookData.panjang_buku,
       bookData.berat_buku,
       bookData.harga_buku,
