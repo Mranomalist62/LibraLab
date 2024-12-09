@@ -11,7 +11,14 @@ import jobdeskRoute from './src/route/jobdeskRoute.js';
 
 
 const app = express();
-app.use(cors()); 
+
+//this will be necessary if we ever run api server and web server in same url
+
+app.use(cors({
+    origin: 'http://localhost',  // Adjust the origin to your frontend URL
+    credentials: true            // Allow cookies to be sent with requests
+}));
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 
