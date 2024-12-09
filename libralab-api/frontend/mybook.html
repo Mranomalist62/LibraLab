@@ -32,8 +32,9 @@
   <body>
     <header>
       <nav class="navbar navbar-expand-lg">
-        <div class="container">
+        <div class="container navbar-container">
           <!-- Navbar Brand -->
+
           <a class="navbar-brand" href="#">Libralab</a>
 
           <button
@@ -57,8 +58,7 @@
                 <i class="fas fa-search"></i>
               </a>
             </div>
-
-            <!-- BURGER -->
+            <!-- Keranjang -->
             <ul class="navbar-nav ms-auto">
               <!-- Menggunakan ms-auto di sini -->
               <li class="nav-item dropdown">
@@ -70,14 +70,23 @@
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <i class="fa-solid fa-list custom-icon"></i>
+                  <i class="fa-solid fa-cart-shopping" style="color: white"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Item 1</a></li>
+                  <li><a class="dropdown-item" href="#">Item 2</a></li>
+                  <li><a class="dropdown-item" href="#">Item 3</a></li>
+                  <li>
+                    <a class="dropdown-item text-center" href="cart.html">
+                      <button class="btn btn-primary w-100">
+                        Lihat Keranjang
+                      </button>
+                    </a>
+                  </li>
                 </ul>
               </li>
             </ul>
+
             <!-- PROFILE -->
             <ul class="navbar-nav">
               <li class="nav-item dropdown">
@@ -112,8 +121,7 @@
                     <a class="dropdown-item" href="mybook.html">Buku Saya</a>
                   </li>
                   <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
-                  <li><a class="dropdown-item" href="#">Wishlish Saya</a></li>
-                  <li><a class="dropdown-item" href="#">Poin Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Keranjang Saya</a></li>
                   <li><hr class="dropdown-divider" /></li>
                   <li><a class="dropdown-item" href="#">Logout</a></li>
                 </ul>
