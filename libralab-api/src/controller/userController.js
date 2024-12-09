@@ -187,6 +187,57 @@ export async function initiateSignUp(req,res){
     }
 }
 
+export async function reinitiateSignUp(req,res){
+    const userData = req.body;
+    try {
+        if(await userValidation.isEmailAvailable(userData)){
+            if(await userValidation.isDataSignUpExist(userData)){
+                
+
+                // Cek apabila masih ada otp yang lama
+                const oldOTP = await userOTPmodel.getUserOTPByEmailDb(userData.email_user);
+
+                // Jika tidak ada, operasi tidak valid
+                if (!oldOTP){
+                    res.status(404).json({message: 'there is no OTP from this address before'});
+                    return;
+                }
+
+                //Hapus otp yang lama
+                await userOTPmodel.DeleteUserOTPDb(userData);
+                
+                //Kirim otp yang baru
+                let otp_status = await OTPMiddleware.sendOTPEmailVerification(userData.email_user);
+
+                if (otp_status.status !== 'Error'){
+                    const mergedData = {
+                        Nama_user       : userData.Nama_user,
+                        password_user   : userData.password_user,
+                        email_user      : userData.email_user,
+                        otp             : otp_status.otp
+                    }
+                    await userOTPmodel.postUserOTPDb(mergedData);
+                    res.status(200).json({message : 'OTP has been sent'});
+                    return
+
+                } else {
+                    res.status(500).json({message: 'Error sending OTP'});}
+                    return
+
+            } else {
+                res.status(404).json({message: 'required information is missing'});
+            }
+        }
+        else{
+            res.status(400).json({message: 'Email has been used'});
+        }
+    } catch (error) {
+        console.log(error,'\n');
+        res.status(500).json({message: 'Error sending OTP', error});
+        return 
+    }
+}
+
 export async function finishSignUp(req,res){
     const userData = req.body;
     try {
@@ -220,7 +271,7 @@ export async function finishSignUp(req,res){
 export async function loginUser(req,res){
     const userData = req.body;
     try {
-        if(await userValidation.isDataLoginExist(userData)){
+        if(userValidation.isDataLoginExist(userData)){
             const result = await userModel.getUserByEmailDb(userData.email_user)
             if(result !== null)
             {

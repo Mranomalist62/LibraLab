@@ -13,6 +13,7 @@ const router = express.Router(); // Correct method to instantiate the router
 
 // Sign Up Operation
 router.post('/initiateSignUp', userController.initiateSignUp);
+router.post('/reinitiateSignUp', userController.reinitiateSignUp)
 router.post('/finishSignUp', userController.finishSignUp);
 
 // Login Operation
