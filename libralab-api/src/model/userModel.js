@@ -82,12 +82,10 @@ export async function getUserDb(){
 
 export async function postUserDb(userData){
     let connection = await DbConnection();
-    let queries = 'INSERT INTO user(Nama_user, ID_Provinsi, ID_Kabupaten, Ket_alamat, notel_user, norek_user, password_user, email_user) VALUES (?,?,?,?,?,?,?,?)';
+    let queries = 'INSERT INTO user(Nama_user, Ket_alamat, notel_user, norek_user, password_user, email_user) VALUES (?,?,?,?,?,?)';
     try{
         const rows = await connection.execute(queries,
             [userData.Nama_user,
-            userData.ID_Provinsi,
-            userData.ID_Kabupaten,
             userData.Ket_alamat,
             userData.notel_user,
             userData.norek_user,
@@ -112,12 +110,10 @@ export async function postUserDb(userData){
 
 export async function putUserDb(userData, userId){
     let connection = await DbConnection();
-    let queries = 'UPDATE user SET Nama_user = ?, ID_Provinsi = ?, ID_Kabupaten = ?, Ket_alamat = ?, notel_user = ?, norek_user = ?, password_user = ?, email_user = ? WHERE ID_User = ?;';
+    let queries = 'UPDATE user SET Nama_user = ?, Ket_alamat = ?, notel_user = ?, norek_user = ?, password_user = ?, email_user = ? WHERE ID_User = ?;';
     try{
         const rows = await connection.execute(queries,
             [userData.Nama_user,
-            userData.ID_Provinsi,
-            userData.ID_Kabupaten,
             userData.Ket_alamat,
             userData.notel_user,
             userData.norek_user,

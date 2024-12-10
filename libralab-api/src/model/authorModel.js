@@ -68,15 +68,14 @@ export async function postAuthorDb(authorData) {
     let connection = await DbConnection();
     let queries = `
         INSERT INTO author(
-            nama_author, ID_Provinsi, ID_Kabupaten, Ket_alamat, 
-            notel_author, norek_author, password_author, email_author
+            nama_author, Ket_alamat, 
+            notel_author, norek_author, 
+            password_author, email_author
         ) VALUES (?,?,?,?,?,?,?,?)
     `;
     try {
         const rows = await connection.execute(queries, [
             authorData.Nama_author,
-            authorData.ID_Provinsi,
-            authorData.ID_Kabupaten,
             authorData.Ket_alamat,
             authorData.notel_author,
             authorData.norek_author,
@@ -96,16 +95,14 @@ export async function putAuthorDb(authorData, authorId) {
     let connection = await DbConnection();
     let queries = `
         UPDATE author SET 
-            nama_author = ?, ID_Provinsi = ?, ID_Kabupaten = ?, 
-            Ket_alamat = ?, notel_author = ?, norek_author = ?, 
+            nama_author = ?, Ket_alamat = ?, 
+            notel_author = ?, norek_author = ?, 
             password_author = ?, email_author = ? 
         WHERE ID_Author = ?
     `;
     try {
         const rows = await connection.execute(queries, [
             authorData.Nama_author,
-            authorData.ID_Provinsi,
-            authorData.ID_Kabupaten,
             authorData.Ket_alamat,
             authorData.notel_author,
             authorData.norek_author,
