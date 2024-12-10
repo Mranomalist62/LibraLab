@@ -5,7 +5,7 @@ import path from 'path';
 const imageStorage = multer.diskStorage({
     // Define destination folder for uploaded files
     destination: function (req, file, cb) {
-        cb(null, 'libralab-api/media/image/book'); // 'uploads/' is the directory where the files will be stored
+        cb(null, 'media/image/book'); // 'uploads/' is the directory where the files will be stored
     },
     
     // Define how the uploaded file should be named
@@ -18,7 +18,7 @@ const imageStorage = multer.diskStorage({
 const readableStorage = multer.diskStorage({
     // Define destination folder for uploaded files
     destination: function (req, file, cb) {
-        cb(null, 'libralab-api/media/readable/book'); // 'uploads/' is the directory where the files will be stored
+        cb(null, 'media/readable/book'); // 'uploads/' is the directory where the files will be stored
     },
     
     // Define how the uploaded file should be named
@@ -72,8 +72,8 @@ const dynamicUpload = () => {
                 destination: function (req, file, cb) {
                     const dest =
                         file.fieldname === 'coverfile'
-                            ? 'libralab-api/media/image/book'
-                            : 'libralab-api/media/readable/book';
+                            ? 'media/image/book'
+                            : 'media/readable/book';
                     cb(null, dest);
                 },
 

@@ -12,6 +12,12 @@ export async function initiateSignUp(req,res){
                 
     
                 staffData.password_staff = await hashingMiddleware.hashPassword(staffData.password_staff);
+
+                if (staffData.password_staff === 500){
+                    res.status(500).json({message: 'Hashing Error'});
+                    return
+                }
+
                 const SignUpStatus = await staffModel.postStaffDb(staffData);
                 if (SignUpStatus === 503 || SignUpStatus === null){
                     res.status(500).json({message: 'Query Error'});

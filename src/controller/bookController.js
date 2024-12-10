@@ -47,7 +47,7 @@ export async function postBook(req, res){
             //Rollback cover update
             const { cover_path } = bookData;
 
-            const imageFolderPath = path.join(process.cwd(), '/libralab-api/media/image/book', cover_path);
+            const imageFolderPath = path.join(process.cwd(), '/media/image/book', cover_path);
 
             if (fs.existsSync(imageFolderPath)) {
 
@@ -58,7 +58,7 @@ export async function postBook(req, res){
             //Rollback readable update
             const { readable_path } = bookData;
 
-            const readableFolderPath = path.join(process.cwd(), '/libralab-api/media/readable/book', readable_path);
+            const readableFolderPath = path.join(process.cwd(), '/media/readable/book', readable_path);
 
             if (fs.existsSync(readableFolderPath)) {
 
@@ -76,7 +76,7 @@ export async function postBook(req, res){
             //Rollback cover update
             const { cover_path } = bookData;
 
-            const imageFolderPath = path.join(process.cwd(), '/libralab-api/media/image/book', cover_path);
+            const imageFolderPath = path.join(process.cwd(), '/media/image/book', cover_path);
 
             if (fs.existsSync(imageFolderPath)) {
 
@@ -87,7 +87,7 @@ export async function postBook(req, res){
             //Rollback readable update
             const { readable_path } = bookData;
 
-            const readableFolderPath = path.join(process.cwd(), '/libralab-api/media/readable/book', readable_path);
+            const readableFolderPath = path.join(process.cwd(), '/media/readable/book', readable_path);
 
             if (fs.existsSync(readableFolderPath)) {
 
@@ -166,7 +166,7 @@ export async function putBookByBookId(req,res){
             return
         }
 
-        const oldimageFolderPath = path.join(process.cwd(), '/libralab-api/media/image/book', oldBookData.cover_path); // Your folder path
+        const oldimageFolderPath = path.join(process.cwd(), '/media/image/book', oldBookData.cover_path); // Your folder path
         // Step 3: Check if the file exists
         if (fs.existsSync(oldimageFolderPath)) {
 
@@ -180,7 +180,7 @@ export async function putBookByBookId(req,res){
             return
         }
         
-        const oldReadableFolderPath = path.join(process.cwd(), '/libralab-api/media/readable/book', oldBookData.readable_path); // Your folder path
+        const oldReadableFolderPath = path.join(process.cwd(), '/media/readable/book', oldBookData.readable_path); // Your folder path
         // Step 3: Check if the file exists
         if (fs.existsSync(oldReadableFolderPath)) {
 
@@ -214,7 +214,7 @@ export async function getBookCoverByUrl(req,res){
             return
         }
 
-        const filePath = path.join(process.cwd(), '/libralab-api/media/image/book', cover_path)
+        const filePath = path.join(process.cwd(), '/media/image/book', cover_path)
 
         if(!fs.existsSync(filePath)){
             res.status(404).json({ message: 'image not found' })
@@ -242,7 +242,7 @@ export async function getBookReadableByUrl(req,res){
             return
         }
 
-        const filePath = path.join(process.cwd(), '/libralab-api/media/readable/book', readable_path)
+        const filePath = path.join(process.cwd(), '/media/readable/book', readable_path)
 
         if(!fs.existsSync(filePath)){
             res.status(404).json({ message: 'readable not found' })
@@ -371,7 +371,7 @@ export async function deleteBookById(req,res){
 
         const { cover_path } = DeletedBookData;
 
-        const imageFolderPath = path.join(process.cwd(), '/libralab-api/media/image/book', cover_path); // Your folder path
+        const imageFolderPath = path.join(process.cwd(), '/media/image/book', cover_path); // Your folder path
         // Step 3: Check if the file exists
         if (fs.existsSync(imageFolderPath)) {
 
@@ -387,7 +387,7 @@ export async function deleteBookById(req,res){
 
         const { readable_path } = DeletedBookData;
 
-        const oldReadableFolderPath = path.join(process.cwd(), '/libralab-api/media/readable/book', readable_path); // Your folder path
+        const oldReadableFolderPath = path.join(process.cwd(), '/media/readable/book', readable_path); // Your folder path
         // Step 3: Check if the file exists
         if (fs.existsSync(oldReadableFolderPath)) {
 

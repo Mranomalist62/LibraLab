@@ -39,6 +39,54 @@ export async function initiateSignUp(req,res){
     }
 }
 
+
+export async function reinitiateSignUp(req,res){
+    const authorData = req.body;
+    try {
+        if(await authorValidation.isEmailAvailable(authorData)){
+            if(await authorValidation.isDataSignUpExist(authorData)){
+                
+
+                // Cek apabila masih ada otp yang lama
+                const oldOTP = await authorOTPmodel.getAuthorOTPByEmailDb(authorData.email_author);
+
+                // Jika ada, hapus
+                if (oldOTP){
+                    await authorOTPmodel.DeleteAuthorOTPDb(authorData);
+                }                
+                
+                //Kirim otp yang baru
+                let otp_status = await OTPMiddleware.sendOTPEmailVerification(authorData.email_author);
+
+                if (otp_status.status !== 'Error'){
+                    const mergedData = {
+                        nama_author       : authorData.nama_author,
+                        password_author   : authorData.password_author,
+                        email_author      : authorData.email_author,
+                        otp             : otp_status.otp
+                    }
+                    await authorOTPmodel.postAuthorOTPDb(mergedData);
+                    res.status(200).json({message : 'OTP has been sent'});
+                    return
+
+                } else {
+                    res.status(500).json({message: 'Error sending OTP'});}
+                    return
+
+            } else {
+                res.status(404).json({message: 'required information is missing'});
+            }
+        }
+        else{
+            res.status(400).json({message: 'Email has been used'});
+        }
+    } catch (error) {
+        console.log(error,'\n');
+        res.status(500).json({message: 'Error sending OTP', error});
+        return 
+    }
+}
+
 export async function finishSignUp(req,res){
     const authorData = req.body;
     try {
@@ -47,6 +95,12 @@ export async function finishSignUp(req,res){
             const result = await OTPMiddleware.verifyAuthorOtp(authorData)
             if(result === 200){
                 authorData.password_author = await hashingMiddleware.hashPassword(authorData.password_author);
+
+                if (authorData.password_author === 500){
+                    res.status(500).json({message: 'Hashing Error'});
+                    return
+                }
+
                 const SignUpStatus = await authorModel.SignUpAuthorDb(authorData);
                 if (SignUpStatus === 503 || SignUpStatus === null){
                     res.status(500).json({message: 'Query Error'});

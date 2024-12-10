@@ -101,7 +101,7 @@ export async function verifyAuthorOtp(authorData){
                     return 404
                 }
             } else {
-                await authorOTPModel.DeleteUserOTPDb(authorData);
+                await authorOTPModel.DeleteAuthorOTPDb(authorData);
                 console.log('OTP is expired, please redo Initiate signUp')
                 return 400
             }
