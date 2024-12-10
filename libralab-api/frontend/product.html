@@ -521,7 +521,7 @@
         </div>
         <button class="add-to-cart">Beli</button>
         <button class="share-button" onclick="copyLink()">
-          <i class="fa-solid fa-share-nodes"></i>
+          <i class="fa-solid fa-share"></i>
         </button>
       </div>
     </div>
@@ -586,6 +586,18 @@
       </div>
     </footer>
     <script>
+      function copyLink() {
+        const currentURL = window.location.href;
+        navigator.clipboard.writeText(currentURL).then(
+          () => {
+            alert('Link berhasil disalin ke clipboard!');
+          },
+          (err) => {
+            console.error('Gagal menyalin link: ', err);
+            alert('Gagal menyalin link, coba lagi.');
+          }
+        );
+      }
       function showTab(tabName) {
         // Hide all tab contents
         const tabContents = document.querySelectorAll('.tab-content');
@@ -604,18 +616,6 @@
 
         // Add active class to the clicked tab button
         document.getElementById(`${tabName}-tab`).classList.add('active');
-
-        function copyLink() {
-          const currentUrl = window.location.href; // Ambil URL halaman saat ini
-          navigator.clipboard
-            .writeText(currentUrl)
-            .then(function () {
-              alert('Link berhasil disalin!'); // Menampilkan pesan setelah berhasil menyalin
-            })
-            .catch(function (error) {
-              alert('Gagal menyalin link: ' + error);
-            });
-        }
       }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
