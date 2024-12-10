@@ -190,12 +190,12 @@ span a:hover {
 
 .social-login {
   display: flex;
-  justify-content: center; /* Memastikan logo berada di tengah */
-  margin-top: 20px; /* Menambahkan margin atas jika perlu */
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .social-icon {
-  margin: 0 10px; /* Menambahkan jarak antara logo */
+  margin: 0 10px;
 }
 .social-icon img {
   width: 35px;
@@ -204,9 +204,9 @@ span a:hover {
   left: 0;
 }
 .social-icon img {
-  width: 40px; /* Ukuran gambar */
-  height: auto; /* Menjaga rasio aspek */
-  cursor: pointer; /* Menunjukkan bahwa ikon bisa diklik */
+  width: 40px;
+  height: auto;
+  cursor: pointer;
 }
 
 .form-select:focus {

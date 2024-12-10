@@ -19,6 +19,11 @@ export async function sendOTPEmailVerification(emailRecipient) {
     let userSMPTP = process.env.USERSMTP;
     let passSMPTP = process.env.PASSSMTP;
 
+    console.log(server);
+    console.log(to);
+    console.log(userSMPTP);
+    console.log(passSMPTP);
+
     const transport = nodemailer.createTransport({
       host: server,
       port: 465,

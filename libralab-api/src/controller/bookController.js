@@ -7,7 +7,7 @@ export async function postBook(req, res) {
   try {
     const authHeader = req.cookies.jwt;
     const Token = await jwtMiddleware.isJWTValid(authHeader);
-
+    console.log(req.body);
     if (Token === 403) {
       res.status(403).json({
         message: 'Token expire or has been tampered',

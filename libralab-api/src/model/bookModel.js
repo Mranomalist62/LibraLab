@@ -2,6 +2,7 @@ import DbConnection from '../config/database.js';
 
 //CRUD Buku
 export async function postBookDb(bookData) {
+  console.log(bookData);
   let connection = await DbConnection();
   let queries = `
         INSERT INTO book(

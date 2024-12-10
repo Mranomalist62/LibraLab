@@ -10,6 +10,7 @@ import staffRoute from './src/route/staffRoute.js';
 import jobdeskRoute from './src/route/jobdeskRoute.js';
 
 const app = express();
+
 app.use(
   cors({
     origin: 'http://localhost:5500', // Adjust the origin to your frontend URL
@@ -17,7 +18,8 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '100mb' })); // For JSON data
+app.use(bodyParser.urlencoded({ limit: '100mb', extended: true }));
 
 app.use('/user', userRoute); // Prefixing user routes with /user
 app.use('/author', authorRoute); // Prefixing author routes with /author

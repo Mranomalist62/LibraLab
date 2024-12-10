@@ -139,7 +139,7 @@
   <body>
     <div class="container">
       <h1 class="title">Upload Your Book</h1>
-      <form class="book-form">
+      <form class="book-form" enctype="multipart/form-data">
         <div class="form-group">
           <label for="judul-buku">Judul Buku</label>
           <input
@@ -147,6 +147,15 @@
             id="judul_buku"
             class="form-control"
             placeholder="Masukkan judul buku"
+          />
+        </div>
+        <div class="form-group">
+          <label for="harga-buku">Harga Buku</label>
+          <input
+            type="text"
+            id="harga_buku"
+            class="form-control"
+            placeholder="Masukkan harga buku"
           />
         </div>
         <div class="form-group">
@@ -213,6 +222,18 @@
               placeholder="Berat"
             />
           </div>
+          <div class="form-group">
+            <label for="tersedia">Tersedia</label><br />
+            <input type="radio" id="available" name="tersedia" value="true" />
+            <label for="available">Tersedia</label>
+            <input
+              type="radio"
+              id="notAvailable"
+              name="tersedia"
+              value="false"
+            />
+            <label for="notAvailable">Tidak Tersedia</label>
+          </div>
         </div>
         <div class="form-actions">
           <button type="button" class="btn btn-secondary">Hapus</button>
@@ -243,87 +264,116 @@
           '.upload-section .btn-upload:nth-of-type(2)'
         );
 
-        // Handle upload form submit untuk upload buku
+        let selectedReadable = null;
+        let selectedCover = null;
+
+        uploadBookButton.addEventListener('click', () => {
+          const fileInput = document.createElement('input');
+          fileInput.type = 'file';
+          fileInput.accept = '.pdf';
+          fileInput.onchange = (event) => {
+            selectedReadable = event.target.files[0];
+            uploadBookButton.textContent = selectedReadable
+              ? `Selected: ${selectedReadable.name}`
+              : 'Upload your book';
+          };
+          fileInput.click();
+        });
+
+        uploadCoverButton.addEventListener('click', () => {
+          const fileInput = document.createElement('input');
+          fileInput.type = 'file';
+          fileInput.accept = 'image/*';
+          fileInput.onchange = (event) => {
+            selectedCover = event.target.files[0];
+            uploadCoverButton.textContent = selectedCover
+              ? `Selected: ${selectedCover.name}`
+              : 'Upload your cover';
+          };
+          fileInput.click();
+        });
+
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
 
-          // Ambil data dari form dan buat objek JSON
-          const bookData = {
-            judul_buku: document.querySelector('#judul_buku').value,
-            ID_Author: document.querySelector('#ID_Author')
-              ? document.querySelector('#ID_Author').value
-              : null,
-            tahun_terbit: document.querySelector('#tahun_terbit').value,
-            ISBN: document.querySelector('#ISBN').value,
-            bahasa: document.querySelector('#bahasa').value,
-            panjang_buku: document.querySelector('#panjang_buku').value,
-            berat_buku: document.querySelector('#berat_buku').value,
-            // Tambahkan lebih banyak field jika diperlukan
-          };
+          // Validate required fields
+          const requiredFields = [
+            'judul_buku',
+            'harga_buku',
+            'tahun_terbit',
+            'ISBN',
+          ];
+          for (let fieldId of requiredFields) {
+            const field = document.getElementById(fieldId);
+            if (!field.value.trim()) {
+              alert(
+                `Please fill in the ${field.previousElementSibling.textContent}`
+              );
+              field.focus();
+              return;
+            }
+          }
 
-          console.log(bookData); // Untuk debugging, cek apakah data sudah benar
+          // Get the selected availability
+          const availabilityRadio = document.querySelector(
+            'input[name="tersedia"]:checked'
+          );
+          if (!availabilityRadio) {
+            alert('Please select availability');
+            return;
+          }
+
+          const formData = new FormData(form);
+
+          // Append files
+          if (selectedReadable) {
+            formData.append('readablefile', selectedReadable);
+          }
+          if (selectedCover) {
+            formData.append('coverfile', selectedCover);
+          }
 
           try {
             const response = await fetch(
               'http://localhost:3000/book/postBook',
               {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(bookData),
+                body: formData,
+                credentials: 'include',
               }
             );
-            console.log('Response Status:', response.status); // Menambahkan log status respons
+
             if (!response.ok) {
-              throw new Error(
-                `Network response was not ok, Status Code: ${response.status}`
-              );
-            }
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
+              const errorText = await response.text();
+              throw new Error(`Error: ${response.status} - ${errorText}`);
             }
 
             const result = await response.json();
             console.log('Success:', result);
             alert('Book information saved successfully!');
+            form.reset();
+
+            // Reset file upload buttons
+            uploadBookButton.textContent = 'Upload your book';
+            uploadCoverButton.textContent = 'Upload your cover';
+            selectedReadable = null;
+            selectedCover = null;
           } catch (error) {
             console.error('Error:', error);
-            alert('There was a problem saving the book information.');
+            alert(`There was a problem: ${error.message}`);
           }
         });
 
-        // Handle button klik untuk upload buku (untuk file)
-        uploadBookButton.addEventListener('click', () => {
-          const fileInput = document.createElement('input');
-          fileInput.type = 'file';
-          fileInput.accept = '.pdf'; // Hanya menerima file PDF
-          fileInput.id = 'book_file'; // Menambahkan ID agar bisa diambil datanya
-          fileInput.onchange = (event) => {
-            const file = event.target.files[0];
-            if (file) {
-              console.log('Book file selected:', file.name);
-              // Anda bisa menambahkan file ke objek JSON jika perlu mengirimkan file
-            }
-          };
-          fileInput.click();
-        });
-
-        // Handle button klik untuk upload cover
-        uploadCoverButton.addEventListener('click', () => {
-          const fileInput = document.createElement('input');
-          fileInput.type = 'file';
-          fileInput.accept = 'image/*'; // Hanya menerima file gambar
-          fileInput.id = 'cover_file'; // Menambahkan ID agar bisa diambil datanya
-          fileInput.onchange = (event) => {
-            const file = event.target.files[0];
-            if (file) {
-              console.log('Cover file selected:', file.name);
-              // Anda bisa menambahkan cover file ke objek JSON jika perlu mengirimkan file
-            }
-          };
-          fileInput.click();
-        });
+        // Reset button functionality
+        document
+          .querySelector('.btn-secondary')
+          .addEventListener('click', () => {
+            form.reset();
+            uploadBookButton.textContent = 'Upload your book';
+            uploadCoverButton.textContent = 'Upload your cover';
+            selectedReadable = null;
+            selectedCover = null;
+          });
       });
     </script>
   </body>

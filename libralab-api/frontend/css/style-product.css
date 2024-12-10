@@ -133,19 +133,19 @@ body {
 
 /* Profile Dropdown */
 .dropdown-menu {
-  padding: 0; /* Menghilangkan padding default */
-  border-radius: 10px; /* Menambah radius untuk tampilan lebih halus */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Menambahkan shadow untuk efek kedalaman */
+  padding: 0; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   z-index: 100;
 }
 
 .dropdown-item {
-  padding: 10px 20px; /* Menambah padding untuk item */
-  transition: background-color 0.3s; /* Animasi saat hover */
+  padding: 10px 20px; 
+  transition: background-color 0.3s; 
 }
 
 .dropdown-item:hover {
-  background-color: #f0f0f0; /* Warna background saat hover */
+  background-color: #f0f0f0; 
 }
 
 /* important */
@@ -154,9 +154,9 @@ body {
 }
 
 .profile-pic {
-  width: 40px; /* Ukuran foto profil */
-  height: 40px; /* Ukuran foto profil */
-  border-radius: 50%; /* Membuat foto profil menjadi bulat */
+  width: 40px; 
+  height: 40px; 
+  border-radius: 50%; 
 }
 
 .navbar .dropdown-toggle::after {
@@ -308,11 +308,11 @@ body {
 
 @media (max-width: 991px) {
   .navbar .dropdown-menu {
-    position: absolute !important; /* Agar dropdown mengambang */
-    width: auto !important; /* Bisa sesuaikan sesuai kebutuhan */
+    position: absolute !important; 
+    width: auto !important; 
   }
 
   .navbar .dropdown-item {
-    padding: 10px 15px; /* Pastikan padding konsisten di responsive */
+    padding: 10px 15px; 
   }
 }

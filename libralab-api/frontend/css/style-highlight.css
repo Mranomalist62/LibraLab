@@ -258,12 +258,12 @@ a.navbar-brand {
 
 @media (max-width: 992px) {
   .navbar .dropdown-menu {
-    position: absolute; /* Agar dropdown mengambang */
-    width: auto; /* Bisa sesuaikan sesuai kebutuhan */
+    position: absolute;
+    width: auto; 
   }
 
   .navbar .dropdown-item {
-    padding: 10px 15px; /* Pastikan padding konsisten di responsive */
+    padding: 10px 15px;
   }
 
   /* carousel gede */

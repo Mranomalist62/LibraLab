@@ -12,11 +12,7 @@ router.get('/getBookByRandom', bookController.getRandomBook);
 router.get('/media/image/:cover_path', bookController.getBookCoverByUrl);
 
 //path for editing book
-router.put(
-  '/putBook',
-  upload.single('coverfile'),
-  bookController.putBookByBookId
-);
+router.put('/putBook', upload.single('coverfile'),  bookController.putBookByBookId);
 
 //path for deleting book
 router.delete('/deleteBook', bookController.deleteBookById);

@@ -127,29 +127,29 @@ body {
 
 /* Profile Dropdown */
 .dropdown-menu {
-  padding: 0; /* Menghilangkan padding default */
-  border-radius: 10px; /* Menambah radius untuk tampilan lebih halus */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Menambahkan shadow untuk efek kedalaman */
+  padding: 0; 
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   z-index: 100;
 }
 
 .dropdown-item {
-  padding: 10px 20px; /* Menambah padding untuk item */
-  transition: background-color 0.3s; /* Animasi saat hover */
+  padding: 10px 20px; 
+  transition: background-color 0.3s;
 }
 
 .dropdown-item:hover {
-  background-color: #f0f0f0; /* Warna background saat hover */
+  background-color: #f0f0f0;
 }
 
 .dropdown-menu {
-  filter: none !important; /* Pastikan dropdown tidak terkena efek blur */
+  filter: none !important; 
 }
 
 .profile-pic {
-  width: 40px; /* Ukuran foto profil */
-  height: 40px; /* Ukuran foto profil */
-  border-radius: 50%; /* Membuat foto profil menjadi bulat */
+  width: 40px; 
+  height: 40px; 
+  border-radius: 50%; 
 }
 
 .navbar .dropdown-toggle::after {
@@ -162,7 +162,6 @@ body {
 }
 
 /* card */
-/* Card container styling */
 .card {
   position: relative;
   width: 160px;
@@ -209,7 +208,7 @@ body {
   font-size: 14px;
   font-weight: bold;
   color: #333;
-  transition: transform 5s linear; /* Efek transisi */
+  transition: transform 5s linear; 
 }
 
 /* Tombol di atas elemen card */
@@ -218,8 +217,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: none; /* Tersembunyi awalnya */
-  z-index: 3; /* Supaya tombol di lapisan atas */
+  display: none; 
+  z-index: 3; 
   padding: 8px 16px;
   background-color: #ff8a00;
   color: #fff;
@@ -234,7 +233,7 @@ body {
 
 /* Animasi Running text hanya saat hover */
 .card:hover .marquee-text {
-  transform: translateX(-100%); /* Gerakkan teks dari kanan ke kiri */
+  transform: translateX(-100%);
 }
 
 .mybook-section {
@@ -251,14 +250,14 @@ body {
 
 @media (max-width: 991px) {
   .mybook-section {
-    width: 100%; /* Mengatur lebar section menjadi 100% */
+    width: 100%; 
     display: flex;
-    justify-content: flex-start; /* Menjaga card tetap di tengah secara horizontal */
-    align-items: center; /* Menjaga card tetap di tengah secara vertikal jika diperlukan */
-    text-align: center; /* Menjaga teks tetap rata tengah */
+    justify-content: flex-start;
+    align-items: center; 
+    text-align: center;
   }
   .navbar .dropdown-menu {
-    position: absolute; /* Agar dropdown mengambang */
-    width: auto; /* Bisa sesuaikan sesuai kebutuhan */
+    position: absolute; 
+    width: auto; 
   }
 }

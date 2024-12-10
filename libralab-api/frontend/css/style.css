@@ -173,7 +173,7 @@ body {
 
 /* BANNER */
 .carousel {
-  max-width: 1000px;
+  max-width: auto;
   margin: 150px auto 0;
   position: relative;
   display: block;
@@ -181,7 +181,7 @@ body {
 
 .carousel-inner img {
   width: 100%;
-  height: 300px;
+  height: auto;
   object-fit: cover;
 }
 
@@ -194,26 +194,6 @@ body {
   transition: filter 0.3s ease;
 }
 
-/* Category */
-/* .categories {
-  margin-top: 40px;
-  width: 70%;
-  margin: 0 auto;
-  padding: 20px 0;
-}
-
-.category-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.category-img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-} */
 
 .row {
   justify-content: space-evenly;
@@ -256,6 +236,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   outline: 1px solid rgba(161, 161, 161, 0.1);
+    transition: all 0.3s ease;
 }
 
 .card-img-top {
@@ -268,8 +249,9 @@ body {
 }
 
 .card-title {
-  font-weight: bold; /* Menonjolkan judul buku */
+  font-weight: bold; 
 }
+
 
 .img-rekomendasi {
   width: 240px;
@@ -280,27 +262,27 @@ body {
 
 .slider {
   /* display: flex;                      */
-  justify-content: center; /* Pusatkan konten secara horizontal */
-  align-items: center; /* Pusatkan konten secara vertikal */
-  margin-top: 3rem; /* Berikan jarak atas */
+  justify-content: center;
+  align-items: center; 
+  margin-top: 3rem; 
   /* height: 100vh;                      */
 }
 
 .card-produk {
   width: 160px;
   height: 290px;
-  border: none; /* Hapus border jika tidak diperlukan */
+  border: none; 
 }
 
-/* Tambahkan breakpoint untuk mode responsive */
+/* k mode responsive */
 @media (max-width: 991px) {
   .navbar .dropdown-menu {
-    position: absolute; /* Agar dropdown mengambang */
-    width: auto; /* Bisa sesuaikan sesuai kebutuhan */
+    position: absolute;
+    width: auto; /*
   }
 
   .navbar .dropdown-item {
-    padding: 10px 15px; /* Pastikan padding konsisten di responsive */
+    padding: 10px 15px; /*  responsive */
   }
 
   /* carousel gede */
@@ -325,7 +307,7 @@ body {
 
   .col-md-2 {
     flex: 0 0 auto;
-    width: 30%; /* Mengatur lebar item */
+    width: 30%; 
     max-width: 30%;
   }
 }
@@ -342,13 +324,13 @@ body {
 
   .row {
     display: flex;
-    justify-content: center; /* Untuk memastikan item tetap di tengah */
-    flex-wrap: wrap; /* Pastikan elemen dapat melipat */
+    justify-content: center; 
+    flex-wrap: wrap; 
   }
 
   .col-md-2 {
     flex: 0 0 auto;
-    width: 30%; /* Mengatur lebar item */
+    width: 30%; 
     max-width: 30%;
   }
 }
