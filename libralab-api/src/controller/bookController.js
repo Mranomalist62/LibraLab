@@ -3,88 +3,102 @@ import * as jwtMiddleware from '../middleware/JWTMiddleware.js';
 import * as path from 'path';
 import fs from 'fs';
 
+// Helper function to delete a file
+const deleteFile = async (filePath) => {
+  if (fs.existsSync(filePath)) {
+    try {
+      await fs.promises.unlink(filePath);
+      console.log(`File deleted: ${filePath}`);
+    } catch (error) {
+      console.error(`Error deleting file: ${filePath}`, error);
+    }
+  }
+};
+
 export async function postBook(req, res) {
   try {
+    // Validate JWT token
     const authHeader = req.cookies.jwt;
     const Token = await jwtMiddleware.isJWTValid(authHeader);
-    console.log(req.body);
-    if (Token === 403) {
-      res.status(403).json({
-        message: 'Token expire or has been tampered',
+
+    // Token validation response handling (can adjust behavior as needed)
+    if (Token === 403 || Token === 401) {
+      return res.status(Token).json({
+        message:
+          Token === 403
+            ? 'Token expired or has been tampered with'
+            : 'Token is missing',
       });
-      return;
-    } else if (Token === 401) {
-      res.status(401).json({
-        message: 'Token is missing',
-      });
-      return;
     }
 
-    if (!req.file) {
+    // Ensure that both files (coverfile and readablefile) are uploaded
+    if (!req.files || !req.files.coverfile || !req.files.readablefile) {
       return res.status(400).json({
         success: false,
-        message: 'No cover file upload',
+        message: 'Both cover file and readable file are required',
       });
     }
 
+    // Prepare book data
     const bookData = {
       ...req.body,
-      ID_Author: Token.ID_Author,
-      cover_path: req.file.filename,
+      ID_Author: Token.ID_Author || 1,
+      cover_path: req.files.coverfile[0].filename, // The first file in the 'coverfile' array
+      readable_path: req.files.readablefile[0].filename, // The first file in the 'readablefile' array
     };
 
+    console.log(bookData);
+
+    // Save book data in the database
     const result = await bookModel.postBookDb(bookData);
 
-    if (!result) {
-      //Rollback cover update
-      const { cover_path } = bookData;
-
-      const imageFolderPath = path.join(
+    if (!result || result === 503) {
+      // Rollback uploaded files if database operation fails
+      const coverPath = path.join(
         process.cwd(),
         '/libralab-api/media/image/book',
-        cover_path
+        req.files.coverfile[0].filename
       );
-
-      if (fs.existsSync(imageFolderPath)) {
-        await fs.promises.unlink(imageFolderPath);
-        console.log(`Image deleted: ${imageFolderPath}`);
-      }
-
-      res.status(500).json({
-        message: 'Error sending book Information',
-      });
-      return;
-    }
-
-    if (result === 503) {
-      //Rollback cover update
-      const { cover_path } = bookData;
-
-      const imageFolderPath = path.join(
+      const readablePath = path.join(
         process.cwd(),
         '/libralab-api/media/image/book',
-        cover_path
+        req.files.readablefile[0].filename
       );
 
-      if (fs.existsSync(imageFolderPath)) {
-        await fs.promises.unlink(imageFolderPath);
-        console.log(`Image deleted: ${imageFolderPath}`);
-      }
+      await deleteFile(coverPath);
+      await deleteFile(readablePath);
 
-      res.status(503).json({
-        message: 'Error sending book Information',
+      return res.status(result === 503 ? 503 : 500).json({
+        message: 'Error saving book information',
       });
-      return;
     }
 
+    // Success response
     res.status(200).json({
-      message: 'book information succesfully sent',
+      message: 'Book information successfully saved',
     });
   } catch (error) {
+    // Rollback uploaded files on unexpected error
+    if (req.files) {
+      const coverPath = path.join(
+        process.cwd(),
+        '/libralab-api/media/image/book',
+        req.files.coverfile[0].filename
+      );
+      const readablePath = path.join(
+        process.cwd(),
+        '/libralab-api/media/image/book',
+        req.files.readablefile[0].filename
+      );
+
+      await deleteFile(coverPath);
+      await deleteFile(readablePath);
+    }
+
+    console.error('Error in postBook:', error);
     res.status(500).json({
       message: 'Internal server error',
     });
-    console.log(error);
   }
 }
 

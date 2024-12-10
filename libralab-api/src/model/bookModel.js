@@ -2,7 +2,6 @@ import DbConnection from '../config/database.js';
 
 //CRUD Buku
 export async function postBookDb(bookData) {
-  console.log(bookData);
   let connection = await DbConnection();
   let queries = `
         INSERT INTO book(
@@ -12,15 +11,12 @@ export async function postBookDb(bookData) {
             ISBN, 
             bahasa,
             halaman,
-            lebar_buku, 
-            panjang_buku, 
-            berat_buku, 
             harga_buku, 
-            format_buku, 
             rating_buku,
             cover_path,
+            readable_path,
             tersedia
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
     `;
   try {
     const rows = await connection.execute(queries, [
@@ -30,13 +26,10 @@ export async function postBookDb(bookData) {
       bookData.ISBN,
       bookData.bahasa,
       bookData.halaman,
-      bookData.lebar_buku,
-      bookData.panjang_buku,
-      bookData.berat_buku,
       bookData.harga_buku,
-      bookData.format_buku,
       bookData.rating_buku,
       bookData.cover_path,
+      bookData.readable_path,
       bookData.tersedia,
     ]);
 
@@ -109,13 +102,10 @@ export async function putBookDb(bookData) {
             ISBN = ?, 
             bahasa = ?,
             halaman = ?,
-            lebar_buku =?,
-            panjang_buku = ?, 
-            berat_buku = ?, 
             harga_buku = ?, 
-            format_buku = ?, 
             rating_buku = ?,
             cover_path = ?,
+            readable_path =?,
             tersedia = ?
         WHERE ID_Buku = ?;
     `;
@@ -126,13 +116,10 @@ export async function putBookDb(bookData) {
       bookData.ISBN,
       bookData.bahasa,
       bookData.halaman,
-      bookData.lebar_buku,
-      bookData.panjang_buku,
-      bookData.berat_buku,
       bookData.harga_buku,
-      bookData.format_buku,
       bookData.rating_buku,
       bookData.cover_path,
+      bookData.readable_path,
       bookData.tersedia,
       bookData.ID_Buku,
     ]);

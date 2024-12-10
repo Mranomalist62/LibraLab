@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Share Button</title>
+  </head>
+  <body>
+    <button onclick="copyLink()">Share</button>
+
+    <script>
+      function copyLink() {
+        const currentURL = window.location.href;
+        navigator.clipboard.writeText(currentURL).then(
+          () => {
+            alert('Link berhasil disalin ke clipboard!');
+          },
+          (err) => {
+            console.error('Gagal menyalin link: ', err);
+            alert('Gagal menyalin link, coba lagi.');
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
