@@ -4,334 +4,309 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Upload Your Book</title>
-    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Reset some default styles */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Global styles */
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+        background-color: #c5c4c4;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: grid;
+        gap: 2rem;
+      }
+
+      .title {
+        text-align: center;
+        grid-column: span 2;
+        margin-bottom: 2rem;
+      }
+
+      /* Styling untuk form */
+      .book-form {
+        display: flex;
+        flex-direction: column; /* Menata elemen secara vertikal */
+        gap: 1rem; /* Jarak antara elemen */
+        width: 100%;
+      }
+
+      /* Styling untuk setiap form-group */
+      .form-group {
+        display: flex;
+        flex-direction: column; /* Menata label dan input secara vertikal */
+      }
+
+      /* Styling label */
+      label {
+        font-size: 1rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem; /* Jarak antara label dan input */
+      }
+
+      /* Styling input */
+      .form-control {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%; /* Input mengisi lebar kolom */
+      }
+
+      .form-row {
+        display: flex;
+        grid-column: 1 / -1;
+        justify-content: space-between;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+        margin-right: 1rem;
+      }
+
+      .form-row .form-group:last-child {
+        margin-right: 0;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .btn-secondary {
+        background-color: #ccc;
+        color: #333;
+        margin-right: 0.5rem;
+      }
+
+      .btn-primary {
+        background-color: #ff6b00;
+        color: #fff;
+      }
+
+      /* Book cover and file section on the right */
+      .upload-section {
+        grid-column: span 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+      }
+
+      .upload-section .btn-upload {
+        display: flex;
+        align-items: center;
+        background-color: #f5f5f5;
+        color: #333;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        margin: 0.5rem 0;
+      }
+
+      .upload-section .btn-upload img {
+        width: 24px;
+        height: 24px;
+        margin-right: 0.5rem;
+      }
+
+      form {
+        display: flex;
+        width: auto;
+        gap: 15px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
   </head>
-  <style>
-    /* Reset some default styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Global styles */
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      overflow-x: hidden;
-      background-color: #c5c4c4;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      background-color: #fff;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-    }
-
-    .title {
-      text-align: center;
-      grid-column: span 2;
-      margin-bottom: 2rem;
-    }
-
-    /* Styling untuk form */
-    .book-form {
-      display: flex;
-      flex-direction: column; /* Menata elemen secara vertikal */
-      gap: 1rem; /* Jarak antara elemen */
-      width: 100%;
-    }
-
-    /* Styling untuk setiap form-group */
-    .form-group {
-      display: flex;
-      flex-direction: column; /* Menata label dan input secara vertikal */
-    }
-
-    /* Styling label */
-    label {
-      font-size: 1rem;
-      font-weight: bold;
-      margin-bottom: 0.5rem; /* Jarak antara label dan input */
-    }
-
-    /* Styling input */
-    .form-control {
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      width: 100%; /* Input mengisi lebar kolom */
-    }
-
-    .form-row {
-      display: flex;
-      grid-column: 1 / -1;
-      justify-content: space-between;
-    }
-
-    .form-row .form-group {
-      flex: 1;
-      margin-right: 1rem;
-    }
-
-    .form-row .form-group:last-child {
-      margin-right: 0;
-    }
-
-    .form-actions {
-      display: flex;
-      justify-content: flex-start;
-      margin-top: 1.5rem;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .btn-secondary {
-      background-color: #ccc;
-      color: #333;
-      margin-right: 0.5rem;
-    }
-
-    .btn-primary {
-      background-color: #ff6b00;
-      color: #fff;
-    }
-
-    /* Book cover and file section on the right */
-    .upload-section {
-      grid-column: span 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-    }
-
-    .upload-section .btn-upload {
-      display: flex;
-      align-items: center;
-      background-color: #f5f5f5;
-      color: #333;
-      padding: 0.75rem 1.5rem;
-      border-radius: 4px;
-      text-decoration: none;
-      margin: 0.5rem 0;
-    }
-
-    .upload-section .btn-upload img {
-      width: 24px;
-      height: 24px;
-      margin-right: 0.5rem;
-    }
-  </style>
   <body>
     <div class="container">
       <h1 class="title">Upload Your Book</h1>
-      <form class="book-form" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="judul-buku">Judul Buku</label>
-          <input
-            type="text"
-            id="judul_buku"
-            class="form-control"
-            placeholder="Masukkan judul buku"
-          />
-        </div>
-        <div class="form-group">
-          <label for="harga-buku">Harga Buku</label>
-          <input
-            type="text"
-            id="harga_buku"
-            class="form-control"
-            placeholder="Masukkan harga buku"
-          />
-        </div>
-        <div class="form-group">
-          <label for="tahun-terbit">Tahun Terbit</label>
-          <input
-            type="text"
-            id="tahun_terbit"
-            class="form-control"
-            placeholder="Masukkan tahun terbit"
-          />
-        </div>
-        <div class="form-group">
-          <label for="isbn">ISBN</label>
-          <input
-            type="text"
-            id="ISBN"
-            class="form-control"
-            placeholder="Masukkan ISBN"
-          />
-        </div>
-        <div class="form-group">
-          <label for="bahasa">Bahasa</label>
-          <input
-            type="text"
-            id="bahasa"
-            class="form-control"
-            placeholder="Masukkan bahasa"
-          />
-        </div>
-        <div class="form-row">
-          <div class="form-group col">
-            <label for="halaman">Halaman</label>
+      <form enctype="multipart/form-data" id="bookForm">
+        <div class="book-form">
+          <div class="form-group">
+            <label for="judul-buku">Judul Buku</label>
             <input
               type="text"
-              id="halaman"
+              id="judul_buku"
               class="form-control"
-              placeholder="Halaman"
-            />
-          </div>
-          <div class="form-group col">
-            <label for="panjang">Panjang (cm)</label>
-            <input
-              type="text"
-              id="panjang_buku"
-              class="form-control"
-              placeholder="Panjang"
-            />
-          </div>
-          <div class="form-group col">
-            <label for="lebar">Lebar (cm)</label>
-            <input
-              type="text"
-              id="lebar_buku"
-              class="form-control"
-              placeholder="Lebar"
-            />
-          </div>
-          <div class="form-group col">
-            <label for="berat">Berat (kg)</label>
-            <input
-              type="text"
-              id="berat_buku"
-              class="form-control"
-              placeholder="Berat"
+              placeholder="Masukkan judul buku"
             />
           </div>
           <div class="form-group">
-            <label for="tersedia">Tersedia</label><br />
-            <input type="radio" id="available" name="tersedia" value="true" />
-            <label for="available">Tersedia</label>
+            <label for="harga-buku">Harga Buku</label>
             <input
-              type="radio"
-              id="notAvailable"
-              name="tersedia"
-              value="false"
+              type="text"
+              id="harga_buku"
+              class="form-control"
+              placeholder="Masukkan harga buku"
             />
-            <label for="notAvailable">Tidak Tersedia</label>
+          </div>
+          <div class="form-group">
+            <label for="tahun-terbit">Tahun Terbit</label>
+            <input
+              type="text"
+              id="tahun_terbit"
+              class="form-control"
+              placeholder="Masukkan tahun terbit"
+            />
+          </div>
+          <div class="form-group">
+            <label for="isbn">ISBN</label>
+            <input
+              type="text"
+              id="ISBN"
+              class="form-control"
+              placeholder="Masukkan ISBN"
+            />
+          </div>
+          <div class="form-group">
+            <label for="bahasa">Bahasa</label>
+            <input
+              type="text"
+              id="bahasa"
+              class="form-control"
+              placeholder="Masukkan bahasa"
+            />
+          </div>
+          <div class="form-row">
+            <div class="form-group col">
+              <label for="halaman">Halaman</label>
+              <input
+                type="text"
+                id="halaman"
+                class="form-control"
+                placeholder="Halaman"
+              />
+            </div>
+            <div class="form-group col">
+              <label for="format_buku">Format Buku</label>
+              <input
+                type="text"
+                id="format_buku"
+                name="format_buku"
+                class="form-control"
+                placeholder="Masukkan format buku (e.g., Hardcover, PDF)"
+              />
+            </div>
+            <div class="form-group col">
+              <label for="rating_buku">Rating Buku</label>
+              <input
+                type="number"
+                id="rating_buku"
+                name="rating_buku"
+                class="form-control"
+                step="0.1"
+                min="0"
+                max="5"
+                placeholder="Masukkan rating buku (0-5)"
+              />
+            </div>
+            <div class="form-group col">
+              <label for="panjang">Panjang (cm)</label>
+              <input
+                type="text"
+                id="panjang_buku"
+                class="form-control"
+                placeholder="Panjang"
+              />
+            </div>
+            <div class="form-group col">
+              <label for="lebar">Lebar (cm)</label>
+              <input
+                type="text"
+                id="lebar_buku"
+                class="form-control"
+                placeholder="Lebar"
+              />
+            </div>
+            <div class="form-group col">
+              <label for="berat">Berat (kg)</label>
+              <input
+                type="text"
+                id="berat_buku"
+                class="form-control"
+                placeholder="Berat"
+              />
+            </div>
+            <div class="form-group">
+              <label for="tersedia">Tersedia</label><br />
+              <input type="radio" id="available" name="tersedia" value="true" />
+              <label for="available">Tersedia</label>
+              <input
+                type="radio"
+                id="notAvailable"
+                name="tersedia"
+                value="false"
+              />
+              <label for="notAvailable">Tidak Tersedia</label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="reset" id="resetBtn" class="btn btn-secondary">
+              Reset
+            </button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
           </div>
         </div>
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary">Hapus</button>
-          <button type="submit" class="btn btn-primary">Simpan</button>
+        <div class="upload-section">
+          <div class="btn btn-upload">
+            <label for="readable_file">Upload Your Book (PDF)</label>
+            <input
+              type="file"
+              id="readable_file"
+              name="readablefile"
+              accept=".pdf"
+            />
+          </div>
+          <div class="btn btn-upload">
+            <label for="cover_file">Upload Your Cover (Image)</label>
+            <input
+              type="file"
+              id="cover_file"
+              name="coverfile"
+              accept="image/*"
+            />
+          </div>
         </div>
       </form>
-
-      <!-- Section for uploading book and cover files -->
-      <div class="upload-section">
-        <button class="btn btn-upload">
-          <img src="upload-icon.svg" alt="+" />
-          Upload your book
-        </button>
-        <button class="btn btn-upload">
-          <img src="upload-icon.svg" alt="+" />
-          Upload your cover
-        </button>
-      </div>
     </div>
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const form = document.querySelector('.book-form');
-        const uploadBookButton = document.querySelector(
-          '.upload-section .btn-upload:nth-of-type(1)'
-        );
-        const uploadCoverButton = document.querySelector(
-          '.upload-section .btn-upload:nth-of-type(2)'
-        );
-
-        let selectedReadable = null;
-        let selectedCover = null;
-
-        uploadBookButton.addEventListener('click', () => {
-          const fileInput = document.createElement('input');
-          fileInput.type = 'file';
-          fileInput.accept = '.pdf';
-          fileInput.onchange = (event) => {
-            selectedReadable = event.target.files[0];
-            uploadBookButton.textContent = selectedReadable
-              ? `Selected: ${selectedReadable.name}`
-              : 'Upload your book';
-          };
-          fileInput.click();
-        });
-
-        uploadCoverButton.addEventListener('click', () => {
-          const fileInput = document.createElement('input');
-          fileInput.type = 'file';
-          fileInput.accept = 'image/*';
-          fileInput.onchange = (event) => {
-            selectedCover = event.target.files[0];
-            uploadCoverButton.textContent = selectedCover
-              ? `Selected: ${selectedCover.name}`
-              : 'Upload your cover';
-          };
-          fileInput.click();
-        });
+        const form = document.getElementById('bookForm');
+        const resetButton = document.getElementById('resetBtn');
 
         form.addEventListener('submit', async (event) => {
           event.preventDefault();
 
-          // Validate required fields
-          const requiredFields = [
-            'judul_buku',
-            'harga_buku',
-            'tahun_terbit',
-            'ISBN',
-          ];
-          for (let fieldId of requiredFields) {
-            const field = document.getElementById(fieldId);
-            if (!field.value.trim()) {
-              alert(
-                `Please fill in the ${field.previousElementSibling.textContent}`
-              );
-              field.focus();
-              return;
-            }
-          }
-
-          // Get the selected availability
-          const availabilityRadio = document.querySelector(
-            'input[name="tersedia"]:checked'
-          );
-          if (!availabilityRadio) {
-            alert('Please select availability');
-            return;
-          }
-
+          // Collect form data
           const formData = new FormData(form);
-
-          // Append files
-          if (selectedReadable) {
-            formData.append('readablefile', selectedReadable);
-          }
-          if (selectedCover) {
-            formData.append('coverfile', selectedCover);
-          }
 
           try {
             const response = await fetch(
@@ -339,7 +314,6 @@
               {
                 method: 'POST',
                 body: formData,
-                credentials: 'include',
               }
             );
 
@@ -349,15 +323,9 @@
             }
 
             const result = await response.json();
-            console.log('Success:', result);
+            console.log(result);
             alert('Book information saved successfully!');
             form.reset();
-
-            // Reset file upload buttons
-            uploadBookButton.textContent = 'Upload your book';
-            uploadCoverButton.textContent = 'Upload your cover';
-            selectedReadable = null;
-            selectedCover = null;
           } catch (error) {
             console.error('Error:', error);
             alert(`There was a problem: ${error.message}`);
@@ -365,15 +333,9 @@
         });
 
         // Reset button functionality
-        document
-          .querySelector('.btn-secondary')
-          .addEventListener('click', () => {
-            form.reset();
-            uploadBookButton.textContent = 'Upload your book';
-            uploadCoverButton.textContent = 'Upload your cover';
-            selectedReadable = null;
-            selectedCover = null;
-          });
+        resetButton.addEventListener('click', () => {
+          form.reset();
+        });
       });
     </script>
   </body>
