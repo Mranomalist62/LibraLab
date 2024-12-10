@@ -28,7 +28,6 @@
         justify-content: center;
         align-items: center;
       }
-      
 
       .otp-modal-content {
         background: white;
@@ -195,6 +194,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bcrypt.js/2.4.3/bcrypt.min.js"></script>
     <script>
+      // Handle close button click
+      const closeModalButton = document.querySelector('.close-modal');
+
+      closeModalButton.addEventListener('click', () => {
+        otpModal.style.display = 'none';
+        clearInterval(timerId);
+      });
+      
       // Toggle password visibility
       const togglePassword = document.querySelector('#togglePassword');
       const password = document.querySelector('#pass');

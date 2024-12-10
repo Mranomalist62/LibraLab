@@ -195,6 +195,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bcrypt.js/2.4.3/bcrypt.min.js"></script>
     <script>
+      // Handle close button click
+      const closeModalButton = document.querySelector('.close-modal');
+
+      closeModalButton.addEventListener('click', () => {
+        otpModal.style.display = 'none';
+        clearInterval(timerId);
+      });
+
       // Toggle password visibility
       const togglePassword = document.querySelector('#togglePassword');
       const password = document.querySelector('#pass');
@@ -251,28 +259,16 @@
         const username = document.getElementById('username').value.trim();
         const email = document.getElementById('email').value.trim();
         const password = document.getElementById('pass').value.trim();
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> 68c214eef25fe1f12785e1a3a00fb0832124eed7
         fetch('http://localhost:3000/user/reinitiateSignUp', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-<<<<<<< HEAD
             email_user: email,
             password_user: password,
             Nama_user: username,
           }),
-=======
-              email_user: email,
-              password_user: password,
-              Nama_user: username,
-            }),
->>>>>>> 68c214eef25fe1f12785e1a3a00fb0832124eed7
         })
           .then((response) => response.json())
           .then((data) => {
@@ -280,11 +276,7 @@
               startTimer();
               showOTPModal();
             } else {
-<<<<<<< HEAD
               console.log(data.message);
-=======
-              console.log(data.message)
->>>>>>> 68c214eef25fe1f12785e1a3a00fb0832124eed7
             }
           })
           .catch((error) => {
