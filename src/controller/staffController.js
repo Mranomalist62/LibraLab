@@ -58,7 +58,7 @@ export async function loginStaff(req,res){
                     } else {
                         res.cookie('jwt',token,{
                             httpOnly : true,
-                            secure: false , // Use only over HTTPS
+                            secure: true , // Use only over HTTPS
                             sameSite: 'Lax',
                             maxAge: 12 * 60 * 60 * 1000
                         });
