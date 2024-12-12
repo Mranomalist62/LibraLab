@@ -199,7 +199,47 @@
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
+      /* recommendation */
+      .align-items-center {
+        margin-top: 6rem;
+        display: flex;
+        justify-content: center; /* Horizontal */
+        align-items: center; /* Vertikal */
+        box-sizing: unset;
+      }
+      .img-rekomendasi {
+        width: 240px;
+        height: 360px;
+        object-fit: cover;
+      }
+      .rekomendasi-produk {
+        background-color: #ffffff;
+        padding: 20px 0;
+        width: 100%;
+      }
 
+      .rekomendasi-produk .container {
+        margin-top: 5rem;
+        padding: 0 0 0 0;
+      }
+
+      .rekomendasi-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .img-rekomendasi {
+        object-fit: cover;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 240px;
+        height: 360px;
+        object-fit: cover;
+      }
       /* card */
       .card {
         position: relative;
@@ -208,7 +248,6 @@
         margin: 5px;
         border: none;
         border-radius: 10px;
-        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
         overflow: hidden;
         padding-top: 20px;
       }
@@ -249,28 +288,6 @@
         color: #333;
         transition: transform 5s linear;
       }
-
-      /* Tombol di atas elemen card */
-      .hidden-btn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: none;
-        z-index: 3;
-        padding: 8px 16px;
-        background-color: #ff8a00;
-        color: #fff;
-        border-radius: 20px;
-        font-size: 12px;
-      }
-
-      /* Tampilkan tombol saat hover pada card */
-      .card:hover .hidden-btn {
-        display: inline-block;
-      }
-
-      /* Animasi Running text hanya saat hover */
       .card:hover .marquee-text {
         transform: translateX(-100%);
       }
@@ -280,6 +297,8 @@
         flex-wrap: wrap;
         margin-top: 1rem;
         margin-bottom: 1rem;
+        justify-content: flex-start;
+        gap: 15px;
       }
 
       .mybook-section .container {
@@ -326,6 +345,7 @@
           justify-content: flex-start;
           align-items: center;
           text-align: center;
+          gap: unset;
         }
         .navbar .dropdown-menu {
           position: absolute;
@@ -339,6 +359,31 @@
           justify-content: center;
           align-items: center;
           text-align: center;
+        }
+      }
+      /* Responsif untuk layar kecil */
+      @media (max-width: 768px) {
+        .mybook-section {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          gap: unset;
+        }
+        .card {
+          width: 120px; /* Card mengecil */
+          height: 170px; /* Card mengecil */
+        }
+        .card-img-top {
+          width: 100px; /* Gambar lebih kecil */
+          height: 140px;
+        }
+        .card-title {
+          font-size: 14px; /* Font judul lebih kecil */
+        }
+        .img-rekomendasi {
+          display: none;
         }
       }
     </style>
@@ -455,6 +500,86 @@
           alt="Banner"
           class="img-fluid w-100"
         />
+      </div>
+      <div class="row align-items-center">
+        <!-- Gambar Rekomendasi -->
+        <div
+          class="col-md-2 text-center img-rekomendasi"
+          onclick="location.href='highlight.html';"
+          style="cursor: pointer"
+        >
+          <!-- <a style="text-align: center">Buku Rekomendasi</a> -->
+          <img
+            src="img/home-rekomen-1.jpeg"
+            alt="Buku Rekomendasi"
+            class="img-rekomendasi"
+          />
+        </div>
+        <!-- Card Buku -->
+        <div class="col-md-8">
+          <div class="slider row">
+            <!-- Card 1 -->
+            <div class="col-2">
+              <div class="card">
+                <img src="img/test1.jpg" class="card-img-top" alt="Buku 1" />
+                <div class="card-body">
+                  <h5 class="card-title">Buku 1</h5>
+                  <p class="card-text">Deskripsi Buku 1</p>
+                </div>
+              </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-2">
+              <div class="card">
+                <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
+                <div class="card-body">
+                  <h5 class="card-title">Buku 2</h5>
+                  <p class="card-text">Deskripsi Buku 2</p>
+                </div>
+              </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-2">
+              <div class="card">
+                <img src="img/test1.jpg" class="card-img-top" alt="Buku 3" />
+                <div class="card-body">
+                  <h5 class="card-title">Buku 3</h5>
+                  <p class="card-text">Deskripsi Buku 3</p>
+                </div>
+              </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="col-2">
+              <div class="card">
+                <img src="img/test1.jpg" class="card-img-top" alt="Buku 4" />
+                <div class="card-body">
+                  <h5 class="card-title">Buku 4</h5>
+                  <p class="card-text">Deskripsi Buku 4</p>
+                </div>
+              </div>
+            </div>
+            <!-- Card 5 -->
+            <div class="col-2">
+              <div class="card">
+                <img src="img/test1.jpg" class="card-img-top" alt="Buku 5" />
+                <div class="card-body">
+                  <h5 class="card-title">Buku 5</h5>
+                  <p class="card-text">Deskripsi Buku 5</p>
+                </div>
+              </div>
+            </div>
+            <!-- Card 6 -->
+            <div class="col-2">
+              <div class="card">
+                <img src="img/test1.jpg" class="card-img-top" alt="Buku 6" />
+                <div class="card-body">
+                  <h5 class="card-title">Buku 6</h5>
+                  <p class="card-text">Deskripsi Buku6</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <h2 class="text-center my-4">Featured Books</h2>
       <!-- Daftar Buku -->
@@ -682,5 +807,41 @@
 
     <!-- Slick Slider JS -->
     <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('.slider').slick({
+          slidesToShow: 5, // Jumlah slide yang ditampilkan sekaligus
+          slidesToScroll: 1,
+          arrows: true, // Tampilkan tombol navigasi
+          dots: true, // Tampilkan navigasi dot
+          responsive: [
+            {
+              breakpoint: 1399,
+              settings: {
+                slidesToShow: 4,
+              },
+            },
+            {
+              breakpoint: 992,
+              settings: {
+                slidesToShow: 3,
+              },
+            },
+            {
+              breakpoint: 768, // Pengaturan responsif untuk ukuran layar lebih kecil
+              settings: {
+                slidesToShow: 4,
+              },
+            },
+            {
+              breakpoint: 576,
+              settings: {
+                slidesToShow: 3,
+              },
+            },
+          ],
+        });
+      });
+    </script>
   </body>
 </html>
