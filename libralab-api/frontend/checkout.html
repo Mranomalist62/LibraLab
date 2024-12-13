@@ -3,26 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pembayaran</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
     />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
       rel="stylesheet"
     />
-    <title>Libralab - Book Store</title>
     <style>
-      main {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-        margin-top: 5rem;
-      }
-
       /* Navbar styling */
       .navbar {
         padding: 10px;
@@ -34,13 +24,13 @@
         z-index: 1000;
         background-color: #ff8a00;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
       }
 
-      .navbar .navbar-container {
-        padding-left: 25px !important;
-        padding-right: 25px !important;
+      .navbar .container {
+        padding-left: 25px;
+        padding-right: 25px;
         justify-content: space-between;
-        padding: 0;
       }
 
       .navbar .navbar-brand {
@@ -71,12 +61,11 @@
       .dropdown-item:hover {
         background-color: #f0f0f0;
       }
-
       .nav-item {
         margin-left: 15px;
       }
 
-      /* Navbar Collapse */
+      /* isinya navbar */
       .navbar-collapse {
         display: flex;
         justify-content: space-between;
@@ -115,6 +104,7 @@
         width: 100%;
         caret-color: #ff8a00;
         font-size: 19px;
+        font-weight: 8px;
         color: rgb(41, 40, 40);
         transition: width 0.4s linear;
       }
@@ -128,16 +118,16 @@
         align-items: center;
         color: white;
         background-color: #ff8a00;
-        font-size: 10px;
+        font-size: 16px;
         bottom: 30px;
         position: relative;
         border-radius: 20px;
+        text-decoration: none;
       }
 
       .search-icon:hover {
         color: #fff !important;
       }
-
       .custom-icon {
         font-size: 30px;
         color: white;
@@ -160,17 +150,6 @@
         background-color: #f0f0f0;
       }
 
-      .profile-pic {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-      }
-
-      .navbar .dropdown-toggle::after {
-        display: none;
-      }
-
-      /* important */
       .dropdown-menu {
         filter: none !important;
       }
@@ -185,147 +164,45 @@
         display: none;
       }
 
-      main .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem;
+      /* important */
+      .dropdown-menu {
+        filter: none !important;
       }
-
-      .book-section {
-        margin-bottom: 2rem;
+      body {
+        background-color: #f9f9f9;
       }
-
-      .book-container {
-        display: flex;
-        gap: 2rem;
+      .py-5 {
+        padding-top: 10rem !important;
       }
-
-      .book-image {
-        width: 200px;
-        height: 300px;
-        background-color: #eee;
+      h1 {
+        font-size: 24px;
       }
-
-      .book-details {
-        flex: 1;
+      .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
-
-      .price {
-        font-size: 1.5rem;
-        margin: 1rem 0;
-      }
-
-      .original-price {
-        text-decoration: line-through;
-        color: #666;
-      }
-
-      .discount {
-        background-color: #ffeded;
-        color: #ff4444;
-        padding: 0.2rem 0.5rem;
-        border-radius: 4px;
-        margin-right: 0.5rem;
-      }
-
-      .quantity-control {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin: 1rem 0;
-      }
-
-      .quantity-btn {
-        padding: 0.5rem 1rem;
-        border: 1px solid #ddd;
-        background: none;
-        cursor: pointer;
-      }
-
-      .shipping-section {
-        margin-top: 2rem;
-      }
-
-      .address-card {
-        border: 1px solid #ddd;
-        padding: 1rem;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-      }
-
-      .shipping-options {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin: 1rem 0;
-      }
-
-      .select-box {
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        width: 100%;
-      }
-
-      .payment-method {
-        display: flex;
-        align-items: center;
-        padding: 0.5rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        margin: 1rem 0;
-      }
-
-      .summary-card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 1rem;
-      }
-
-      .summary-item {
-        display: flex;
-        justify-content: space-between;
-        margin: 0.5rem 0;
-        color: #666;
-      }
-
-      .total {
-        font-weight: bold;
-        color: #000;
-        border-top: 1px solid #ddd;
-        padding-top: 1rem;
-        margin-top: 1rem;
-      }
-
-      .promo-button {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.8rem;
-        width: 100%;
-        background-color: #f5f5f5;
+      .btn-custom {
+        background-color: #ff8a00;
+        color: #fff;
         border: none;
-        border-radius: 8px;
-        margin-bottom: 1rem;
-        cursor: pointer;
+      }
+      .btn-custom:hover {
+        background-color: #e07800;
       }
 
-      .order-button {
-        width: 100%;
-        padding: 1rem;
-        background-color: #eee;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
+      @media (max-width: 991px) {
+        .navbar .dropdown-menu {
+          position: absolute;
+          width: auto;
+        }
       }
     </style>
   </head>
   <body>
-    <header class="header">
+    <header>
       <nav class="navbar navbar-expand-lg">
         <div class="container navbar-container">
           <!-- Navbar Brand -->
+
           <a class="navbar-brand" href="#">Libralab</a>
 
           <button
@@ -349,34 +226,6 @@
                 <i class="fas fa-search"></i>
               </a>
             </div>
-            <!-- Keranjang -->
-            <ul class="navbar-nav ms-auto">
-              <!-- Menggunakan ms-auto di sini -->
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i class="fa-solid fa-cart-shopping" style="color: white"></i>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Item 1</a></li>
-                  <li><a class="dropdown-item" href="#">Item 2</a></li>
-                  <li><a class="dropdown-item" href="#">Item 3</a></li>
-                  <li>
-                    <a class="dropdown-item text-center" href="cart.html">
-                      <button class="btn btn-primary w-100">
-                        Lihat Keranjang
-                      </button>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
 
             <!-- PROFILE -->
             <ul class="navbar-nav">
@@ -402,18 +251,20 @@
                         alt="Profile"
                         class="profile-pic me-2"
                       />
-                      <div>
-                        <strong>Email@example.com</strong>
-                        <small class="d-block text-muted">Username</small>
+                      <div id="user-info">
+                        <strong id="user-email">user@gmail.com</strong>
+                        <small
+                          id="user-name"
+                          class="d-block text-muted"
+                        ></small>
                       </div>
                     </div>
                   </li>
                   <li>
                     <a class="dropdown-item" href="mybook.html">Buku Saya</a>
                   </li>
-                  <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
-                  <li><a class="dropdown-item" href="#">Wishlish Saya</a></li>
-                  <li><a class="dropdown-item" href="#">Poin Saya</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Keranjang Saya</a></li> -->
                   <li><hr class="dropdown-divider" /></li>
                   <li><a class="dropdown-item" href="#">Logout</a></li>
                 </ul>
@@ -423,123 +274,86 @@
         </div>
       </nav>
     </header>
-
-    <main>
-      <div class="container">
-        <div class="book-section">
-          <h2>Buku yang dibeli</h2>
-          <div class="book-container">
-            <div class="book-image"></div>
-            <div class="book-details">
-              <p>Author's name</p>
-              <h3>Judul Buku</h3>
-              <div class="price">
-                <span class="discount">30%</span>
-                <span class="original-price">Rp150.000</span>
-                <span>Rp100.000</span>
-              </div>
-              <div class="quantity-control">
-                <button class="quantity-btn" onclick="updateQuantity(-1)">
-                  -
-                </button>
-                <span id="quantity">1</span>
-                <button class="quantity-btn" onclick="updateQuantity(1)">
-                  +
-                </button>
-              </div>
-            </div>
+    <div class="container py-5">
+      <div class="text-center mb-4">
+        <h1>Silahkan Melakukan Pembayaran</h1>
+      </div>
+      <div class="card mx-auto" style="max-width: 500px">
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <img
+              src="img/test1.jpg"
+              alt="Cover Buku"
+              class="img-fluid rounded mb-3"
+              style="max-width: 150px"
+            />
+            <h5 class="fw-bold">Libralab</h5>
+            <p class="text-muted mb-1" id="nama_author">Jonathan Black</p>
+            <p class="text-muted" id="judul_buku">
+              Sejarah Dunia yang disembunyikan
+            </p>
+            <h3 class="text-dark" id="harga_buku">Rp105.000</h3>
           </div>
-        </div>
-
-        <div class="shipping-section">
-          <h2>Pengiriman dan pembayaran</h2>
-          <div class="address-card">
-            <h3>Rumah - Alif Irsyad Santoso (62857XXXXXXXX)</h3>
-            <p>
-              Alamat Lengkap : Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.
+          <div class="alert alert-secondary text-start" role="alert">
+            <h6 class="mb-2">Transfer Bank</h6>
+            <p class="mb-0">
+              Nomor Rekening akan muncul ketika anda menekan tombol pesan.
+              Silahkan lakukan pembayaran ke nomor rekening tersebut.
             </p>
           </div>
-
-          <div class="shipping-options">
-            <div>
-              <label>Pilih Pengiriman</label>
-              <select class="select-box">
-                <option>Reguler</option>
-              </select>
-            </div>
-            <div>
-              <label>Pilih Kurir</label>
-              <select class="select-box">
-                <option>JNE Express (10.000)</option>
-              </select>
-            </div>
+          <div class="text-center">
+            <!-- Tombol untuk membuka modal -->
+            <button
+              class="btn btn-custom w-100"
+              data-bs-toggle="modal"
+              data-bs-target="#accountModal"
+            >
+              Pesan
+            </button>
           </div>
-
-          <div class="payment-method">
-            <img src="dana-logo.png" alt="DANA" style="margin-right: 1rem" />
-            DANA Rp 50.000
-          </div>
-
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              margin: 1rem 0;
-            "
-          >
-            <span>Asuransi Pengiriman</span>
-            <span>Rp1.500 ✓</span>
-          </div>
-        </div>
-
-        <div class="summary-card">
-          <button class="promo-button">
-            <span>🎫</span>
-            Gunakan promo agar lebih hemat
-            <span style="margin-left: auto">›</span>
-          </button>
-
-          <h3>Ringkasan Belanja</h3>
-          <div class="summary-item">
-            <span>Total Harga (1 Barang)</span>
-            <div>
-              <div style="text-decoration: line-through">Rp150.000</div>
-              <div>Rp100.000</div>
-            </div>
-          </div>
-          <div class="summary-item">
-            <span>Total Ongkos Kirim</span>
-            <span>Rp10.000</span>
-          </div>
-          <div class="summary-item">
-            <span>Asuransi Pengiriman</span>
-            <span>Rp1.500</span>
-          </div>
-          <div class="summary-item">
-            <span>Biaya Jasa Aplikasi</span>
-            <span>Rp1.500</span>
-          </div>
-          <div class="summary-item total">
-            <span>Total Tagihan</span>
-            <span>Rp113.000</span>
-          </div>
-
-          <button class="order-button">Pesan</button>
         </div>
       </div>
-    </main>
+    </div>
 
-    <script>
-      let quantity = 1;
+    <!-- Modal untuk popup rekening -->
+    <div
+      class="modal fade"
+      id="accountModal"
+      tabindex="-1"
+      aria-labelledby="accountModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="accountModalLabel">
+              Informasi Rekening
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0"><strong>Nomor Rekening: 123-456-7890</strong></p>
+            <p class="mb-0">Bank: BCA</p>
+            <p class="mb-0">Nama Penerima: Joko Simorangkir</p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-custom"
+              data-bs-dismiss="modal"
+            >
+              Tutup
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      function updateQuantity(change) {
-        quantity = Math.max(1, quantity + change);
-        document.getElementById('quantity').textContent = quantity;
-      }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
