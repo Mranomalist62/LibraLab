@@ -188,7 +188,65 @@
       .btn-custom:hover {
         background-color: #e07800;
       }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
 
+      .upload-container {
+        text-align: center !important;
+        margin-bottom: 20px;
+      }
+      .parent-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+      }
+      .upload-btn {
+        width: 150px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .upload-btn:hover {
+        background-color: #e0e0e0;
+      }
+
+      .upload-btn img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+
+      .hidden-input {
+        display: none;
+      }
+
+      .pesan-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ff8a00;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .pesan-btn:hover {
+        background-color: #ff7300;
+      }
       @media (max-width: 991px) {
         .navbar .dropdown-menu {
           position: absolute;
@@ -296,27 +354,33 @@
           </div>
           <div class="alert alert-secondary text-start" role="alert">
             <h6 class="mb-2">Transfer Bank</h6>
-            <p class="mb-0">
-              Nomor Rekening akan muncul ketika anda menekan tombol pesan.
-              Silahkan lakukan pembayaran ke nomor rekening tersebut.
-            </p>
+            <p class="mb-0"><strong>Nomor Rekening: 123-456-7890</strong></p>
+            <p class="mb-0">Bank: BCA</p>
+            <p class="mb-0">Nama Penerima: Joko Simorangkir</p>
+          </div>
+          <div class="parent-container">
+            <div class="upload-container">
+              <label for="upload-image" class="upload-btn">
+                <i class="fa-solid fa-camera"></i>
+              </label>
+              <input
+                type="file"
+                id="upload-image"
+                class="hidden-input"
+                accept="image/*"
+              />
+            </div>
           </div>
           <div class="text-center">
             <!-- Tombol untuk membuka modal -->
-            <button
-              class="btn btn-custom w-100"
-              data-bs-toggle="modal"
-              data-bs-target="#accountModal"
-            >
-              Pesan
-            </button>
+            <button class="btn btn-custom w-100">Pesan</button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Modal untuk popup rekening -->
-    <div
+    <!-- <div
       class="modal fade"
       id="accountModal"
       tabindex="-1"
@@ -352,8 +416,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script></script>
   </body>
 </html>
