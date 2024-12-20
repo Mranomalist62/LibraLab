@@ -9,7 +9,314 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="css/style-mybook.css" />
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+      }
+
+      /* Navbar styling */
+      .navbar {
+        padding: 10px;
+        justify-content: space-around;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #ff8a00;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .navbar .container {
+        padding-left: 25px;
+        padding-right: 25px;
+        justify-content: space-between;
+      }
+
+      .navbar .navbar-brand {
+        font-weight: 600;
+        font-size: 35px;
+        color: #ffffff;
+      }
+
+      .navbar-nav {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: #333;
+        padding-right: 15px;
+      }
+
+      .nav-link:hover {
+        color: #000000;
+      }
+
+      .dropdown-menu {
+        font-weight: 400;
+        z-index: 20;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+      .nav-item {
+        margin-left: 15px;
+      }
+
+      /* isinya navbar */
+      .navbar-collapse {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* Search bar */
+      .search {
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        align-items: center;
+      }
+
+      .search-input {
+        color: white;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 0;
+        margin-top: 5px;
+        caret-color: transparent;
+        line-height: 20px;
+        transition: width 0.4s linear;
+      }
+
+      .search-input::placeholder {
+        font-size: 15px;
+        font-style: italic;
+      }
+
+      .search .search-input {
+        padding: 0 10px;
+        width: 100%;
+        caret-color: #ff8a00;
+        font-size: 19px;
+        font-weight: 8px;
+        color: rgb(41, 40, 40);
+        transition: width 0.4s linear;
+      }
+
+      .search-icon {
+        height: 34px;
+        width: 34px;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #ff8a00;
+        font-size: 10px;
+        bottom: 30px;
+        position: relative;
+        border-radius: 20px;
+      }
+
+      .search-icon:hover {
+        color: #fff !important;
+      }
+      .custom-icon {
+        font-size: 30px;
+        color: white;
+      }
+
+      /* Profile Dropdown */
+      .dropdown-menu {
+        padding: 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+      }
+
+      .dropdown-item {
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .dropdown-menu {
+        filter: none !important;
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .navbar .dropdown-toggle::after {
+        display: none;
+      }
+
+      /* important */
+      .dropdown-menu {
+        filter: none !important;
+      }
+
+      /* card */
+      .card {
+        position: relative;
+        width: 160px;
+        height: 220px;
+        margin: 5px;
+        border: none;
+        border-radius: 10px;
+        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+        overflow: hidden;
+        padding-top: 20px;
+      }
+
+      /* Judul Buku di Atas */
+      .card-title {
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        right: 10px;
+        font-weight: bold;
+        text-align: center;
+        padding: 4px;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+        z-index: 2;
+        white-space: nowrap;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+
+      /* Gambar buku */
+      .card-img-top {
+        width: 140px;
+        height: 180px;
+        object-fit: cover;
+        margin: 10px auto;
+        display: block;
+        z-index: 1;
+      }
+
+      .marquee-text {
+        display: inline-block;
+        white-space: nowrap;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        transition: transform 5s linear;
+      }
+
+      /* Tombol di atas elemen card */
+      .hidden-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        z-index: 3;
+        padding: 8px 16px;
+        background-color: #ff8a00;
+        color: #fff;
+        border-radius: 20px;
+        font-size: 12px;
+      }
+
+      .hidden-btn:hover {
+        background-color: #f7921f;
+        box-shadow: #ff8a00;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      /* Tampilkan tombol saat hover pada card */
+      .card:hover .hidden-btn {
+        display: inline-block;
+      }
+
+      /* Animasi Running text hanya saat hover */
+      .card:hover .marquee-text {
+        transform: translateX(-100%);
+      }
+
+      .mybook-section {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 10rem;
+        margin-bottom: 21.5rem;
+      }
+
+      .mybook-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .footer {
+        background-color: #333;
+        color: #fff;
+        position: relative;
+      }
+
+      .footer h5 {
+        font-weight: bold;
+      }
+
+      .footer a {
+        transition: color 0.3s ease;
+      }
+
+      .footer a:hover {
+        color: #ffcc00;
+      }
+
+      .footer .social-icons a {
+        font-size: 20px;
+        margin-right: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .footer .social-icons a:hover {
+        transform: scale(1.2);
+      }
+
+      .footer .border-light {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      @media (max-width: 991px) {
+        .mybook-section {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          text-align: center;
+        }
+        .navbar .dropdown-menu {
+          position: absolute;
+          width: auto;
+        }
+      }
+      .content {
+        flex: 1;
+      }
+    </style>
 
     <!-- Slick Slider CSS -->
     <link
@@ -58,34 +365,6 @@
                 <i class="fas fa-search"></i>
               </a>
             </div>
-            <!-- Keranjang -->
-            <ul class="navbar-nav ms-auto">
-              <!-- Menggunakan ms-auto di sini -->
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="navbarDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i class="fa-solid fa-cart-shopping" style="color: white"></i>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">Item 1</a></li>
-                  <li><a class="dropdown-item" href="#">Item 2</a></li>
-                  <li><a class="dropdown-item" href="#">Item 3</a></li>
-                  <li>
-                    <a class="dropdown-item text-center" href="cart.html">
-                      <button class="btn btn-primary w-100">
-                        Lihat Keranjang
-                      </button>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
 
             <!-- PROFILE -->
             <ul class="navbar-nav">
@@ -111,17 +390,20 @@
                         alt="Profile"
                         class="profile-pic me-2"
                       />
-                      <div>
-                        <strong>Email@example.com</strong>
-                        <small class="d-block text-muted">Username</small>
+                      <div id="user-info">
+                        <strong id="user-email">user@gmail.com</strong>
+                        <small
+                          id="user-name"
+                          class="d-block text-muted"
+                        ></small>
                       </div>
                     </div>
                   </li>
                   <li>
                     <a class="dropdown-item" href="mybook.html">Buku Saya</a>
                   </li>
-                  <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
-                  <li><a class="dropdown-item" href="#">Keranjang Saya</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Keranjang Saya</a></li> -->
                   <li><hr class="dropdown-divider" /></li>
                   <li><a class="dropdown-item" href="#">Logout</a></li>
                 </ul>
@@ -149,7 +431,7 @@
               class="btn btn-primary hidden-btn"
               href="reading.html"
               role="button"
-              >Edit</a
+              >Baca</a
             >
           </div>
         </div>
@@ -168,76 +450,72 @@
               class="btn btn-primary hidden-btn"
               href="reading.html"
               role="button"
-              >Edit</a
+              >Baca</a
             >
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
-          </div>
-        </div>
-        <div class="card">
-          <img src="img/test1.jpg" class="card-img-top" alt="Buku 2" />
-          <div class="card-body">
-            <h5 class="card-title">Buku 2</h5>
-            <p class="card-text">Deskripsi Buku 2</p>
           </div>
         </div>
         <!-- Tambahkan lebih banyak card -->
       </section>
     </div>
+    <footer class="footer bg-dark text-white py-5">
+      <div class="container">
+        <div class="row">
+          <!-- About Section -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Libralab</h5>
+            <p>
+              Libralab adalah platform untuk berbagi dan menemukan buku-buku
+              menarik dari seluruh dunia. Temukan buku favorit Anda dan mulai
+              perjalanan membaca Anda hari ini!
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-white text-decoration-none">Home</a>
+              </li>
+              <li>
+                <a href="mybook.html" class="text-white text-decoration-none"
+                  >Buku Saya</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact Section -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Hubungi Kami</h5>
+            <p><i class="fas fa-envelope me-2"></i> support@libralab.com</p>
+            <p><i class="fas fa-phone-alt me-2"></i> +62 895-3739-09905</p>
+            <p>
+              <i class="fas fa-map-marker-alt me-2"></i> Jl. DI Panjaitan
+              No.128, Kabupaten Banyumas, Jawa Tengah
+            </p>
+          </div>
+        </div>
+
+        <hr class="border-light" />
+
+        <div class="text-center mt-3">
+          <p class="mb-0">&copy; 2024 Libralab. All rights reserved.</p>
+          <div class="social-icons mt-2">
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
