@@ -4,6 +4,31 @@ import * as OTPMiddleware from '../middleware/OTPMiddleware.js'
 import * as hashingMiddleware from '../middleware/hashingMiddleware.js';
 import * as JWTMiddleware from '../middleware/JWTMiddleware.js'
 import * as authorOTPmodel from '../model/authorOTPmodel.js'
+//Author CRUD FUNCTION
+export async function getAuthorByID(req, res) {
+    const author_ID = req.query.id;  // Using query parameter instead of path parameter
+    try {
+        const authorRaw = await authorModel.getAuthorByIdDb(author_ID);
+
+        if (!authorRaw) {
+            res.status(404).json({ message: 'Author not found' });
+            return;
+        }
+
+        // Destructuring the authorRaw object to extract the relevant fields
+        const { nama_author, email_author, ID_author } = authorRaw;
+
+        const author = { nama_author, email_author, ID_author };
+
+        res.status(200).json(author);
+        return;
+    } catch (error) {
+        console.log(error, '\n');
+        res.status(500).json({ message: 'Error retrieving Author', error });
+        return;
+    }
+}
+
 
 //Author SIGN UP & LOGIN FUNCTION
 export async function initiateSignUp(req,res){
@@ -142,8 +167,10 @@ export async function loginAuthor(req,res){
                         res.cookie('jwt',token,{
                             httpOnly : true,
                             secure: true , // Use only over HTTPS
-                            sameSite: 'Lax',
-                            maxAge: 12 * 60 * 60 * 1000
+                            SameSite: 'None',
+                            maxAge: 12 * 60 * 60 * 1000,
+                            domain: '.libralab.my.id',
+                            path : '/'
                         });
                         res.status(200).json({message: 'Credential confirmed, Login success'})   
                     }

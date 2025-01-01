@@ -16,8 +16,9 @@ export async function postBookDb(bookData) {
             rating_buku,
             cover_path,
             readable_path,
-            tersedia
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
+            tersedia,
+            deskripsi
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?);
     `;
     try {
         const rows = await connection.execute(queries, [
@@ -31,7 +32,8 @@ export async function postBookDb(bookData) {
             bookData.rating_buku,
             bookData.cover_path,
             bookData.readable_path,
-            bookData.tersedia 
+            bookData.tersedia,
+            bookData.deskripsi
         ]);
 
         return rows.length !== 0 ? rows : null;
@@ -110,6 +112,7 @@ export async function putBookDb(bookData) {
             cover_path = ?,
             readable_path =?,
             tersedia = ?
+            deskripsi = ?
         WHERE ID_Buku = ?;
     `;
     try {
@@ -124,6 +127,7 @@ export async function putBookDb(bookData) {
             bookData.cover_path,
             bookData.readable_path,
             bookData.tersedia,
+            bookData.deskripsi,
             bookData.ID_Buku,
         ]);
 

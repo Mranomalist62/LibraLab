@@ -59,8 +59,10 @@ export async function loginStaff(req,res){
                         res.cookie('jwt',token,{
                             httpOnly : true,
                             secure: true , // Use only over HTTPS
-                            sameSite: 'Lax',
-                            maxAge: 12 * 60 * 60 * 1000
+                            SameSite: 'None',
+                            maxAge: 12 * 60 * 60 * 1000,
+                            domain: '.libralab.my.id',
+                            path : '/'
                         });
                         res.status(200).json({message: 'Credential confirmed, Login success'})   
                     }

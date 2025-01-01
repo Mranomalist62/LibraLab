@@ -4,7 +4,7 @@ import * as path from 'path'
 import fs from 'fs'
 
 
-//to-do -> fix book controller with both pdf and image file 
+//fixed
 
 
 export async function postBook(req, res){
@@ -108,7 +108,7 @@ export async function postBook(req, res){
             message: 'Internal server error' })
         console.log(error);
     }
-}//still broken
+}
 
 export async function putBookByBookId(req,res){
     try {const authHeader = req.cookies.jwt;
@@ -167,10 +167,10 @@ export async function putBookByBookId(req,res){
         }
 
         const oldimageFolderPath = path.join(process.cwd(), '/media/image/book', oldBookData.cover_path); // Your folder path
-        // Step 3: Check if the file exists
+        // Check if the file exists
         if (fs.existsSync(oldimageFolderPath)) {
 
-            // Step 4: Delete the file
+            // Delete the file
             await fs.promises.unlink(oldimageFolderPath); 
             // Asynchronously delete the file
             console.log(`Image deleted: ${oldimageFolderPath}`);
@@ -181,12 +181,12 @@ export async function putBookByBookId(req,res){
         }
         
         const oldReadableFolderPath = path.join(process.cwd(), '/media/readable/book', oldBookData.readable_path); // Your folder path
-        // Step 3: Check if the file exists
+        //Check if the file exists
         if (fs.existsSync(oldReadableFolderPath)) {
 
-            // Step 4: Delete the file
+            //Delete the file
             await fs.promises.unlink(oldReadableFolderPath); 
-            // Asynchronously delete the file
+
             console.log(`Readable deleted: ${oldReadableFolderPath}`);
         }
         else {
@@ -313,7 +313,7 @@ export async function getRandomBook(req,res){
             return
         } 
 
-        const result = await bookModel.getbookByRandomDb(req.body.limit);
+        const result = await bookModel.getbookByRandomDb(req.query.limit);
     
         if(!result){
             res.status(404).json({message: 'no Book in database for this author'});
@@ -321,7 +321,7 @@ export async function getRandomBook(req,res){
         }
 
         if(result===503){
-            res.status(503).json({message: 'Error sending book Information'});
+            res.status(503).json({message: 'Error getting book Information'});
             return
         }
 

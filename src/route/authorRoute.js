@@ -19,4 +19,7 @@ router.post('/finishSignUp', authorController.finishSignUp);
 // Login Operation
 router.post('/login', authorController.loginAuthor);
 
+
+router.get('/getAuthorByID', authorController.getAuthorByID);
+
 export default router;
