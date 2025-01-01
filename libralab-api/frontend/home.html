@@ -526,57 +526,80 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', async () => {
-        const apiUrl =
-          'https://libralabapi.libralab.my.id:3000/book/getBookByRandom';
-        const limit = 5; // Example: limit to 5 books
-
-        try {
-          // Create a new URL object from the API base URL
-          const urlWithParams = new URL(apiUrl);
-
-          // Append 'limit' as a query parameter
-          urlWithParams.searchParams.append('limit', limit);
-
-          // Perform the fetch request to the server with query parameters
-          const response = await fetch(urlWithParams, {
-            method: 'GET', // GET request method
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            credentials: 'include', // Include credentials (cookies, session, etc.)
-          });
-
-          // Parse the JSON response from the API
-          const books = await response.json();
-
-          // Get the container element where the books will be displayed
-          const bookContainer = document.getElementById('book-container');
-
-          // Loop through the books data and generate cards dynamically
-          books.forEach((book) => {
-            // Create a new card element for each book
-            const bookCard = document.createElement('div');
-            bookCard.classList.add('col-md-3', 'mb-4'); // Add Bootstrap classes for layout
-
-            // Set the inner HTML for the card
-            bookCard.innerHTML = `
+      const apiUrl = 'https://libralabapi.libralab.my.id:3000/book/getBookByRandom';
+      const limit = 5; // Example: limit to 5 books
+    
+      try {
+        // Create a new URL object from the API base URL
+        const urlWithParams = new URL(apiUrl);
+    
+        // Append 'limit' as a query parameter
+        urlWithParams.searchParams.append('limit', limit);
+    
+        // Perform the fetch request to the server with query parameters
+        const response = await fetch(urlWithParams, {
+          method: 'GET', // GET request method
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include', // Include credentials (cookies, session, etc.)
+        });
+    
+        // Parse the JSON response from the API
+        const books = await response.json();
+    
+        // Get the container element where the books will be displayed
+        const bookContainer = document.getElementById('book-container');
+    
+        // Loop through the books data and generate cards dynamically
+        books.forEach((book) => {
+          // Create a new card element for each book
+          const bookCard = document.createElement('div');
+          bookCard.classList.add('col-md-3', 'mb-4'); // Add Bootstrap classes for layout
+    
+          // Serialize the book object to a JSON string and encode it
+          const encodedBookData = encodeURIComponent(JSON.stringify(book));
+    
+          // Set the inner HTML for the card and make the whole div clickable
+          bookCard.innerHTML = `
+            <a href="#" class="card-link" onclick="storeBookData('${encodedBookData}')">
               <div class="card">
-                <img src="${book.coverpath}" class="card-img-top" alt="${book.title}" />
+                <img 
+                  src="https://libralabapi.libralab.my.id:3000/book/media/image/${book.cover_path}" 
+                  class="card-img-top" 
+                  alt="${book.judul_buku}" 
+                />
                 <div class="card-body">
-                  <h5 class="card-title">${book.title}</h5>
-                  <p class="card-text">${book.description}</p>
+                  <h5 class="card-title">${book.judul_buku}</h5>
                 </div>
               </div>
-            `;
-
-            // Append the generated card to the container
-            bookContainer.appendChild(bookCard);
-          });
-        } catch (error) {
-          // Handle any errors that occur during the fetch
-          console.error('Error fetching books:', error);
-        }
-      });
+            </a>
+          `;
+    
+          // Append the generated card to the container
+          bookContainer.appendChild(bookCard);
+        });
+      } catch (error) {
+        // Handle any errors that occur during the fetch
+        console.error('Error fetching books:', error);
+      }
+    });
+    
+    // Function to store book data in localStorage and redirect
+    function storeBookData(encodedBookData) {
+      try {
+        // Decode the JSON string
+        const book = JSON.parse(decodeURIComponent(encodedBookData));
+    
+        // Store the book data as a JSON string in localStorage
+        localStorage.setItem('currentSelectedBook', JSON.stringify(book));
+    
+        // Redirect to the product details page
+        window.location.href = 'product.html';
+      } catch (error) {
+        console.error('Error storing book data:', error);
+      }
+    }
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
