@@ -266,7 +266,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="deskrpsi">Deskrpsi</label>
+            <label for="deskrpsi">Deskripsi</label>
             <input
               type="text"
               id="deskripsi"
@@ -338,55 +338,41 @@
         .getElementById('bookForm')
         .addEventListener('submit', async (event) => {
           event.preventDefault();
-
+    
+          // Check if both file inputs are empty
+          const readableFile = document.getElementById('readable_file').files[0];
+          const coverFile = document.getElementById('cover_file').files[0];
+    
+          if (!readableFile || !coverFile) {
+            alert('Please upload both the book file and the cover image.');
+            return; // Prevent form submission
+          }
+    
           // Create a new FormData object
           const formData = new FormData();
-
+    
           // Manually append each form input
-          formData.append(
-            'judul_buku',
-            document.getElementById('judul_buku').value
-          );
-          formData.append(
-            'harga_buku',
-            document.getElementById('harga_buku').value
-          );
-          formData.append(
-            'tahun_terbit',
-            document.getElementById('tahun_terbit').value
-          );
+          formData.append('judul_buku', document.getElementById('judul_buku').value);
+          formData.append('harga_buku', document.getElementById('harga_buku').value);
+          formData.append('tahun_terbit', document.getElementById('tahun_terbit').value);
           formData.append('ISBN', document.getElementById('ISBN').value);
           formData.append('bahasa', document.getElementById('bahasa').value);
-          formData.append(
-            'deskripsi',
-            document.getElementById('deskripsi').value
-          );
+          formData.append('deskripsi', document.getElementById('deskripsi').value);
           formData.append('halaman', document.getElementById('halaman').value);
-          formData.append(
-            'tersedia',
-            document.getElementById('tersedia').value
-          );
-
+          formData.append('tersedia', document.getElementById('tersedia').value);
+    
           // Append the rating field with a default value of 0
           formData.append('rating_buku', 0);
-
+    
           // Append files
-          const readableFile =
-            document.getElementById('readable_file').files[0];
-          const coverFile = document.getElementById('cover_file').files[0];
-
-          if (readableFile) {
-            formData.append('readablefile', readableFile);
-          }
-          if (coverFile) {
-            formData.append('coverfile', coverFile);
-          }
-
+          formData.append('readablefile', readableFile);
+          formData.append('coverfile', coverFile);
+    
           // Log FormData for debugging
           for (let [key, value] of formData.entries()) {
             console.log(`${key}:`, value);
           }
-
+    
           // Send the form data via fetch
           try {
             const response = await fetch(
@@ -397,12 +383,13 @@
                 credentials: 'include',
               }
             );
-
+    
             if (!response.ok) {
               const errorText = await response.text();
-              throw new Error(`Error: ${response.status} - ${errorText}`);
+              console.log(errorText);
+              alert(`Failed to send book information`);
             }
-
+    
             const result = await response.json();
             console.log(result);
             alert('Book information saved successfully!');
