@@ -232,73 +232,47 @@
     </style>
   </head>
   <body>
-    <main>
-      <div class="main-container">
-        <div class="header">
-          <h1>My Library</h1>
-          <div class="profile-section">
-            <div class="profile-info">
-              <button
-                class="edit-profile-btn"
-                onclick="location.href='author_data.html'"
-              >
-                <i class="fa-solid fa-user"></i>
-              </button>
-              <p class="author-name">John Doe</p>
-              <!-- Ganti dengan nama author yang sesuai -->
+      <main>
+        <div class="main-container">
+          <div class="header">
+            <h1>My Library</h1>
+            <div class="profile-section">
+              <div class="profile-info">
+                <button class="edit-profile-btn" onclick="location.href='author_data.html'">
+                  <i class="fa-solid fa-user"></i>
+                </button>
+                <p class="author-name">Edit Profil</p>
+              </div>
             </div>
           </div>
+          <p class="welcome-text">
+            Hi Author, thank you for participating and contributing to our
+            website. Please organize your library.
+          </p>
+          <div class="add-book-section">
+            <span class="book-input-display" id="addBookTitle">Add your new book</span>
+            <a href="author-addbook.html" class="add-btn" style="text-decoration: none">+</a>
+          </div>
+          <div class="orders-section">
+            <h2>Your Order</h2>
+            <table class="order-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Book</th>
+                  <th>Bukti</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="orderTableBody">
+                <!-- Table rows will be inserted here dynamically -->
+              </tbody>
+            </table>
+          </div>
         </div>
-        <p class="welcome-text">
-          Hi Author, thank you for participating and contributing to our
-          website. Please organize your library.
-        </p>
-        <div class="add-book-section">
-          <span class="book-input-display" id="addBookTitle"
-            >Add your new book</span
-          >
-          <a
-            href="author-addbook.html"
-            class="add-btn"
-            style="text-decoration: none"
-            >+</a
-          >
-        </div>
-        <div class="orders-section">
-          <h2>Your Order</h2>
-          <table class="order-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Bukti</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="orderTableBody">
-              <tr>
-                <td>Example</td>
-                <td><a href="https://example.com">Bukti Pembayaran</a></td>
-                <td><button class="confirm-btn">Confirm</button></td>
-              </tr>
-              <tr>
-                <td>Example</td>
-                <td><a href="https://example.com">Bukti Pembayaran</a></td>
-                <td><button class="confirm-btn">Confirm</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      </div>
-    </main>
+      </main>
 
     <script>
-      document
-        .getElementById('editBookTitle')
-        .addEventListener('click', function () {
-          window.location.href = 'author-editbook.html';
-        });
-
       document
         .getElementById('addBookTitle')
         .addEventListener('click', function () {
@@ -329,11 +303,184 @@
         });
       });
 
-      bookInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-          addBtn.click();
+      
+      document.addEventListener('DOMContentLoaded', async function () {
+        const apiUrl = 'https://libralabapi.libralab.my.id:3000/transaction/getTransactionUnconfirmedByAuthorID';
+        const confirmApiUrl = 'https://libralabapi.libralab.my.id:3000/transaction/confirmTransaction';
+    
+        // Get the order table body element
+        const orderTableBody = document.getElementById('orderTableBody');
+    
+        // Check if the element exists
+        if (!orderTableBody) {
+            console.error("Order table body not found!");
+            return;
         }
-      });
+    
+        // Function to fetch transactions
+        async function fetchTransactions() {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                if (!response.ok) throw new Error(`Failed to fetch transactions: ${response.statusText}`);
+                
+                const jsonResponse = await response.json();
+                console.log("Fetched transactions response:", jsonResponse);
+        
+                // Check if the response contains the data array
+                if (jsonResponse.data && Array.isArray(jsonResponse.data)) {
+                    return jsonResponse.data; // Return the transactions array
+                } else {
+                    console.error("Unexpected response format:", jsonResponse);
+                    return [];
+                }
+            } catch (error) {
+                console.error(error);
+                return []; // Return an empty array on error
+            }
+        }
+            
+        // Function to confirm a transaction
+        async function confirmTransaction(transactionId, userId, bookId) {
+            try {
+                const response = await fetch(confirmApiUrl, {
+                    method: 'POST',
+                    credentials: 'include', // Include credentials like cookies
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ID_Transaksi: transactionId,
+                        ID_User: userId,    // Include ID_User
+                        ID_Buku: bookId     // Include ID_Buku
+                    }) 
+                });
+        
+                if (!response.ok) throw new Error(`Failed to confirm transaction: ${response.statusText}`);
+                
+                // Assuming the response contains confirmation data
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
+        
+        async function fetchUserName(userID) {
+            try {
+                const response = await fetch(`https://libralabapi.libralab.my.id:3000/user/getUserByID?id=${userID}`, {
+                    method: 'GET',
+                    credentials: 'include' // Include credentials with the request
+                });
+                const data = await response.json();
+                if (data && data.Nama_user) {
+                    return data.Nama_user; // Return the user name
+                } else {
+                    console.error('User name not found');
+                    return "Unknown User"; // Fallback if user name is not found
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                return "Unknown User"; // Fallback on error
+            }
+        }
+        
+        async function fetchBookTitle(bookID) {
+            try {
+                const response = await fetch(`https://libralabapi.libralab.my.id:3000/book/getBookByID?id=${bookID}`, {
+                    method: 'GET',
+                    credentials: 'include' // Include credentials with the request
+                });
+                const data = await response.json();
+                if (data && data.judul_buku) {
+                    return data.judul_buku; // Return the book title
+                } else {
+                    console.error('Book title not found');
+                    return "Unknown Book"; // Fallback if book title is not found
+                }
+            } catch (error) {
+                console.error('Error fetching book data:', error);
+                return "Unknown Book"; // Fallback on error
+            }
+        }
+            
+        async function generateOrderTable() {
+            const transactions = await fetchTransactions();
+        
+            if (!Array.isArray(transactions)) {
+                console.error("Expected an array but got:", transactions);
+                return;
+            }
+        
+            // Iterate through each transaction to generate the table row
+            for (const transaction of transactions) {
+                const row = document.createElement('tr');
+        
+                // Fetch user details using ID_User
+                const userName = await fetchUserName(transaction.ID_User); // Function to fetch user name by ID_User
+        
+                // Fetch book details using ID_Buku
+                const bookTitle = await fetchBookTitle(transaction.ID_Buku); // Function to fetch book title by ID_Buku
+        
+                // Create Name Cell
+                const nameCell = document.createElement('td');
+                nameCell.textContent = userName || "Unknown User"; // Display user name or "Unknown User" if not found
+                row.appendChild(nameCell);
+        
+                // Create Book Cell
+                const bookCell = document.createElement('td');
+                bookCell.textContent = bookTitle || "Unknown Book"; // Display book title or "Unknown Book" if not found
+                row.appendChild(bookCell);
+        
+                // Create Payment Proof Cell
+                const proofCell = document.createElement('td');
+                const proofLink = document.createElement('a');
+                proofLink.href = transaction.file_path; // Assuming file_path is a valid URL or relative path
+                proofLink.textContent = "Download Proof";
+                proofLink.target = "_blank";
+                proofCell.appendChild(proofLink);
+                row.appendChild(proofCell);
+        
+                // Create Status Cell
+                const statusCell = document.createElement('td');
+                const confirmButton = document.createElement('button');
+                confirmButton.classList.add('confirm-btn');
+                confirmButton.textContent = "Confirm";
+        
+                if (transaction.status_transaksi === "verified") {
+                    confirmButton.disabled = true;
+                    confirmButton.style.opacity = '0.5';
+                }
+        
+                confirmButton.addEventListener('click', async function () {
+                    if (transaction.status_transaksi !== "verified") {
+                        const result = await confirmTransaction(transaction.ID_Transaksi, transaction.ID_User, transaction.ID_Buku); // Using ID_Transaksi
+                        if (result) {
+                            alert(`Transaction for Book ID ${transaction.ID_Buku} has been confirmed!`);
+                            transaction.status_transaksi = "verified";
+                            this.disabled = true;
+                            this.style.opacity = '0.5';
+                        } else {
+                            alert('Failed to confirm the transaction. Please try again.');
+                        }
+                    }
+                });
+        
+                statusCell.appendChild(confirmButton);
+                row.appendChild(statusCell);
+        
+                // Append the row to the table body
+                orderTableBody.appendChild(row);
+            }
+        } 
+        // Call the function to generate the table
+        generateOrderTable();
+    });
     </script>
   </body>
 </html>
