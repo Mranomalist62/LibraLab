@@ -192,4 +192,59 @@ export async function loginAuthor(req,res){
     }
 }
 
-//AUTHOR HOME FUNCTION
+//AUTHOR PROFILE CRUD FUNCTION
+
+export async function putAuthorData(req, res) {
+    try {
+        // Extract the JWT token from cookies
+        const authHeader = req.cookies.jwt;
+
+        // Validate the token and extract the payload
+        const Token = await JWTMiddleware.isJWTValid(authHeader);
+
+        if (Token === 403) {
+            return res.status(403).json({
+                message: 'Token expired or has been tampered with.',
+            });
+        } else if (Token === 401) {
+            return res.status(401).json({
+                message: 'Token is missing.',
+            });
+        }
+
+        // Extract author ID from the validated token
+        const authorId = Token.ID_Author; // Adjust this based on your token payload structure
+
+        // Get author data from the request body
+        const authorData = req.body;
+
+        if (!authorData) {
+            return res.status(400).json({ message: 'Missing author data in the request body.' });
+        }
+
+        // Call the database function to update the author
+        const result = await authorModel.putAuthorDb(authorData, authorId);
+
+        if (result === 503) {
+            return res.status(503).json({
+                message: 'Service unavailable. Database error occurred.',
+            });
+        }
+
+        if (!result) {
+            return res.status(404).json({
+                message: 'Author not found or no changes were made.',
+            });
+        }
+
+        return res.status(200).json({
+            message: 'Author updated successfully.',
+            data: result,
+        });
+    } catch (error) {
+        console.error('Error updating author:', error);
+        return res.status(500).json({
+            message: 'An internal server error occurred while updating the author.',
+        });
+    }
+}

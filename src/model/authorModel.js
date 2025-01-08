@@ -96,9 +96,8 @@ export async function putAuthorDb(authorData, authorId) {
     let queries = `
         UPDATE author SET 
             nama_author = ?, Ket_alamat = ?, 
-            notel_author = ?, norek_author = ?, 
-            password_author = ?, email_author = ? 
-        WHERE ID_Author = ?
+            notel_author = ?, norek_author = ?
+        WHERE ID_Author = ?;
     `;
     try {
         const rows = await connection.execute(queries, [
@@ -106,8 +105,6 @@ export async function putAuthorDb(authorData, authorId) {
             authorData.Ket_alamat,
             authorData.notel_author,
             authorData.norek_author,
-            authorData.password_author,
-            authorData.email_author,
             authorId,
         ]);
         return rows.length !== 0 ? rows : null;
