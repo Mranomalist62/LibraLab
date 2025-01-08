@@ -4,6 +4,7 @@ import * as OTPMiddleware from '../middleware/OTPMiddleware.js'
 import * as hashingMiddleware from '../middleware/hashingMiddleware.js';
 import * as JWTMiddleware from '../middleware/JWTMiddleware.js'
 import * as authorOTPmodel from '../model/authorOTPmodel.js'
+
 //Author CRUD FUNCTION
 export async function getAuthorByID(req, res) {
     const author_ID = req.query.id;  // Using query parameter instead of path parameter
@@ -16,9 +17,9 @@ export async function getAuthorByID(req, res) {
         }
 
         // Destructuring the authorRaw object to extract the relevant fields
-        const { nama_author, email_author, ID_author } = authorRaw;
+        const { nama_author, email_author, ID_author, notel_author, norek_author  } = authorRaw;
 
-        const author = { nama_author, email_author, ID_author };
+        const author = { nama_author, email_author, ID_author, notel_author, norek_author};
 
         res.status(200).json(author);
         return;

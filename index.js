@@ -8,6 +8,7 @@ import authorRoute from './src/route/authorRoute.js';
 import bookRoute from './src/route/bookRoute.js';
 import staffRoute from './src/route/staffRoute.js';
 import jobdeskRoute from './src/route/jobdeskRoute.js';
+import transactionRoute from './src/route/transactionRoute.js';
 import fs from 'fs';
 import { format } from 'util';
 import https from 'https';
@@ -41,6 +42,7 @@ app.use('/author', authorRoute); // Prefixing author routes with /author
 app.use('/book',bookRoute); // Prefixing book routes with /book
 app.use('/staff',staffRoute); // Prefixing staff routes with /staff
 app.use('/jobdesk',jobdeskRoute);// Prefixing jobdesk route with /Jobdesk
+app.use('/transaction',transactionRoute); //Prefixing transaction route with /transaction
 
 const log_file = fs.createWriteStream(new URL('./debug.log', import.meta.url), { flags: 'w' });
 const log_stdout = process.stdout;
