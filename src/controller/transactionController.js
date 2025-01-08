@@ -1,14 +1,73 @@
 // transactionController.js
 import * as transactionModel from '../model/transactionModel.js';
-import * as jwtMiddleware from '../middleware/JWTMiddleware.js';
+import * as ownedModel from '../model/ownedModel.js';
+import * as JWTMiddleware from '../middleware/JWTMiddleware.js';
 import * as path from 'path';
 import fs from 'fs';
 
+export async function confirmTransaction(req, res) {
+    const authHeader = req.cookies.jwt;
+    const Token = await JWTMiddleware.isJWTValid(authHeader);
+
+    // Validate token
+    if (Token === 403) {
+        res.status(403).json({
+            message: 'Token expired or has been tampered',
+        });
+        return;
+    } else if (Token === 401) {
+        res.status(401).json({
+            message: 'Token is missing',
+        });
+        return;
+    }
+
+    const transactionId = req.body.ID_Transaksi;  // Assuming the transaction ID is passed in the request body
+    const authorID = Token.ID_Author;
+
+    try {
+        // Start transaction confirmation
+        const confirmResult = await transactionModel.confirmTransactionDb(transactionId);
+
+        if (!confirmResult || confirmResult === 503) {
+            res.status(500).json({
+                message: 'Error confirming the transaction',
+            });
+            return;
+        }
+
+        // Continue to post ownership
+        const ownedBookData = {
+            ID_User: req.body.ID_User,
+            ID_Buku: req.body.ID_Buku, 
+            // Assuming the book ID is passed in the request body
+        };
+        const postOwnedResult = await ownedModel.postOwnedBookDb(ownedBookData);
+
+        if (!postOwnedResult || postOwnedResult === 503) {
+            // If posting ownership fails, unconfirm the transaction
+            await transactionModel.unconfirmTransactionDb(transactionId);
+            res.status(500).json({
+                message: 'Error posting the ownership. Transaction has been reverted.',
+            });
+            return;
+        }
+
+        res.status(200).json({
+            message: 'Transaction confirmed and ownership recorded successfully',
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Internal server error',
+        });
+        console.log(error);
+    }
+}
 
 export async function getTransactionByAuthorID(req, res) {
     try {
         const authHeader = req.cookies.jwt;
-        const Token = await jwtMiddleware.isJWTValid(authHeader);
+        const Token = await JWTMiddleware.isJWTValid(authHeader);
 
         if (Token === 403) {
             res.status(403).json({
@@ -57,7 +116,7 @@ export async function getTransactionByAuthorID(req, res) {
 export async function getTransactionUnconfirmedByAuthorID(req, res) {
     try {
         const authHeader = req.cookies.jwt;
-        const Token = await jwtMiddleware.isJWTValid(authHeader);
+        const Token = await JWTMiddleware.isJWTValid(authHeader);
 
         if (Token === 403) {
             res.status(403).json({
@@ -105,7 +164,7 @@ export async function getTransactionUnconfirmedByAuthorID(req, res) {
 export async function postTransaction(req, res) {
     try {
         const authHeader = req.cookies.jwt;
-        const Token = await jwtMiddleware.isJWTValid(authHeader);
+        const Token = await JWTMiddleware.isJWTValid(authHeader);
 
         if (Token === 403) {
             res.status(403).json({

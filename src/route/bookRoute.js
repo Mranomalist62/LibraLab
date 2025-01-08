@@ -10,6 +10,7 @@ router.post('/postBook', dynamicUpload(), bookController.postBook);
 
 router.get('/getBookByAuthorId', bookController.getBookByAuthorId);
 router.get('/getBookByRandom/',bookController.getRandomBook);
+router.get('/getBookByID',bookController.getBookById);
 router.get('/media/image/:cover_path',bookController.getBookCoverByUrl);
 router.get('/media/readable/:readable_path',bookController.getBookReadableByUrl);
 

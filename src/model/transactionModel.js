@@ -155,3 +155,47 @@
             connection.end();
         }
     }
+
+    export async function confirmTransactionDb(transactionData) {
+        let connection = await DbConnection();
+        let queries = `
+            UPDATE transaction
+            SET 
+                status_transaksi = 'verified'  
+            WHERE ID_Transaksi = ?;
+        `;
+        try {
+            const [rows] = await connection.execute(queries, [transactionData]);
+    
+            return rows.affectedRows !== 0 ? rows : null; 
+    
+        } catch (error) {
+            console.log(error, '\n');
+            return 503; 
+    
+        } finally {
+            connection.end();
+        }
+    }
+
+    export async function unconfirmTransactionDb(transactionData) {
+        let connection = await DbConnection();
+        let queries = `
+            UPDATE transaction
+            SET 
+                status_transaksi = 'Unverified'  
+            WHERE ID_Transaksi = ?;
+        `;
+        try {
+            const [rows] = await connection.execute(queries, [transactionData]);
+    
+            return rows.affectedRows !== 0 ? rows : null; 
+    
+        } catch (error) {
+            console.log(error, '\n');
+            return 503; 
+    
+        } finally {
+            connection.end();
+        }
+    }

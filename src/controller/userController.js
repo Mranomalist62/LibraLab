@@ -6,23 +6,29 @@ import * as JWTMiddleware from '../middleware/JWTMiddleware.js'
 import * as userOTPmodel from '../model/userOTPModel.js'
 
 //USER CRUD
-// export async function getUser(req, res){
-//     const userId = req.params.id;
-//     try {
-//         const user = await userModel.getUserDb();
-//         if(user){
-//             res.status(200).json(user);
-//             return
-//         } else {
-//             res.status(404).json({message: 'User not found'});
-//             return
-//         }
-//     } catch(error) {
-//         console.log(error,'\n');
-//         res.status(500).json({message: 'error retrieving user', error});
-//         return
-//     }
-// }
+export async function getUserByID(req, res) {
+    const user_ID = req.query.id;  // Using query parameter instead of path parameter
+    try {
+        const userRaw = await userModel.getUserByIdDb(user_ID);
+
+        if (!userRaw) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+
+        // Destructuring the authorRaw object to extract the relevant fields
+        const { Nama_user, email_user , ID_User , notel_user, norek_user  } = userRaw;
+
+        const user = { Nama_user, email_user, ID_User, notel_user, norek_user};
+
+        res.status(200).json(user);
+        return;
+    } catch (error) {
+        console.log(error, '\n');
+        res.status(500).json({ message: 'Error retrieving User', error });
+        return;
+    }
+}
 
 // export async function getUserbyID(req, res){
 //     const userId = req.params.id;
