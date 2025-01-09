@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Libralab - Payment Management</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        width: 250px;
+        background-color: white;
+        padding: 20px;
+        border-right: 1px solid #eee;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 40px;
+      }
+
+      .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        border-radius: 8px;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .menu-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .menu-item.active {
+        background-color: #e0e0e0;
+      }
+
+      .menu-item i {
+        margin-right: 12px;
+        width: 20px;
+      }
+
+      .bottom-menu {
+        margin-top: auto;
+        border-top: 1px solid #eee;
+        padding-top: 20px;
+      }
+
+      .main-content {
+        flex-grow: 1;
+        padding: 20px;
+        background-color: #fff;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+      }
+
+      .search-bar {
+        flex-grow: 1;
+        margin: 0 20px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+      }
+
+      .profile-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .section-title {
+        font-size: 24px;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .section-title i {
+        font-size: 24px;
+      }
+
+      .wallet-section {
+        margin-bottom: 40px;
+      }
+
+      .wallet-title {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .wallet-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .wallet-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .wallet-logo {
+        width: 100px;
+        object-fit: contain;
+      }
+
+      .wallet-number {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .copy-icon {
+        cursor: pointer;
+        padding: 5px;
+      }
+
+      .income-section {
+        margin-top: 40px;
+      }
+
+      .income-title {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+
+      .income-amount {
+        font-size: 32px;
+        font-weight: bold;
+      }
+
+      .dark-mode-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .toggle-switch {
+        width: 40px;
+        height: 20px;
+        background-color: #ccc;
+        border-radius: 20px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .toggle-switch::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background-color: white;
+        border-radius: 50%;
+        top: 1px;
+        left: 1px;
+        transition: transform 0.3s;
+      }
+
+      .toggle-switch.active::after {
+        transform: translateX(20px);
+      }
+
+      body.dark-mode {
+        background-color: #1a1a1a;
+        color: #fff;
+      }
+
+      .dark-mode .sidebar,
+      .dark-mode .main-content {
+        background-color: #1a1a1a;
+        color: #fff;
+      }
+
+      .dark-mode .menu-item {
+        color: #fff;
+      }
+
+      .dark-mode .menu-item.active {
+        background-color: #333;
+      }
+
+      .dark-mode .wallet-item {
+        border-bottom-color: #333;
+      }
+
+      .dark-mode .search-bar {
+        background-color: #333;
+        border-color: #444;
+        color: #fff;
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          display: none;
+        }
+
+        .sidebar.show {
+          display: flex;
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          z-index: 1000;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="top-menu">
+        <div class="logo">Libralab</div>
+        <a href="#" class="menu-item">
+          <i>👤</i>
+          Account
+        </a>
+        <a href="#" class="menu-item">
+          <i>📊</i>
+          Analytic
+        </a>
+        <a href="#" class="menu-item ">
+          <i>📝</i>
+          Content
+        </a>
+        <a href="#" class="menu-item active">
+          <i>💳</i>
+          Payment
+        </a>
+      </div>
+      <div class="bottom-menu">
+        <a href="#" class="menu-item">
+          <i>↪</i>
+          Logout
+        </a>
+        <!-- <div class="menu-item">
+                <i>🌙</i>
+                Dark Mode
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div> -->
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="header">
+        <div class="hamburger">☰</div>
+        <input type="text" class="search-bar" placeholder="Search..." />
+        <div class="profile-icon">👤</div>
+      </div>
+
+      <h1 class="section-title">
+        <i>💳</i>
+        Manage your payment
+      </h1>
+
+      <div class="wallet-section">
+        <h2 class="wallet-title">Your E - Wallet Account</h2>
+        <div class="wallet-item">
+          <div class="wallet-info">
+            <img
+              src="https://cdn.icon-icons.com/icons2/2699/PNG/512/dana_logo_icon_168824.png"
+              alt="Dana"
+              class="wallet-logo"
+            />
+          </div>
+          <div class="wallet-number">
+            0857-XXXX-XXXX
+            <span class="copy-icon">📋</span>
+          </div>
+        </div>
+        <div class="wallet-item">
+          <div class="wallet-info">
+            <img
+              src="https://cdn.icon-icons.com/icons2/2699/PNG/512/shopee_pay_logo_icon_170014.png"
+              alt="ShopeePay"
+              class="wallet-logo"
+            />
+          </div>
+          <div class="wallet-number">
+            0857-XXXX-XXXX
+            <span class="copy-icon">📋</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wallet-section">
+        <h2 class="wallet-title">Your E - Wallet Account</h2>
+        <div class="wallet-item">
+          <div class="wallet-info">
+            <img
+              src="https://logos-download.com/wp-content/uploads/2016/06/Bank_Mandiri_logo_white_bg.png"
+              alt="Mandiri"
+              class="wallet-logo"
+            />
+          </div>
+          <div class="wallet-number">
+            180XXXXXXXXXX
+            <span class="copy-icon">📋</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="income-section">
+        <h2 class="income-title">Your Income</h2>
+        <div class="income-amount">Rp176.542.500,-</div>
+      </div>
+    </div>
+
+    <script>
+      // Dark mode toggle functionality
+      const toggleSwitch = document.querySelector('.toggle-switch');
+      const body = document.body;
+
+      toggleSwitch.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        toggleSwitch.classList.toggle('active');
+      });
+
+      // Copy to clipboard functionality
+      const copyIcons = document.querySelectorAll('.copy-icon');
+
+      copyIcons.forEach((icon) => {
+        icon.addEventListener('click', () => {
+          const number = icon.parentElement.textContent.trim().split('📋')[0];
+          navigator.clipboard.writeText(number).then(() => {
+            alert('Number copied to clipboard!');
+          });
+        });
+      });
+
+      // Mobile menu toggle
+      const hamburger = document.querySelector('.hamburger');
+      const sidebar = document.querySelector('.sidebar');
+
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('show');
+      });
+    </script>
+  </body>
+</html>

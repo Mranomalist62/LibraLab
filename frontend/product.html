@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detail Buku</title>
+    <link rel="stylesheet" href="css/style-product.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #fafafa;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      /* Navbar styling */
+      .navbar {
+        padding: 10px;
+        justify-content: space-around;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #ff8a00;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .navbar .container {
+        padding-left: 25px;
+        padding-right: 25px;
+        justify-content: space-between;
+        height: unset;
+      }
+
+      .navbar .navbar-brand {
+        font-weight: 600;
+        font-size: 35px;
+        color: #ffffff;
+      }
+
+      .navbar-nav {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: #333;
+        padding-right: 15px;
+      }
+
+      .nav-link:hover {
+        color: #000000;
+      }
+
+      .dropdown-menu {
+        font-weight: 400;
+        z-index: 20;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+      .nav-item {
+        margin-left: 15px;
+      }
+
+      /* isinya navbar */
+      .navbar-collapse {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* Search bar */
+      .search {
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        align-items: center;
+      }
+
+      .search-input {
+        color: white;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 0;
+        margin-top: 5px;
+        caret-color: transparent;
+        line-height: 20px;
+        transition: width 0.4s linear;
+      }
+
+      .search-input::placeholder {
+        font-size: 15px;
+        font-style: italic;
+      }
+
+      .search .search-input {
+        padding: 0 10px;
+        width: 100%;
+        caret-color: #ff8a00;
+        font-size: 19px;
+        font-weight: 8px;
+        color: rgb(41, 40, 40);
+        transition: width 0.4s linear;
+      }
+
+      .search-icon {
+        height: 34px;
+        width: 34px;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #ff8a00;
+        font-size: 16px;
+        bottom: 30px;
+        position: relative;
+        border-radius: 20px;
+        text-decoration: none;
+      }
+
+      .search-icon:hover {
+        color: #fff !important;
+      }
+      .custom-icon {
+        font-size: 30px;
+        color: white;
+      }
+
+      /* Profile Dropdown */
+      .dropdown-menu {
+        padding: 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+      }
+
+      .dropdown-item {
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .dropdown-menu {
+        filter: none !important;
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .navbar .dropdown-toggle::after {
+        display: none;
+      }
+
+      /* important */
+      .dropdown-menu {
+        filter: none !important;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .product-image {
+        flex-basis: 50%;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .product-image img {
+        max-width: 250px; /* Membatasi lebar gambar menjadi 450px */
+        width: 100%; /* Agar gambar tetap responsif */
+        height: auto; /* Menjaga aspek rasio gambar */
+      }
+
+      .product-info {
+        flex-basis: 50%;
+        padding: 20px;
+      }
+
+      .price {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .original-price {
+        font-size: 24px;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .discount {
+        background-color: #ff6b6b;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+
+      .add-to-cart {
+        background-color: #ff6b6b;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .add-to-cart:hover {
+        background-color: #e65252;
+      }
+
+      .footer {
+        background-color: #333;
+        color: #fff;
+      }
+
+      .footer h5 {
+        font-weight: bold;
+      }
+
+      .footer a {
+        transition: color 0.3s ease;
+      }
+
+      .footer a:hover {
+        color: #ffcc00;
+      }
+
+      .footer .social-icons a {
+        font-size: 20px;
+        margin-right: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .footer .social-icons a:hover {
+        transform: scale(1.2);
+      }
+
+      .footer .border-light {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+      .tabs {
+        margin-top: 20px;
+      }
+
+      .tab-button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none; /* Menghapus border lainnya */
+        background-color: transparent; /* Mengatur latar belakang menjadi transparan */
+        color: #333; /* Warna teks normal */
+        font-size: 16px;
+        transition: all 0.3s ease; /* Transisi halus untuk perubahan gaya */
+      }
+
+      .tab-button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none; /* Menghapus border lainnya */
+        background-color: transparent; /* Mengatur latar belakang menjadi transparan */
+        color: #333; /* Warna teks normal */
+        font-size: 16px;
+        position: relative; /* Diperlukan untuk penempatan garis bawah */
+        transition: color 0.3s ease, border-bottom 0.3s ease; /* Transisi halus pada warna dan border-bottom */
+      }
+
+      .tab-button:hover {
+        color: #000; /* Ubah warna teks saat hover */
+      }
+
+      .tab-button.active {
+        color: #000; /* Warna teks menjadi hitam ketika aktif */
+      }
+
+      .tab-button::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px; /* Ketebalan garis bawah */
+        background-color: black;
+        transition: width 0.3s ease; /* Transisi halus untuk garis bawah */
+      }
+
+      .tab-button.active::after {
+        width: 100%; /* Ketika tab aktif, garis bawah akan mengisi penuh */
+      }
+
+      .tab-content {
+        display: none;
+        margin-top: 20px;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      ul {
+        list-style-type: none;
+        padding-left: 0;
+      }
+
+      ul li {
+        margin: 5px 0;
+      }
+      /* Menyesuaikan ukuran tombol */
+      .add-to-cart,
+      .share-button {
+        padding: 10px 20px; /* Menyamakan padding */
+        font-size: 16px; /* Menyamakan ukuran font */
+        border-radius: 4px; /* Menyamakan border-radius */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-bottom: 10px; /* Spasi antara tombol */
+      }
+
+      .add-to-cart {
+        background-color: #ff8a00;
+        color: #fff;
+        border: none;
+      }
+
+      .add-to-cart:hover {
+        background-color: #ffcc00;
+      }
+
+      .share-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+      }
+
+      .share-button:hover {
+        background-color: #45a049;
+      }
+
+      .share-button:focus,
+      .add-to-cart:focus {
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container navbar-container">
+          <!-- Navbar Brand -->
+
+          <a class="navbar-brand" href="home.html">Libralab</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa-solid fa-bars custom-icon"></span>
+          </button>
+
+          <!-- Navbar Content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- SEARCH -->
+            <div class="search">
+              <input type="text" class="search-input" placeholder="" />
+              <!-- <a href="#" class="search-icon"> 
+                <i class="fas fa-search"></i>
+              </a>-->
+            </div>
+
+            <!-- PROFILE -->
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user-circle custom-icon"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <div class="d-flex align-items-center p-2">
+                      <a href="user_profile.html">
+                        <img
+                          src="img/test1.jpg"
+                          alt="Profile"
+                          class="profile-pic me-2"
+                        />
+                      </a>
+                      <div id="user-info">
+                        <strong id="user-email">user@gmail.com</strong>
+                        <small
+                          id="user-name"
+                          class="d-block text-muted"
+                        ></small>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="mybook.html">Buku Saya</a>
+                  </li>
+                  <!-- <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Keranjang Saya</a></li> -->
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <section class="product-section"></section>
+    <div class="container">
+      <div class="product-image">
+        <img src="img/test1.jpg" alt="Wisdome of the Oracle Divination Cards" />
+      </div>
+      <div class="product-info">
+        <h2>Wisdome of the Oracle Divination Cards</h2>
+
+        <!-- Tabs for description and book details -->
+        <div class="tabs">
+          <button class="tab-button" id="desc-tab" onclick="showTab('desc')">
+            Deskripsi
+          </button>
+          <button
+            class="tab-button"
+            id="details-tab"
+            onclick="showTab('details')"
+          >
+            Detail Buku
+          </button>
+        </div>
+
+        <!-- Deskripsi Tab Content -->
+        <div id="desc" class="tab-content active">
+          <p>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem
+            doloribus aut possimus, ea optio consectetur fugiat sequi numquam
+            enim illo sunt nobis. Doloremque numquam laudantium iusto, veniam
+            velit corrupti nisi.
+          </p>
+        </div>
+
+        <!-- Detail Buku Tab Content -->
+        <div id="details" class="tab-content">
+          <ul>
+            <li><strong>Penulis:</strong> John Doe</li>
+            <li><strong>Tahun Terbit:</strong> 2024</li>
+            <li><strong>Bahasa:</strong> Indonesia</li>
+            <li><strong>Jumlah Halaman:</strong> 200</li>
+            <li><strong>ISBN:</strong> 1234567890</li>
+            <li><strong>Format:</strong> Hardcover</li>
+          </ul>
+        </div>
+
+        <div class="price">
+          <span class="original-price">Rp. 125.000</span>
+          <!-- <span class="discount">50%</span> -->
+        </div>
+        <button class="add-to-cart">Beli</button>
+        <button class="share-button" onclick="copyLink()">
+          <i class="fa-solid fa-share"></i>
+        </button>
+      </div>
+    </div>
+
+    <footer class="footer bg-dark text-white py-5">
+      <div class="container" style="height: unset; display: block">
+        <div class="row">
+          <!-- About Section -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Libralab</h5>
+            <p>
+              Libralab adalah platform untuk berbagi dan menemukan buku-buku
+              menarik dari seluruh dunia. Temukan buku favorit Anda dan mulai
+              perjalanan membaca Anda hari ini!
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-white text-decoration-none">Home</a>
+              </li>
+              <li>
+                <a href="mybook.html" class="text-white text-decoration-none"
+                  >Buku Saya</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact Section -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Hubungi Kami</h5>
+            <p><i class="fas fa-envelope me-2"></i> support@libralab.com</p>
+            <p><i class="fas fa-phone-alt me-2"></i> +62 812-3456-7890</p>
+            <p>
+              <i class="fas fa-map-marker-alt me-2"></i> Jalan Buku No. 123,
+              Jakarta
+            </p>
+          </div>
+        </div>
+
+        <hr class="border-light" />
+
+        <div class="text-center mt-3">
+          <p class="mb-0">&copy; 2024 Libralab. All rights reserved.</p>
+          <div class="social-icons mt-2">
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      async function updateBookInfo() {
+        const bookData = localStorage.getItem('currentSelectedBook');
+        if (bookData) {
+          const book = JSON.parse(bookData);
+    
+          // Update book image
+          if (book.cover_path) {
+            const coverURL = `https://libralabapi.libralab.my.id:3000/book/media/image/${book.cover_path}`;
+            const bookCover = document.querySelector('.product-image img');
+            if (bookCover) {
+              bookCover.src = coverURL;
+            }
+          }
+    
+          // Update book title
+          if (book.judul_buku) {
+            const bookTitleElement = document.querySelector('.product-info h2');
+            if (bookTitleElement) {
+              bookTitleElement.textContent = book.judul_buku;
+            }
+          }
+    
+          // Update book description
+          if (book.deskripsi) {
+            const bookDescriptionElement = document.querySelector('#desc p');
+            if (bookDescriptionElement) {
+              bookDescriptionElement.textContent = book.deskripsi;
+            }
+          }
+    
+          // Fetch author details and update book details
+          try {
+            const response = await fetch(
+              `https://libralabapi.libralab.my.id:3000/author/getAuthorByID?id=${book.ID_Author}`
+            );
+    
+            if (!response.ok) {
+              console.error('Failed to fetch author details');
+              return;
+            }
+    
+            const authorData = await response.json();
+            const detailsElement = document.getElementById('details');
+    
+            if (detailsElement) {
+              detailsElement.innerHTML = `
+                <ul>
+                  <li><strong>Penulis:</strong> ${authorData.nama_author}</li>
+                  <li><strong>Tahun Terbit:</strong> ${book.tahun_terbit}</li>
+                  <li><strong>Bahasa:</strong> ${book.bahasa}</li>
+                  <li><strong>Jumlah Halaman:</strong> ${book.halaman}</li>
+                  <li><strong>ISBN:</strong> ${book.ISBN}</li>
+                </ul>
+              `;
+            }
+    
+            // Update price
+            const priceElement = document.querySelector('.price .original-price');
+            if (priceElement) {
+              priceElement.textContent = `Rp ${formatCurrency(book.harga_buku)}`;
+            }
+    
+          } catch (error) {
+            console.error('Error fetching author details:', error);
+          }
+    
+        } else {
+          console.error('No book data found in localStorage');
+        }
+      }
+    
+      function formatCurrency(amount) {
+        return new Intl.NumberFormat('id-ID').format(amount);
+      }
+    
+      function copyLink() {
+        const currentURL = window.location.href;
+        navigator.clipboard.writeText(currentURL).then(
+          () => {
+            alert('Link berhasil disalin ke clipboard!');
+          },
+          (err) => {
+            console.error('Gagal menyalin link: ', err);
+            alert('Gagal menyalin link, coba lagi.');
+          }
+        );
+      }
+    
+      function showTab(tabName) {
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabContents.forEach((content) => {
+          content.classList.remove('active');
+        });
+    
+        const tabButtons = document.querySelectorAll('.tab-button');
+        tabButtons.forEach((button) => {
+          button.classList.remove('active');
+        });
+    
+        document.getElementById(tabName).classList.add('active');
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+      }
+    
+      // Redirect to checkout page when the "add-to-cart" button is clicked
+      document.querySelector('.add-to-cart').addEventListener('click', function() {
+        window.location.href = 'checkout.html';
+      });
+    
+      // Call the updateBookInfo function when the page loads
+      document.addEventListener('DOMContentLoaded', () => {
+        updateBookInfo();
+      });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  </body>
+</html>

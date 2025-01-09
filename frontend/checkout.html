@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pembayaran</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* Navbar styling */
+      .navbar {
+        padding: 10px;
+        justify-content: space-around;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #ff8a00;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+      }
+
+      .navbar .container {
+        padding-left: 25px;
+        padding-right: 25px;
+        justify-content: space-between;
+      }
+
+      .navbar .navbar-brand {
+        font-weight: 600;
+        font-size: 35px;
+        color: #ffffff;
+      }
+
+      .navbar-nav {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: #333;
+        padding-right: 15px;
+      }
+
+      .nav-link:hover {
+        color: #000000;
+      }
+
+      .dropdown-menu {
+        font-weight: 400;
+        z-index: 20;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+      .nav-item {
+        margin-left: 15px;
+      }
+
+      /* isinya navbar */
+      .navbar-collapse {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* Search bar */
+      .search {
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        align-items: center;
+      }
+
+      .search-input {
+        color: white;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 0;
+        margin-top: 5px;
+        caret-color: transparent;
+        line-height: 20px;
+        transition: width 0.4s linear;
+      }
+
+      .search-input::placeholder {
+        font-size: 15px;
+        font-style: italic;
+      }
+
+      .search .search-input {
+        padding: 0 10px;
+        width: 100%;
+        caret-color: #ff8a00;
+        font-size: 19px;
+        font-weight: 8px;
+        color: rgb(41, 40, 40);
+        transition: width 0.4s linear;
+      }
+
+      .search-icon {
+        height: 34px;
+        width: 34px;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #ff8a00;
+        font-size: 16px;
+        bottom: 30px;
+        position: relative;
+        border-radius: 20px;
+        text-decoration: none;
+      }
+
+      .search-icon:hover {
+        color: #fff !important;
+      }
+      .custom-icon {
+        font-size: 30px;
+        color: white;
+      }
+
+      /* Profile Dropdown */
+      .dropdown-menu {
+        padding: 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+      }
+
+      .dropdown-item {
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .dropdown-menu {
+        filter: none !important;
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .navbar .dropdown-toggle::after {
+        display: none;
+      }
+
+      /* important */
+      .dropdown-menu {
+        filter: none !important;
+      }
+      body {
+        background-color: #f9f9f9;
+      }
+      .py-5 {
+        padding-top: 10rem !important;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .card {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .btn-custom {
+        background-color: #ff8a00;
+        color: #fff;
+        border: none;
+      }
+      .btn-custom:hover {
+        background-color: #e07800;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+      }
+
+      .upload-container {
+        text-align: center !important;
+        margin-bottom: 20px;
+      }
+      .parent-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+      }
+      .upload-btn {
+        width: 150px;
+        height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .upload-btn:hover {
+        background-color: #e0e0e0;
+      }
+
+      .upload-btn img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+      }
+
+      .hidden-input {
+        display: none;
+      }
+
+      .pesan-btn {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #ff8a00;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      .pesan-btn:hover {
+        background-color: #ff7300;
+      }
+      .footer {
+        background-color: #333;
+        color: #fff;
+        width: 100%;
+      }
+
+      .footer h5 {
+        font-weight: bold;
+      }
+
+      .footer a {
+        transition: color 0.3s ease;
+      }
+
+      .footer a:hover {
+        color: #ffcc00;
+      }
+
+      .footer .social-icons a {
+        font-size: 20px;
+        margin-right: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .footer .social-icons a:hover {
+        transform: scale(1.2);
+      }
+
+      .footer .border-light {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+      @media (max-width: 991px) {
+        .navbar .dropdown-menu {
+          position: absolute;
+          width: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container navbar-container">
+          <!-- Navbar Brand -->
+
+          <a class="navbar-brand" href="home.html">Libralab</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa-solid fa-bars custom-icon"></span>
+          </button>
+
+          <!-- Navbar Content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- SEARCH -->
+            <div class="search">
+              <input type="text" class="search-input" placeholder="" />
+              <!-- <a href="#" class="search-icon"> 
+                <i class="fas fa-search"></i>
+              </a>-->
+            </div>
+
+            <!-- PROFILE -->
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user-circle custom-icon"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <div class="d-flex align-items-center p-2">
+                      <a href="user_profile.html">
+                        <img
+                          src="img/test1.jpg"
+                          alt="Profile"
+                          class="profile-pic me-2"
+                        />
+                      </a>
+                      <div id="user-info">
+                        <strong id="user-email">user@gmail.com</strong>
+                        <small
+                          id="user-name"
+                          class="d-block text-muted"
+                        ></small>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="mybook.html">Buku Saya</a>
+                  </li>
+                  <!-- <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Keranjang Saya</a></li> -->
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container py-5">
+      <div class="text-center mb-4">
+        <h1>Silahkan Melakukan Pembayaran</h1>
+      </div>
+      <div class="card mx-auto" style="max-width: 500px">
+        <div class="card-body">
+          <div class="text-center mb-4">
+            <img
+              src="img/test1.jpg"
+              alt="Cover Buku"
+              class="img-fluid rounded mb-3"
+              style="max-width: 150px"
+            />
+            <h5 class="fw-bold">Libralab</h5>
+            <p class="text-muted mb-1" id="nama_author">Jonathan Black</p>
+            <p class="text-muted" id="judul_buku">
+              Sejarah Dunia yang disembunyikan
+            </p>
+            <h3 class="text-dark" id="harga_buku">Rp105.000</h3>
+          </div>
+          <div class="alert alert-secondary text-start" role="alert" id="transfer-bank-alert">
+              <h6 class="mb-2">Transfer Bank</h6>
+              <p class="mb-0" id="rekening-number"><strong>Nomor Rekening: 123-456-7890</strong></p>
+              <p class="mb-0" id="penerima-name">Nama Penerima: Joko Simorangkir</p>
+          </div>
+        </div>
+          <div class="parent-container">
+            <div class="upload-container">
+              <label for="upload-image" class="upload-btn">
+                <i class="fa-solid fa-camera"></i>
+              </label>
+              <input
+                type="file"
+                id="upload-image"
+                class="hidden-input"
+                accept="image/*"
+              />
+            </div>
+          </div>
+          <div class="text-center">
+            <!-- Tombol untuk membuka modal -->
+            <button id="pesanButton" class="btn btn-custom w-100">Pesan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer bg-dark text-white py-5">
+      <div class="container">
+        <div class="row">
+          <!-- About Section -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Libralab</h5>
+            <p>
+              Libralab adalah platform untuk berbagi dan menemukan buku-buku
+              menarik dari seluruh dunia. Temukan buku favorit Anda dan mulai
+              perjalanan membaca Anda hari ini!
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Quick Links</h5>
+            <ul class="list-unstyled">
+              <li>
+                <a href="#" class="text-white text-decoration-none">Home</a>
+              </li>
+              <li>
+                <a href="mybook.html" class="text-white text-decoration-none"
+                  >Buku Saya</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact Section -->
+          <div class="col-md-4 mb-3">
+            <h5 class="text-uppercase">Hubungi Kami</h5>
+            <p><i class="fas fa-envelope me-2"></i> support@libralab.com</p>
+            <p><i class="fas fa-phone-alt me-2"></i> +62 895-3739-09905</p>
+            <p>
+              <i class="fas fa-map-marker-alt me-2"></i> Jl. DI Panjaitan
+              No.128, Kabupaten Banyumas, Jawa Tengah
+            </p>
+          </div>
+        </div>
+
+        <hr class="border-light" />
+
+        <div class="text-center mt-3">
+          <p class="mb-0">&copy; 2024 Libralab. All rights reserved.</p>
+          <div class="social-icons mt-2">
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-white me-3"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      async function updateCheckoutPage() {
+        // Retrieve book data from localStorage
+        const bookData = localStorage.getItem('currentSelectedBook');
+        if (bookData) {
+          const book = JSON.parse(bookData);
+    
+          // Update book cover image
+          const bookCover = document.querySelector('.card-body img');
+          if (book.cover_path && bookCover) {
+            const coverURL = `https://libralabapi.libralab.my.id:3000/book/media/image/${book.cover_path}`;
+            bookCover.src = coverURL;
+          }
+    
+          // Update book title
+          const bookTitle = document.querySelector('#judul_buku');
+          if (book.judul_buku && bookTitle) {
+            bookTitle.textContent = book.judul_buku;
+          }
+    
+          // Update book price
+          const bookPrice = document.querySelector('#harga_buku');
+          if (book.harga_buku && bookPrice) {
+            bookPrice.textContent = `Rp${formatCurrency(book.harga_buku)}`;
+          }
+    
+          // Fetch author data
+          try {
+            const authorResponse = await fetch(
+              `https://libralabapi.libralab.my.id:3000/author/getAuthorByID?id=${book.ID_Author}`
+            );
+    
+            if (authorResponse.ok) {
+              const authorData = await authorResponse.json();
+    
+              // Update author name and author number
+              const authorNameElement = document.querySelector('#penerima-name');
+              if (authorNameElement) {
+                authorNameElement.textContent = "Nama Penerima: " + authorData.nama_author;
+              }
+    
+              const authorNorekElement = document.querySelector('#rekening-number');
+              if (authorNorekElement) {
+                authorNorekElement.textContent = "Nomor Rekening: " + authorData.norek_author || 'No account available';
+              }
+            } else {
+              console.error('Failed to fetch author details');
+            }
+          } catch (error) {
+            console.error('Error fetching author details:', error);
+          }
+        } else {
+          console.error('No book data found in localStorage');
+        }
+      }
+    
+      // Format price to currency format
+      function formatCurrency(amount) {
+        return new Intl.NumberFormat('id-ID').format(amount);
+      }
+    
+      // Run the updateCheckoutPage function when the page loads
+      document.addEventListener('DOMContentLoaded', updateCheckoutPage);
+    
+      async function handleFileUpload() {
+        // Get the book data and user data from localStorage or another source
+        const bookData = JSON.parse(localStorage.getItem('currentSelectedBook'));
+        console.log(bookData);
+    
+        if (!bookData) {
+          console.error('Book data not found');
+          return;
+        }
+    
+        // Get the image file selected for upload
+        const fileInput = document.getElementById('upload-image');
+        const paymentFile = fileInput.files[0];
+    
+        if (!paymentFile) {
+          console.error('No payment file selected');
+          return;
+        }
+        
+        // Create a FormData object
+        const formData = new FormData();
+        formData.append('ID_Buku', bookData.ID_Buku); // Book ID
+        formData.append('ID_Author', bookData.ID_Author); // Author ID
+        formData.append('paymentFile', paymentFile); // The image file
+        const pesanButton = document.getElementById('pesanButton');
+        
+        try {
+          // Upload the form data to the server
+          pesanButton.disabled = true;
+          const response = await fetch('https://libralabapi.libralab.my.id:3000/transaction/postTransaction', {
+            method: 'POST',
+            body: formData,
+            credentials: 'include'
+          });
+          if (response.ok) {
+                const responseData = await response.json();
+                alert('Your book has been purchased and is now awaiting author confirmation.');
+                }
+            else {
+                pesanButton.disabled = false;
+                // Handle failed request
+                console.error('Failed to upload transaction:', response.statusText);
+                alert('There was an error processing your transaction. Please try again later.');
+          }
+        } catch (error) {
+          console.error('Error during file upload:', error);
+        }
+      }
+    
+      // Attach the file upload handler to the button click
+      const uploadButton = document.querySelector('.btn-custom');
+      uploadButton.addEventListener('click', handleFileUpload);
+      
+    </script>
+
+  </body>
+</html>

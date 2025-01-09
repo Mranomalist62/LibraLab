@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>My Library</title>
+    <style>
+      main {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+
+      .main-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      .welcome-text {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        color: #333;
+      }
+
+      /* Island Style */
+      .add-book-section,
+      .edit-book-section,
+      .orders-section {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .add-book-section,
+      .edit-book-section {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: space-between;
+        margin: 20px 0;
+      }
+
+      .book-input-display {
+        font-size: 16px;
+        color: #333;
+        flex-grow: 1;
+        padding: 8px 12px;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .book-input-display:hover {
+        background-color: #e9e9e9;
+      }
+
+      .add-btn {
+        background-color: #ffa500;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .add-btn:hover {
+        background-color: #e68900;
+      }
+      .profile-container {
+        text-align: center; /* Memusatkan seluruh konten */
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .profile-section {
+        display: flex;
+        align-items: center;
+      }
+
+      .profile-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .edit-profile-btn {
+        background-color: #f0f0f0;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+      }
+
+      .edit-profile-btn i {
+        font-size: 2rem;
+        color: black;
+      }
+
+      .edit-profile-btn:hover {
+        background-color: #ffffff;
+      }
+
+      .author-name {
+        font-size: 1rem;
+        color: #333;
+        font-weight: bold;
+        margin-top: 10px; /* Memberikan jarak antara tombol dan nama */
+      }
+
+      .order-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .order-table th,
+      .order-table td {
+        padding: 15px 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+      }
+
+      .confirm-btn {
+        background: #f0f0f0;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .confirm-btn:hover {
+        background: #e0e0e0;
+      }
+      .book-card-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-top: 40px;
+      }
+      .card {
+        position: relative;
+        width: 160px;
+        height: 220px;
+        margin: 5px;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        padding-top: 20px;
+      }
+
+      /* Judul Buku di Atas */
+      .card-title {
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        right: 10px;
+        font-weight: bold;
+        text-align: center;
+        padding: 4px;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+        z-index: 2;
+        white-space: nowrap;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+
+      /* Gambar buku */
+      .card-img-top {
+        width: 140px;
+        height: 180px;
+        object-fit: cover;
+        margin: 10px auto;
+        display: block;
+        z-index: 1;
+      }
+
+      .marquee-text {
+        display: inline-block;
+        white-space: nowrap;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        transition: transform 5s linear;
+      }
+      .card:hover .marquee-text {
+        transform: translateX(-100%);
+      }
+    </style>
+  </head>
+  <body>
+      <main>
+        <div class="main-container">
+          <div class="header">
+            <h1>My Library</h1>
+            <div class="profile-section">
+              <div class="profile-info">
+                <button class="edit-profile-btn" onclick="location.href='author_data.html'">
+                  <i class="fa-solid fa-user"></i>
+                </button>
+                <p class="author-name">Edit Profil</p>
+              </div>
+            </div>
+          </div>
+          <p class="welcome-text">
+            Hi Author, thank you for participating and contributing to our
+            website. Please organize your library.
+          </p>
+          <div class="add-book-section">
+            <span class="book-input-display" id="addBookTitle">Add your new book</span>
+            <a href="author-addbook.html" class="add-btn" style="text-decoration: none">+</a>
+          </div>
+          <div class="orders-section">
+            <h2>Your Order</h2>
+            <table class="order-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Book</th>
+                  <th>Bukti</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="orderTableBody">
+                <!-- Table rows will be inserted here dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+    <script>
+      document
+        .getElementById('addBookTitle')
+        .addEventListener('click', function () {
+          window.location.href = 'author-addbook.html';
+        });
+
+      const bookInput = document.querySelector('.book-input');
+      const addBtn = document.querySelector('.add-btn');
+
+      addBtn.addEventListener('click', () => {
+        const bookTitle = bookInput.value.trim();
+        if (bookTitle) {
+          alert(`Book "${bookTitle}" has been added to your library!`);
+          bookInput.value = '';
+        } else {
+          alert('Please enter a book title!');
+        }
+      });
+
+      const confirmButtons = document.querySelectorAll('.confirm-btn');
+      confirmButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+          const row = this.closest('tr');
+          const name = row.cells[0].textContent;
+          alert(`Order for ${name} has been confirmed!`);
+          this.disabled = true;
+          this.style.opacity = '0.5';
+        });
+      });
+
+      
+      document.addEventListener('DOMContentLoaded', async function () {
+        const apiUrl = 'https://libralabapi.libralab.my.id:3000/transaction/getTransactionUnconfirmedByAuthorID';
+        const confirmApiUrl = 'https://libralabapi.libralab.my.id:3000/transaction/confirmTransaction';
+    
+        // Get the order table body element
+        const orderTableBody = document.getElementById('orderTableBody');
+    
+        // Check if the element exists
+        if (!orderTableBody) {
+            console.error("Order table body not found!");
+            return;
+        }
+    
+        // Function to fetch transactions
+        async function fetchTransactions() {
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                if (!response.ok) throw new Error(`Failed to fetch transactions: ${response.statusText}`);
+                
+                const jsonResponse = await response.json();
+                console.log("Fetched transactions response:", jsonResponse);
+        
+                // Check if the response contains the data array
+                if (jsonResponse.data && Array.isArray(jsonResponse.data)) {
+                    return jsonResponse.data; // Return the transactions array
+                } else {
+                    console.error("Unexpected response format:", jsonResponse);
+                    return [];
+                }
+            } catch (error) {
+                console.error(error);
+                return []; // Return an empty array on error
+            }
+        }
+            
+        // Function to confirm a transaction
+        async function confirmTransaction(transactionId, userId, bookId) {
+            try {
+                const response = await fetch(confirmApiUrl, {
+                    method: 'POST',
+                    credentials: 'include', // Include credentials like cookies
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ID_Transaksi: transactionId,
+                        ID_User: userId,    // Include ID_User
+                        ID_Buku: bookId     // Include ID_Buku
+                    }) 
+                });
+        
+                if (!response.ok) throw new Error(`Failed to confirm transaction: ${response.statusText}`);
+                
+                // Assuming the response contains confirmation data
+                return await response.json();
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        }
+        
+        async function fetchUserName(userID) {
+            try {
+                const response = await fetch(`https://libralabapi.libralab.my.id:3000/user/getUserByID?id=${userID}`, {
+                    method: 'GET',
+                    credentials: 'include' // Include credentials with the request
+                });
+                const data = await response.json();
+                if (data && data.Nama_user) {
+                    return data.Nama_user; // Return the user name
+                } else {
+                    console.error('User name not found');
+                    return "Unknown User"; // Fallback if user name is not found
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                return "Unknown User"; // Fallback on error
+            }
+        }
+        
+        async function fetchBookTitle(bookID) {
+            try {
+                const response = await fetch(`https://libralabapi.libralab.my.id:3000/book/getBookByID?id=${bookID}`, {
+                    method: 'GET',
+                    credentials: 'include' // Include credentials with the request
+                });
+                const data = await response.json();
+                if (data && data.judul_buku) {
+                    return data.judul_buku; // Return the book title
+                } else {
+                    console.error('Book title not found');
+                    return "Unknown Book"; // Fallback if book title is not found
+                }
+            } catch (error) {
+                console.error('Error fetching book data:', error);
+                return "Unknown Book"; // Fallback on error
+            }
+        }
+            
+        async function generateOrderTable() {
+            const transactions = await fetchTransactions();
+        
+            if (!Array.isArray(transactions)) {
+                console.error("Expected an array but got:", transactions);
+                return;
+            }
+        
+            // Iterate through each transaction to generate the table row
+            for (const transaction of transactions) {
+                const row = document.createElement('tr');
+        
+                // Fetch user details using ID_User
+                const userName = await fetchUserName(transaction.ID_User); // Function to fetch user name by ID_User
+        
+                // Fetch book details using ID_Buku
+                const bookTitle = await fetchBookTitle(transaction.ID_Buku); // Function to fetch book title by ID_Buku
+        
+                // Create Name Cell
+                const nameCell = document.createElement('td');
+                nameCell.textContent = userName || "Unknown User"; // Display user name or "Unknown User" if not found
+                row.appendChild(nameCell);
+        
+                // Create Book Cell
+                const bookCell = document.createElement('td');
+                bookCell.textContent = bookTitle || "Unknown Book"; // Display book title or "Unknown Book" if not found
+                row.appendChild(bookCell);
+        
+                // Create Payment Proof Cell
+                const proofCell = document.createElement('td');
+                const proofLink = document.createElement('a');
+                proofLink.href = transaction.file_path; // Assuming file_path is a valid URL or relative path
+                proofLink.textContent = "Download Proof";
+                proofLink.target = "_blank";
+                proofCell.appendChild(proofLink);
+                row.appendChild(proofCell);
+        
+                // Create Status Cell
+                const statusCell = document.createElement('td');
+                const confirmButton = document.createElement('button');
+                confirmButton.classList.add('confirm-btn');
+                confirmButton.textContent = "Confirm";
+        
+                if (transaction.status_transaksi === "verified") {
+                    confirmButton.disabled = true;
+                    confirmButton.style.opacity = '0.5';
+                }
+        
+                confirmButton.addEventListener('click', async function () {
+                    if (transaction.status_transaksi !== "verified") {
+                        const result = await confirmTransaction(transaction.ID_Transaksi, transaction.ID_User, transaction.ID_Buku); // Using ID_Transaksi
+                        if (result) {
+                            alert(`Transaction for Book ID ${transaction.ID_Buku} has been confirmed!`);
+                            transaction.status_transaksi = "verified";
+                            this.disabled = true;
+                            this.style.opacity = '0.5';
+                        } else {
+                            alert('Failed to confirm the transaction. Please try again.');
+                        }
+                    }
+                });
+        
+                statusCell.appendChild(confirmButton);
+                row.appendChild(statusCell);
+        
+                // Append the row to the table body
+                orderTableBody.appendChild(row);
+            }
+        } 
+        // Call the function to generate the table
+        generateOrderTable();
+    });
+    </script>
+  </body>
+</html>

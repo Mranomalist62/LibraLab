@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style-mybook.css" />
+
+    <!-- Slick Slider CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>Libralab</title>
+    <link rel="icon" type="image/x-icon" href="img/test1.jpg" />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <!-- Navbar Brand -->
+          <a class="navbar-brand" href="home.html">Libralab</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa-solid fa-bars custom-icon"></span>
+          </button>
+
+          <!-- Navbar Content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- SEARCH -->
+            <div class="search">
+              <input type="text" class="search-input" placeholder="" />
+              <!-- <a href="#" class="search-icon"> 
+                <i class="fas fa-search"></i>
+              </a>-->
+            </div>
+
+            <!-- BURGER -->
+            <ul class="navbar-nav ms-auto">
+              <!-- Menggunakan ms-auto di sini -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-list custom-icon"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                </ul>
+              </li>
+            </ul>
+            <!-- PROFILE -->
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user-circle custom-icon"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <div class="d-flex align-items-center p-2">
+                      <img
+                        src="img/test1.jpg"
+                        alt="Profile"
+                        class="profile-pic me-2"
+                      />
+                      <div>
+                        <strong>Email@example.com</strong>
+                        <small class="d-block text-muted">Username</small>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="mybook.html">Buku Saya</a>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container">
+      <!-- Daftar Buku -->
+      <!-- Card 1 -->
+      <section class="mybook-section">
+        <div class="card">
+          <img
+            src="img/test1.jpg"
+            class="card-img-top full-height-img"
+            alt="Buku 1"
+          />
+          <div class="card-body">
+            <h5 class="card-title marquee-text">
+              Wisdome of the Oracle Divination Cards
+            </h5>
+            <a
+              class="btn btn-primary hidden-btn"
+              href="reading.html"
+              role="button"
+              >Edit</a
+            >
+          </div>
+        </div>
+
+      </section>
+    </div>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Slick Slider JS -->
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script>
+      // Base API URLs
+      const ownedBooksApiUrl = "https://libralabapi.libralab.my.id:3000/owned/getOwnedBookByID";
+      const bookDetailsApiUrl = "https://libralabapi.libralab.my.id:3000/book/getBookByID";
+      const imageUrl = "https://libralabapi.libralab.my.id:3000/book/media/image/";
+    
+      // Function to fetch owned books
+      async function fetchOwnedBooks() {
+        try {
+          const response = await fetch(`${ownedBooksApiUrl}`, {
+            method: "GET",
+            credentials: "include", // Include credentials
+          });
+          if (!response.ok) {
+            throw new Error(`Error fetching owned books: ${response.status}`);
+          }
+          const data = await response.json();
+          return data; // Assuming the API returns an array of {ID_Owned, ID_User, ID_Buku}
+        } catch (error) {
+          console.error(error);
+          return [];
+        }
+      }
+    
+      // Function to fetch book details by ID_Buku
+      async function fetchBookDetails(bookId) {
+        try {
+          const response = await fetch(`${bookDetailsApiUrl}?id=${bookId}`, {
+            method: "GET",
+            credentials: "include", // Include credentials
+          });
+          if (!response.ok) {
+            throw new Error(`Error fetching book details for ID ${bookId}: ${response.status}`);
+          }
+          return await response.json(); // Assuming the API returns {judul_buku, cover_path, link, ...}
+        } catch (error) {
+          console.error(error);
+          return null; // Return null if an error occurs
+        }
+      }
+    
+      // Function to create a card
+      function createCard(book) {
+        return `
+          <div class="card">
+            <img src="${imageUrl}${book.cover_path}" class="card-img-top full-height-img" alt="${book.judul_buku}" />
+            <div class="card-body">
+              <h5 class="card-title marquee-text">${book.judul_buku}</h5>
+              <a class="btn btn-primary hidden-btn" role="button"
+                 data-book='${JSON.stringify(book)}' onclick="saveCurrentBook(event)">Read</a>
+            </div>
+          </div>
+        `;
+      }
+    
+      // Function to save the current book to localStorage
+      function saveCurrentBook(event) {
+        event.preventDefault(); // Prevent default anchor behavior
+        const bookData = event.target.getAttribute("data-book");
+        if (bookData) {
+          localStorage.setItem("currentReadBook", bookData);
+          console.log("Book saved to localStorage:", JSON.parse(bookData));
+          // Redirect to reading.html
+          window.location.href = "reading.html";
+        }
+      }
+    
+      // Function to dynamically add cards to the section
+      function renderCards(books) {
+        const section = document.querySelector(".mybook-section");
+        section.innerHTML = ""; // Clear existing content
+        books.forEach((book) => {
+          if (book) {
+            section.innerHTML += createCard(book);
+          }
+        });
+      }
+    
+      // Fetch and render books
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          // Step 1: Fetch owned books
+          const ownedBooks = await fetchOwnedBooks();
+    
+          // Step 2: Fetch details for each owned book
+          const bookDetailsPromises = ownedBooks.map((ownedBook) =>
+            fetchBookDetails(ownedBook.ID_Buku)
+          );
+    
+          // Wait for all book details to be fetched
+          const books = await Promise.all(bookDetailsPromises);
+    
+          // Step 3: Render the cards
+          renderCards(books);
+        } catch (error) {
+          console.error("Error in fetching and rendering books:", error);
+        }
+      });
+    </script>
+  </body>
+</html>

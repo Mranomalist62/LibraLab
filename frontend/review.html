@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <title>Libralab - Ulasan Buku</title>
+    <style>
+      main {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        margin-top: 5rem;
+      }
+
+      /* Navbar styling */
+      .navbar {
+        padding: 10px;
+        justify-content: space-around;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #ff8a00;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar .navbar-container {
+        padding-left: 25px;
+        padding-right: 25px;
+        justify-content: space-between;
+      }
+
+      .navbar .navbar-brand {
+        font-weight: 600;
+        font-size: 35px;
+        color: #ffffff;
+      }
+
+      .navbar-nav {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        font-weight: 500;
+        color: #333;
+        padding-right: 15px;
+      }
+
+      .nav-link:hover {
+        color: #000000;
+      }
+
+      .dropdown-menu {
+        font-weight: 400;
+        z-index: 20;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .nav-item {
+        margin-left: 15px;
+      }
+
+      /* Navbar Collapse */
+      .navbar-collapse {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* Search bar */
+      .search {
+        width: 100%;
+        height: 50px;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 30px;
+        align-items: center;
+      }
+
+      .search-input {
+        color: white;
+        border: 0;
+        outline: 0;
+        background: none;
+        width: 0;
+        margin-top: 5px;
+        caret-color: transparent;
+        line-height: 20px;
+        transition: width 0.4s linear;
+      }
+
+      .search-input::placeholder {
+        font-size: 15px;
+        font-style: italic;
+      }
+
+      .search .search-input {
+        padding: 0 10px;
+        width: 100%;
+        caret-color: #ff8a00;
+        font-size: 19px;
+        color: rgb(41, 40, 40);
+        transition: width 0.4s linear;
+      }
+
+      .search-icon {
+        height: 34px;
+        width: 34px;
+        float: right;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        background-color: #ff8a00;
+        font-size: 10px;
+        bottom: 30px;
+        position: relative;
+        border-radius: 20px;
+      }
+
+      .search-icon:hover {
+        color: #fff !important;
+      }
+
+      .custom-icon {
+        font-size: 30px;
+        color: white;
+      }
+
+      /* Profile Dropdown */
+      .dropdown-menu {
+        padding: 0;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+      }
+
+      .dropdown-item {
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown-item:hover {
+        background-color: #f0f0f0;
+      }
+
+      .profile-pic {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .navbar .dropdown-toggle::after {
+        display: none;
+      }
+      /* important */
+      .dropdown-menu {
+        filter: none !important;
+      }
+      main .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+      }
+
+      .review-form {
+        padding: 1rem;
+      }
+
+      .book-info {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .book-image {
+        width: 150px;
+        height: 200px;
+        background: #f0f0f0;
+        flex-shrink: 0;
+      }
+
+      .book-details {
+        flex-grow: 1;
+      }
+
+      .order-date {
+        text-align: right;
+        color: #666;
+        font-size: 0.875rem;
+      }
+
+      .author {
+        margin-bottom: 0.5rem;
+        color: #666;
+      }
+
+      .book-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .rating-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .rating-question {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .star-rating {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .star {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        border: 2px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .star.filled {
+        background-color: #f0f0f0;
+        border-color: #666;
+      }
+
+      .rating-text {
+        font-weight: bold;
+      }
+
+      .review-textarea {
+        width: 100%;
+        min-height: 150px;
+        padding: 1rem;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+        resize: vertical;
+      }
+
+      .photo-upload {
+        margin-bottom: 2rem;
+      }
+
+      .photo-upload-title {
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+
+      .upload-box {
+        width: 100px;
+        height: 100px;
+        border: 2px dashed #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .tips-card {
+        background: #f9f9f9;
+        padding: 1rem;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .tips-title {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .tips-icon {
+        width: 20px;
+        height: 20px;
+        border: 2px solid #666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .tips-list {
+        list-style-position: inside;
+        padding-left: 1rem;
+      }
+
+      .tips-list li {
+        margin-bottom: 0.5rem;
+        color: #666;
+      }
+
+      .tips-list strong {
+        color: #333;
+      }
+
+      .button-container {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+        margin-top: 2rem;
+      }
+
+      .btn {
+        padding: 0.75rem 2rem;
+        border-radius: 4px;
+        border: 1px solid #666;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .btn-outline {
+        background: white;
+      }
+
+      .btn-primary {
+        background: #666;
+        color: white;
+      }
+      @media (max-width: 991px) {
+        .navbar .dropdown-menu {
+          position: absolute; /* Agar dropdown mengambang */
+          width: auto; /* Bisa sesuaikan sesuai kebutuhan */
+        }
+
+        .navbar .dropdown-item {
+          padding: 10px 15px; /* Pastikan padding konsisten di responsive */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container navbar-container">
+          <!-- Navbar Brand -->
+          <a class="navbar-brand" href="#">Libralab</a>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="fa-solid fa-bars custom-icon"></span>
+          </button>
+
+          <!-- Navbar Content -->
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- SEARCH -->
+            <div class="search">
+              <input type="text" class="search-input" placeholder="Search..." />
+              <a href="#" class="search-icon">
+                <i class="fas fa-search"></i>
+              </a>
+            </div>
+            <!-- Keranjang -->
+            <ul class="navbar-nav ms-auto">
+              <!-- Menggunakan ms-auto di sini -->
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-cart-shopping" style="color: white"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Item 1</a></li>
+                  <li><a class="dropdown-item" href="#">Item 2</a></li>
+                  <li><a class="dropdown-item" href="#">Item 3</a></li>
+                  <li>
+                    <a class="dropdown-item text-center" href="cart.html">
+                      <button class="btn btn-primary w-100">
+                        Lihat Keranjang
+                      </button>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+
+            <!-- PROFILE -->
+            <ul class="navbar-nav">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="profileDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-user-circle custom-icon"></i>
+                </a>
+                <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="profileDropdown"
+                >
+                  <li>
+                    <div class="d-flex align-items-center p-2">
+                      <img
+                        src="img/test1.jpg"
+                        alt="Profile"
+                        class="profile-pic me-2"
+                      />
+                      <div>
+                        <strong>Email@example.com</strong>
+                        <small class="d-block text-muted">Username</small>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="mybook.html">Buku Saya</a>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Pesanan Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Wishlish Saya</a></li>
+                  <li><a class="dropdown-item" href="#">Poin Saya</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Logout</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="container">
+        <div class="review-form">
+          <div class="book-info">
+            <div class="book-image"></div>
+            <div class="book-details">
+              <div class="author">Author: Nama Author</div>
+              <div class="book-title">Judul Buku</div>
+              <div class="order-date">
+                Pesanan diterima: 15 Jan 2024, 13.53 WIB
+              </div>
+            </div>
+          </div>
+
+          <div class="rating-container">
+            <div class="rating-question">
+              Bagaimana kualitas buku yang anda pesan?
+            </div>
+            <div class="star-rating" id="starRating">
+              <div class="star">★</div>
+              <div class="star">★</div>
+              <div class="star">★</div>
+              <div class="star">★</div>
+              <div class="star">★</div>
+            </div>
+            <div class="rating-text">Bagus Sekali</div>
+          </div>
+
+          <div class="review-text">
+            <div class="rating-question">Berikan ulasan</div>
+            <textarea
+              class="review-textarea"
+              placeholder="Tulis deskripsi anda mengenai buku ini"
+            ></textarea>
+          </div>
+
+          <div class="photo-upload">
+            <div class="photo-upload-title">
+              Bagikan foto-foto dari buku yang Anda terima
+            </div>
+            <div class="upload-box">+</div>
+          </div>
+
+          <div class="button-container">
+            <button class="btn btn-outline">Batal</button>
+            <button class="btn btn-primary">Kirim</button>
+          </div>
+        </div>
+
+        <div class="tips-container">
+          <div class="tips-card">
+            <div class="tips-title">
+              <div class="tips-icon">★</div>
+              <span>Tips Menulis Ulasan</span>
+            </div>
+            <ul class="tips-list">
+              <li>
+                <strong>Kesesuaian dengan deskripsi</strong><br />
+                Cth: Ukuran dan warna sesuai dengan foto.
+              </li>
+              <li>
+                <strong>Fungsionalitas Produk</strong><br />
+                Cth: Produk bekerja dengan baik & kuat
+              </li>
+              <li>
+                <strong
+                  >Keinginan merekomendasikan produk ini kepada teman</strong
+                ><br />
+                Cth: Barang bagus, cepat sampai, recommended!
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      // Star Rating Functionality
+      const starRating = document.getElementById('starRating');
+      const stars = starRating.getElementsByClassName('star');
+      const ratingText = document.querySelector('.rating-text');
+
+      const ratingTexts = [
+        'Sangat Buruk',
+        'Buruk',
+        'Cukup',
+        'Bagus',
+        'Bagus Sekali',
+      ];
+
+      Array.from(stars).forEach((star, index) => {
+        star.addEventListener('click', () => {
+          // Reset all stars
+          Array.from(stars).forEach((s) => s.classList.remove('filled'));
+
+          // Fill stars up to clicked star
+          for (let i = 0; i <= index; i++) {
+            stars[i].classList.add('filled');
+          }
+
+          // Update rating text
+          ratingText.textContent = ratingTexts[index];
+        });
+      });
+
+      // Image Upload Preview
+      const uploadBox = document.querySelector('.upload-box');
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*';
+      fileInput.style.display = 'none';
+
+      uploadBox.addEventListener('click', () => {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            uploadBox.style.backgroundImage = 'url(' + e.target.result + ')';
+            uploadBox.style.backgroundSize = 'cover';
+            uploadBox.textContent = '';
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
